@@ -1,0 +1,9 @@
+# guy has no version tags...
+version=latest
+port=9265
+cities="london,chicago,glen ellyn"
+# interval=1200 changed to 600 on 2019-08-05 as daily api usage was only ~220/day out of quota 1k
+interval=600
+key=86713040bcac217df0e96b41b047723d
+
+docker run -d --name=weather_exporter --restart unless-stopped -p 172.16.12.2:$port:$port -e DARK_SKY_API_KEY=$key -e SCRAPE_INTERVAL=$interval -e CITIES="$cities" -e UNITS=si celliott/weather_exporter:$version

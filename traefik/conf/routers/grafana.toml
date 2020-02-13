@@ -1,0 +1,15 @@
+[http]
+  [http.routers]
+    [http.routers.grafana]
+      entryPoints = ["websecure"]
+      rule = "Host(`grafana.vanstaveren.us`)"
+      service = "grafana"
+      [http.routers.grafana.tls]
+        certResolver = "le"
+        [[http.routers.grafana.tls.domains]]
+          main = "grafana.vanstaveren.us"
+    [http.routers.grafana_http]
+      entryPoints = ["web"]
+      rule = "Host(`grafana.vanstaveren.us`)"
+      middlewares = ["redirectscheme"]
+      service = "grafana"

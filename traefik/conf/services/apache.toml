@@ -1,0 +1,4 @@
+[http.services]
+  [http.services.apache.loadBalancer]
+    [[http.services.apache.loadBalancer.servers]]
+      url = "http://172.16.12.2:8080/"

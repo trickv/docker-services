@@ -1,0 +1,16 @@
+[http]
+  [http.routers]
+    [http.routers.apachesites]
+      entryPoints = ["websecure"]
+      rule = "Host(`vanstaveren.us`) || Host(`trick.vanstaveren.us`)"
+      service = "apache"
+      [http.routers.apachesites.tls]
+        certResolver = "le"
+        [[http.routers.apachesites.tls.domains]]
+          main = "vanstaveren.us"
+          sans = ["trick.vanstaveren.us"]
+    [http.routers.apachesites_http]
+      entryPoints = ["web"]
+      rule = "Host(`vanstaveren.us`) || Host(`trick.vanstaveren.us`)"
+      service = "apache"
+      middlewares = ["redirectscheme"]

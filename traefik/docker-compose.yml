@@ -2,12 +2,12 @@ version: '2'
 
 services:
   reverse-proxy:
-    image: traefik:v2.1.4
+    image: traefik:v2.3.2
     restart: unless-stopped
     command:
       - "--api.insecure=true"
-      - "--providers.file.directory=/conf"
-      - "--providers.file.watch=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.websecure.address=:443"
       - "--entryPoints.web.address=:80"
       - "--certificatesResolvers.le.acme.email=trick@vanstaveren.us"
@@ -24,4 +24,32 @@ services:
       - "8079:8080"
       - "7082:7082"
     volumes:
-      - /root/docker/traefik/conf:/conf
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    network_mode: host
+
+  airsonic:
+    container_name: airsonic
+    image: linuxserver/airsonic
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      #- CONTEXT_PATH=<URL_BASE> #optional
+      #- JAVA_OPTS=<options> #optional
+    volumes:
+      - ./config:/config
+      #- config:/airsonic/config
+      - /mnt/music:/music
+      #- playlists:/airsonic/playlists
+      #- podcasts:/airsonic/podcasts
+    ports:
+      - 4039:4040
+      - 8444:8443
+    restart: unless-stopped
+    #network_mode: host
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.airsonic.rule=Host(`airsonic.home.v9n.us`)"
+      - "traefik.http.routers.airsonic.entrypoints=websecure"
+      - "traefik.http.routers.airsonic.tls.certresolver=le"
+      - "traefik.http.services.airsonic.loadbalancer.server.port=4040"

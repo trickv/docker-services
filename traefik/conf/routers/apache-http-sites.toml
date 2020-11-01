@@ -1,6 +1,0 @@
-[http]
-  [http.routers]
-    [http.routers.apacheinsecure]
-      entryPoints = ["web"]
-      rule = "Host(`realsarahweir.com`) || Host(`www.realsarahweir.com`) || Host(`ip.v9n.us`) || Host(`hacks.v9n.us`) || Host(`hg.vanstaveren.us`) || Host(`hg.v9n.us`) || Host(`marie.vanstaveren.us`) || Host(`www.marie.vanstaveren.us`)"
-      service = "apache"

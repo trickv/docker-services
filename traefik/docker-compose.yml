@@ -39,7 +39,7 @@ services:
     volumes:
       - ./config:/config
       #- config:/airsonic/config
-      - /mnt/music:/music
+      - /mnt/music/Master_Collection:/music
       #- playlists:/airsonic/playlists
       #- podcasts:/airsonic/podcasts
     ports:

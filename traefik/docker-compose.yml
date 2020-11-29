@@ -53,3 +53,19 @@ services:
       - "traefik.http.routers.airsonic.entrypoints=websecure"
       - "traefik.http.routers.airsonic.tls.certresolver=le"
       - "traefik.http.services.airsonic.loadbalancer.server.port=4040"
+  
+  hass:
+    container_name: hass
+    image: homeassistant/home-assistant:0.104.3
+    volumes:
+      - ./hass-config:/config
+    environment:
+      - TZ=America/Chicago
+    restart: always
+    network_mode: host
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hass.rule=Host(`hass.vanstaveren.us`)"
+      - "traefik.http.routers.hass.entrypoints=websecure"
+      - "traefik.http.routers.hass.tls.certresolver=le"
+      - "traefik.http.services.hass.loadbalancer.server.port=8123"

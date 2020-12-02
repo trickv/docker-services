@@ -27,7 +27,3 @@ switch:
       - address: c6
         name: Tree
         comm_type: rf
-  - platform: remote_rpi_gpio
-    host: jimmy.home.vanstaveren.us
-    ports:
-      17: Space Heater Relay

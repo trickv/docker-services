@@ -1,1 +1,23 @@
-[]
+- id: 'turn on outdoor lights at sunset'
+  alias: 'turn on outdoor lights at sunset'
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id:
+        - switch.front_lights
+
+- id: 'turn off outdoor lights at 10pm'
+  alias: 'turn off outdoor lights at 10pm'
+  trigger:
+  - at: '22:00:00'
+    platform: time
+  condition: []
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id:
+        - switch.front_lights

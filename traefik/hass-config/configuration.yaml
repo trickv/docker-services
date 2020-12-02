@@ -22,8 +22,11 @@ switch:
   - platform: mochad
     devices:
       - address: c8
-        name: Garage
+        name: Garage Lights
         comm_type: rf
-      - address: c6
-        name: Tree
+#      - address: c9
+#        name: Tree
+#        comm_type: rf
+      - address: c10
+        name: Front Lights
         comm_type: rf

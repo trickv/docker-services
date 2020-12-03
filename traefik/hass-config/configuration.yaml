@@ -21,6 +21,12 @@ mochad:
 switch:
   - platform: mochad
     devices:
+      - address: c3
+        name: HVAC temp box
+        comm_type: rf
+      - address: c7
+        name: Office temp box
+        comm_type: rf
       - address: c8
         name: Garage Lights
         comm_type: rf

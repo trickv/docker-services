@@ -1,0 +1,22 @@
+christmastreeon:
+  alias: Turn On Christmas Tree
+  description: "Turn On Christmas Tree"
+  sequence:
+    - event: LOGBOOK_ENTRY
+      event_data:
+        name: Tree
+        message: it happened
+    - alias: IFTTT SmartLife A On
+      service: ifttt.trigger
+      data: {"event":"SmartLife_A_ON", "value1":""}
+christmastreeoff:
+  alias: Turn Off Christmas Tree
+  description: "Turn Off Christmas Tree"
+  sequence:
+    - event: LOGBOOK_ENTRY
+      event_data:
+        name: Tree
+        message: it happened
+    - alias: IFTTT SmartLife A Off
+      service: ifttt.trigger
+      data: {"event":"SmartLife_A_OFF", "value1":""}

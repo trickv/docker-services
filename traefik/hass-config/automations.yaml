@@ -21,3 +21,43 @@
     data:
       entity_id:
         - switch.front_lights
+
+- id: 'tree on sunrise'
+  alias: 'turn on christmas tree near sunrise'
+  trigger:
+  - event: sunrise
+    platform: sun
+    offset: "-00:30:00"
+  condition: []
+  action:
+  - service: script.christmastreeon
+
+- id: 'tree off sunrise'
+  alias: 'turn of christmas tree after sunrise'
+  trigger:
+  - event: sunrise
+    platform: sun
+    offset: "+02:00:00"
+  condition: []
+  action:
+  - service: script.christmastreeon
+
+- id: 'tree on sunset'
+  alias: 'turn on christmas tree near sunset'
+  trigger:
+  - event: sunset
+    platform: sun
+    offset: "-00:30:00"
+  condition: []
+  action:
+  - service: script.christmastreeon
+
+- id: 'tree off evening'
+  alias: 'turn off christmas tree late at night'
+  trigger:
+  - at: '23:00:00'
+    platform: time
+  condition: []
+  action:
+  - service: script.christmastreeoff
+

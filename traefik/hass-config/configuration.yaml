@@ -36,3 +36,6 @@ switch:
       - address: c10
         name: Front Lights
         comm_type: rf
+
+ifttt:
+  key: bWDYaMaVYJf9_2PvfBqsnl

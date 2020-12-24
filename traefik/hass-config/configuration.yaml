@@ -45,6 +45,9 @@ switch:
       - address: c10
         name: Front Lights
         comm_type: rf
-
+  - platform: remote_rpi_gpio
+    host: jimmy.home.vanstaveren.us
+    ports:
+      17: Space Heater Relay
 ifttt:
   key: bWDYaMaVYJf9_2PvfBqsnl

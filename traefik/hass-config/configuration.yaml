@@ -46,7 +46,7 @@ switch:
         name: Front Lights
         comm_type: rf
   - platform: remote_rpi_gpio
-    host: 172.16.17.18
+    host: jimmy.home.vanstaveren.us
     ports:
       17: Space Heater Relay
 ifttt:

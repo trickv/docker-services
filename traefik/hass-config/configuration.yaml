@@ -10,6 +10,7 @@ logbook:
 config:
 mobile_app:
 system_health:
+prometheus:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:

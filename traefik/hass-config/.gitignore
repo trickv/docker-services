@@ -1,3 +1,4 @@
 .HA_VERSION
 .storage/
 *.db
+.uuid

@@ -61,3 +61,18 @@
   action:
   - service: script.christmastreeoff
 
+- id: 'space heater on'
+  alias: 'space heater on'
+  trigger:
+  - at: '06:00:00'
+    platform: time
+  action:
+  - service: script.spaceheatertoggle
+
+- id: 'space heater off'
+  alias: 'space heater off'
+  trigger:
+  - at: '20:30:00'
+    platform: time
+  action:
+  - service: script.spaceheatertoggle

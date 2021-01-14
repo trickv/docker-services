@@ -59,6 +59,8 @@ services:
     image: homeassistant/home-assistant:2021.1.1
     volumes:
       - ./hass-config:/config
+    devices:
+      - /dev/ttyUSB0
     environment:
       - TZ=America/Chicago
     restart: always

@@ -69,3 +69,20 @@
     platform: time
   action:
   - service: script.spaceheatertoggle
+- id: '1610601254900'
+  alias: Zigbee coord offline
+  description: ''
+  trigger:
+  - device_id: d32453256e3baa07fd98fa84f9ebfe79
+    domain: zha
+    platform: device
+    type: device_offline
+    subtype: device_offline
+  condition: []
+  action:
+  - device_id: d52a44b77c804db281802af791d8d3ef
+    domain: mobile_app
+    type: notify
+    message: zigbee coord offline
+    title: ''
+  mode: single

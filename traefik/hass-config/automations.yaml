@@ -1,5 +1,5 @@
-- id: 'turn on outdoor lights at sunset'
-  alias: 'turn on outdoor lights at sunset'
+- id: turn on outdoor lights at sunset
+  alias: turn on outdoor lights at sunset
   trigger:
   - event: sunset
     platform: sun
@@ -8,10 +8,9 @@
   - service: switch.turn_on
     data:
       entity_id:
-        - switch.front_lights
-
-- id: 'turn off outdoor lights at 10pm'
-  alias: 'turn off outdoor lights at 10pm'
+      - switch.front_lights
+- id: turn off outdoor lights at 10pm
+  alias: turn off outdoor lights at 10pm
   trigger:
   - at: '22:00:00'
     platform: time
@@ -20,57 +19,51 @@
   - service: switch.turn_off
     data:
       entity_id:
-        - switch.front_lights
-
-- id: 'tree on sunrise'
-  alias: 'turn on christmas tree near sunrise'
+      - switch.front_lights
+- id: tree on sunrise
+  alias: turn on christmas tree near sunrise
   trigger:
   - event: sunrise
     platform: sun
-    offset: "-00:30:00"
+    offset: -00:30:00
   condition: []
   action:
   - service: script.christmastreeon
-
-- id: 'tree off sunrise'
-  alias: 'turn of christmas tree after sunrise'
+- id: tree off sunrise
+  alias: turn of christmas tree after sunrise
   trigger:
   - event: sunrise
     platform: sun
-    offset: "+02:00:00"
+    offset: +02:00:00
   condition: []
   action:
   - service: script.christmastreeon
-
-- id: 'tree on sunset'
-  alias: 'turn on christmas tree near sunset'
+- id: tree on sunset
+  alias: turn on christmas tree near sunset
   trigger:
   - event: sunset
     platform: sun
-    offset: "-00:30:00"
+    offset: -00:30:00
   condition: []
   action:
   - service: script.christmastreeon
-
-- id: 'tree off evening'
-  alias: 'turn off christmas tree late at night'
+- id: tree off evening
+  alias: turn off christmas tree late at night
   trigger:
   - at: '23:00:00'
     platform: time
   condition: []
   action:
   - service: script.christmastreeoff
-
-- id: 'space heater on'
-  alias: 'space heater on'
+- id: space heater on
+  alias: space heater on
   trigger:
-  - at: '06:00:00'
+  - at: 06:00:00
     platform: time
   action:
   - service: script.spaceheatertoggle
-
-- id: 'space heater off'
-  alias: 'space heater off'
+- id: space heater off
+  alias: space heater off
   trigger:
   - at: '20:30:00'
     platform: time

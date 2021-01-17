@@ -56,19 +56,21 @@
   action:
   - service: script.christmastreeoff
 - id: space heater on
-  alias: space heater on
+  alias: space heater on morning
   trigger:
-  - at: 06:00:00
+  - at: 07:00:00
     platform: time
   action:
   - service: script.spaceheatertoggle
+  mode: single
 - id: space heater off
-  alias: space heater off
+  alias: space heater off morning
   trigger:
-  - at: '20:30:00'
+  - at: '10:00:00'
     platform: time
   action:
   - service: script.spaceheatertoggle
+  mode: single
 - id: '1610601254900'
   alias: Zigbee coord offline
   description: ''
@@ -85,4 +87,26 @@
     type: notify
     message: zigbee coord offline
     title: ''
+  mode: single
+- id: '1610686517820'
+  alias: space heater on afternoon
+  description: ''
+  trigger:
+  - platform: time
+    at: '15:00:00'
+  condition: []
+  action:
+  - service: script.spaceheatertoggle
+    data: {}
+  mode: single
+- id: '1610686556109'
+  alias: space heater off evening
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:00:00'
+  condition: []
+  action:
+  - service: script.spaceheatertoggle
+    data: {}
   mode: single

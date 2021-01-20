@@ -110,3 +110,20 @@
   - service: script.spaceheatertoggle
     data: {}
   mode: single
+- id: '1611114482176'
+  alias: Tag e664296e-0823-42b9-8c84-afa287ccfd02 is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: e664296e-0823-42b9-8c84-afa287ccfd02
+  condition: []
+  action:
+  - type: toggle
+    device_id: 56d3bb99a887d39d5d9a37356de710e2
+    entity_id: light.closet_ceiling_lamp
+    domain: light
+  - type: toggle
+    device_id: 470a9ae157247c582dbd6e332ca4d777
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
+    domain: light
+  mode: single

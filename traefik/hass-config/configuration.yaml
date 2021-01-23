@@ -52,3 +52,9 @@ switch:
       17: Space Heater Relay
 ifttt:
   key: bWDYaMaVYJf9_2PvfBqsnl
+
+nest:
+  client_id: 320399857508-vcdobu2sn65h4a05usktf99okl6n3s1i.apps.googleusercontent.com
+  client_secret: !secret nest_client_secret
+  project_id: f0d76122-8194-4fe4-998e-434ca4a98ecc
+  subscriber_id: projects/hass1-302004/subscriptions/hass1

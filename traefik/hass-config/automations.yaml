@@ -127,3 +127,16 @@
     entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
     domain: light
   mode: single
+- id: '1611235873151'
+  alias: CJ red christmas lights nfc tag
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 53aac03f-ad3d-4c9b-b199-5e96d623cdab
+  condition: []
+  action:
+  - type: toggle
+    device_id: 68cbfff1d40d9adcf09446f0a3990b4a
+    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
+    domain: switch
+  mode: single

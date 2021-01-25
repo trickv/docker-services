@@ -140,3 +140,29 @@
     entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
     domain: switch
   mode: single
+- id: '1611545414210'
+  alias: boiler on
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /2
+    minutes: '0'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  mode: single
+- id: '1611545451637'
+  alias: boiler off
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /2
+    minutes: '30'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  mode: single

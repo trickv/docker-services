@@ -50,6 +50,12 @@ switch:
     host: jimmy.home.vanstaveren.us
     ports:
       17: Space Heater Relay
+  - platform: remote_rpi_gpio
+    host: 172.16.17.28
+    invert_logic: true
+    ports:
+      17: Boiler West 1/12hp
+      27: Boiler East 1/25hp
 ifttt:
   key: bWDYaMaVYJf9_2PvfBqsnl
 

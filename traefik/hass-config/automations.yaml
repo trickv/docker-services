@@ -145,7 +145,6 @@
   description: ''
   trigger:
   - platform: time_pattern
-    hours: /2
     minutes: '0'
   condition: []
   action:
@@ -158,8 +157,7 @@
   description: ''
   trigger:
   - platform: time_pattern
-    hours: /2
-    minutes: '30'
+    minutes: '20'
   condition: []
   action:
   - service: switch.turn_off

@@ -164,3 +164,33 @@
     data: {}
     entity_id: switch.boiler_east_1_25hp
   mode: single
+- id: '1611635037918'
+  alias: hack thermostat top
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    above: '68'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1611635088318'
+  alias: hack thermostat bottom
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    below: '66'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: heat
+  mode: single

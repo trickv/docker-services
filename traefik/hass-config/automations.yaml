@@ -185,7 +185,7 @@
   trigger:
   - platform: numeric_state
     entity_id: sensor.bedroom_temperature
-    below: '66'
+    below: '66.5'
   condition: []
   action:
   - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f

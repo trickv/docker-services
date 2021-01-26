@@ -40,9 +40,6 @@ switch:
       - address: c8
         name: Garage Lights
         comm_type: rf
-#      - address: c9
-#        name: Tree
-#        comm_type: rf
       - address: c10
         name: Front Lights
         comm_type: rf

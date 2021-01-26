@@ -141,7 +141,7 @@
     domain: switch
   mode: single
 - id: '1611545414210'
-  alias: boiler on
+  alias: boiler scheduled on
   description: ''
   trigger:
   - platform: time_pattern
@@ -153,7 +153,7 @@
     entity_id: switch.boiler_east_1_25hp
   mode: single
 - id: '1611545451637'
-  alias: boiler off
+  alias: boiler scheduled off
   description: ''
   trigger:
   - platform: time_pattern

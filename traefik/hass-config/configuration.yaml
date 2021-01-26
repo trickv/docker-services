@@ -61,3 +61,12 @@ nest:
   client_secret: !secret nest_client_secret
   project_id: f0d76122-8194-4fe4-998e-434ca4a98ecc
   subscriber_id: projects/hass1-302004/subscriptions/hass1
+
+climate:
+  - platform: generic_thermostat
+    name: Boiler East
+    heater: switch.boiler_east_1_25hp
+    target_sensor: sensor.pws_dr_temperature
+    target_temp: 69
+    min_cycle_duration:
+      minutes: 1

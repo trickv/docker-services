@@ -71,3 +71,7 @@ climate:
     target_temp: 69
     min_cycle_duration:
       minutes: 1
+
+solaredge:
+  api_key: R3QWABJRVG0V88WGDSQDI3X997W9IU8Q
+  site_id: 1735273

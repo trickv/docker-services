@@ -49,7 +49,7 @@ switch:
     ports:
       17: Space Heater Relay
   - platform: remote_rpi_gpio
-    host: 172.16.17.28
+    host: thermostatpi.home.vanstaveren.us
     invert_logic: true
     ports:
       17: Boiler West 1/12hp

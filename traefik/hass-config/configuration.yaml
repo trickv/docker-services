@@ -46,6 +46,7 @@ switch:
         comm_type: rf
   - platform: remote_rpi_gpio
     host: jimmy.home.vanstaveren.us
+    invert_logic: true
     ports:
       17: Space Heater Relay
   - platform: remote_rpi_gpio

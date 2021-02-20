@@ -71,3 +71,11 @@ services:
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
+
+  unifi-poller:
+    container_name: unifi-poller
+    image: golift/unifi-poller
+    volumes:
+      - ./unifi-poller/unifi-poller.conf:/config/unifi-poller.conf
+    restart: always
+    network_mode: host

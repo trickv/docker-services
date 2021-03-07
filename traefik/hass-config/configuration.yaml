@@ -69,7 +69,7 @@ climate:
     name: Boiler East
     heater: switch.boiler_east_1_25hp
     target_sensor: sensor.c_temperature
-    target_temp: 69.5
+    target_temp: 69
     min_cycle_duration:
       minutes: 1
 

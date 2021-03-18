@@ -10,9 +10,9 @@
       entity_id:
       - switch.front_lights
 - id: turn off outdoor lights at 10pm
-  alias: turn off outdoor lights at 10pm
+  alias: turn off outdoor lights at night
   trigger:
-  - at: '22:00:00'
+  - at: '21:00:00'
     platform: time
   condition: []
   action:
@@ -20,6 +20,7 @@
     data:
       entity_id:
       - switch.front_lights
+  mode: single
 - id: tree on sunrise
   alias: turn on christmas tree near sunrise
   trigger:
@@ -111,7 +112,7 @@
     data: {}
   mode: single
 - id: '1611114482176'
-  alias: Tag e664296e-0823-42b9-8c84-afa287ccfd02 is scanned
+  alias: Tag A scan in office
   description: ''
   trigger:
   - platform: tag
@@ -170,7 +171,7 @@
   trigger:
   - platform: numeric_state
     entity_id: sensor.bedroom_temperature
-    above: '68'
+    above: '67.5'
   condition: []
   action:
   - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
@@ -193,4 +194,134 @@
     entity_id: climate.dining_room
     type: set_hvac_mode
     hvac_mode: heat
+  mode: single
+- id: '1611837767885'
+  alias: boiler overheat
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_hot_supply
+    above: '190'
+  condition: []
+  action:
+  - device_id: d52a44b77c804db281802af791d8d3ef
+    domain: mobile_app
+    type: notify
+    message: boiler hot
+    title: boiker overheating
+  mode: single
+- id: '1612029886139'
+  alias: Cycle Boiler While Cool
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '3'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  - delay: 0:15
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  mode: single
+- id: '1612066319156'
+  alias: boiler freeze warning
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_cool_return
+    below: '38'
+    for: 0:10
+  condition: []
+  action:
+  - device_id: d52a44b77c804db281802af791d8d3ef
+    domain: mobile_app
+    type: notify
+    message: freeze possible
+    title: boiler freeze warning
+  mode: single
+- id: '1612420578646'
+  alias: Office lights on evening
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.closet_ceiling_lamp
+  - service: light.turn_on
+    data: {}
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
+  mode: single
+- id: '1612420745134'
+  alias: office lights off at dinner
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:30'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.closet_ceiling_lamp
+  - service: light.turn_on
+    data: {}
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
+  mode: single
+- id: '1614231127176'
+  alias: boiler cycle hourly
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+    minutes: '50'
+  condition: []
+  action:
+  - service: script.boiler_spike_run
+    data: {}
+  mode: single
+- id: '1614353754547'
+  alias: motion light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      no_motion_wait: '120'
+      motion_entity: binary_sensor.ewelink_ms01_motion_ias_zone
+      light_target:
+        device_id:
+        - 56d3bb99a887d39d5d9a37356de710e2
+- id: '1615695696754'
+  alias: Cycle DR Radiator Sensor Power
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /1
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
+  - delay: 0:45
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
   mode: single

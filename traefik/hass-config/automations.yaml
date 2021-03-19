@@ -325,3 +325,27 @@
     data: {}
     entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
   mode: single
+- id: '1616132884135'
+  alias: boiler on http notify
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.boiler_east_1_25hp
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: shell_command.boiler_on
+  mode: single
+- id: '1616132903319'
+  alias: boiler off http notify
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.boiler_east_1_25hp
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: shell_command.boiler_off
+  mode: single

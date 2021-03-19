@@ -1,0 +1,34 @@
+- id: '1616113042902'
+  name: 'Bedtime: reading'
+  entities:
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off:
+      min_mireds: 153
+      max_mireds: 370
+      brightness: 166
+      color_temp: 370
+      off_brightness:
+      friendly_name: Lamp
+      supported_features: 43
+      state: 'on'
+- id: '1616113086177'
+  name: 'Bedtime: sleep'
+  entities:
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off:
+      min_mireds: 153
+      max_mireds: 370
+      off_brightness:
+      friendly_name: Lamp
+      supported_features: 43
+      state: 'off'
+- id: '1616113185695'
+  name: 'Bedtime: jammies'
+  entities:
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off:
+      min_mireds: 153
+      max_mireds: 370
+      brightness: 196
+      color_temp: 294
+      off_brightness:
+      friendly_name: Lamp
+      supported_features: 43
+      state: 'on'

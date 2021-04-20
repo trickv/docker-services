@@ -34,7 +34,10 @@ switch:
   - platform: mochad
     devices:
       - address: c1
-        name: Basement lights
+        name: RF box outlet
+        comm_type: rf
+      - address: c2
+        name: Basement big lights
         comm_type: rf
       - address: c3
         name: HVAC temp box

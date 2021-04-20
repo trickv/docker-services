@@ -12,6 +12,7 @@ mobile_app:
 system_health:
 prometheus:
 history:
+my:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
@@ -32,6 +33,9 @@ mochad:
 switch:
   - platform: mochad
     devices:
+      - address: c1
+        name: Basement lights
+        comm_type: rf
       - address: c3
         name: HVAC temp box
         comm_type: rf
@@ -80,3 +84,9 @@ solaredge:
 shell_command:
   boiler_on: !secret boiler_on_notify_shell_command
   boiler_off: !secret boiler_off_notify_shell_command
+
+sensor:
+  - platform: comed_hourly_pricing
+    monitored_feeds:
+      - type: five_minute
+      - type: current_hour_average

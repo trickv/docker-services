@@ -2,4 +2,3 @@
 .storage/
 *.db
 .uuid
-blueprints/

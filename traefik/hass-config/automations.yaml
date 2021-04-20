@@ -12,7 +12,7 @@
 - id: turn off outdoor lights at 10pm
   alias: turn off outdoor lights at night
   trigger:
-  - at: '21:00:00'
+  - at: '21:01:05'
     platform: time
   condition: []
   action:
@@ -20,42 +20,11 @@
     data:
       entity_id:
       - switch.front_lights
+  - wait_template: 00:01:00
+  - service: switch.turn_off
+    target:
+      entity_id: switch.front_lights
   mode: single
-- id: tree on sunrise
-  alias: turn on christmas tree near sunrise
-  trigger:
-  - event: sunrise
-    platform: sun
-    offset: -00:30:00
-  condition: []
-  action:
-  - service: script.christmastreeon
-- id: tree off sunrise
-  alias: turn of christmas tree after sunrise
-  trigger:
-  - event: sunrise
-    platform: sun
-    offset: +02:00:00
-  condition: []
-  action:
-  - service: script.christmastreeon
-- id: tree on sunset
-  alias: turn on christmas tree near sunset
-  trigger:
-  - event: sunset
-    platform: sun
-    offset: -00:30:00
-  condition: []
-  action:
-  - service: script.christmastreeon
-- id: tree off evening
-  alias: turn off christmas tree late at night
-  trigger:
-  - at: '23:00:00'
-    platform: time
-  condition: []
-  action:
-  - service: script.christmastreeoff
 - id: space heater on
   alias: space heater on morning
   trigger:
@@ -304,11 +273,10 @@
   use_blueprint:
     path: homeassistant/motion_light.yaml
     input:
-      no_motion_wait: '120'
+      no_motion_wait: 120
       motion_entity: binary_sensor.ewelink_ms01_motion_ias_zone
       light_target:
-        device_id:
-        - 56d3bb99a887d39d5d9a37356de710e2
+        entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_level_light_color_on_off
 - id: '1615695696754'
   alias: Cycle DR Radiator Sensor Power
   description: ''
@@ -349,3 +317,42 @@
   action:
   - service: shell_command.boiler_off
   mode: single
+- id: '1616726294569'
+  alias: miner off!
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:59:00'
+  condition: []
+  action:
+  - service: script.christmastreeoff
+  mode: single
+- id: '1617891510203'
+  alias: Cycle HVAC temperature sensor box
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /23
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.hvac_temp_box
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.hvac_temp_box
+  mode: single
+- id: '1618778612817'
+  alias: motion basement big lights
+  description: ''
+  use_blueprint:
+    path: freakshock88/motion_illuminance_activated_entity.yaml
+    input:
+      motion_sensor: binary_sensor.ewelink_ms01_motion_ias_zone
+      target_entity: switch.basement_lights
+      no_motion_wait: '2'

@@ -1,29 +1,23 @@
 christmastreeon:
-  alias: Turn On Christmas Tree
+  alias: Turn On Miner
   description: Turn On Christmas Tree
   sequence:
-  - event: LOGBOOK_ENTRY
-    event_data:
-      name: Tree
-      message: it happened
   - alias: IFTTT SmartLife A On
     service: ifttt.trigger
     data:
       event: SmartLife_A_ON
       value1: ''
+  mode: single
 christmastreeoff:
-  alias: Turn Off Christmas Tree
+  alias: Turn Off Miner
   description: Turn Off Christmas Tree
   sequence:
-  - event: LOGBOOK_ENTRY
-    event_data:
-      name: Tree
-      message: it happened
   - alias: IFTTT SmartLife A Off
     service: ifttt.trigger
     data:
       event: SmartLife_A_OFF
       value1: ''
+  mode: single
 spaceheatertoggle:
   alias: Space Heater Toggle
   description: Toggles the on/off state of the space heater

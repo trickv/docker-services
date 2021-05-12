@@ -37,12 +37,27 @@ spaceheatertoggle:
     data:
       entity_id: switch.space_heater_relay
 boiler_spike_run:
-  alias: Boiler spike run
+  alias: Boiler spike run 15m
   sequence:
   - service: switch.turn_on
     data: {}
     entity_id: switch.boiler_east_1_25hp
   - delay: 0:15
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  mode: single
+boiler_spike_run_45m:
+  alias: Boiler spike run 45m
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+      milliseconds: 0
   - service: switch.turn_off
     data: {}
     entity_id: switch.boiler_east_1_25hp

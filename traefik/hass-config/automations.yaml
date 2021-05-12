@@ -20,10 +20,6 @@
     data:
       entity_id:
       - switch.front_lights
-  - wait_template: 00:01:00
-  - service: switch.turn_off
-    target:
-      entity_id: switch.front_lights
   mode: single
 - id: space heater on
   alias: space heater on morning
@@ -332,7 +328,7 @@
   description: ''
   trigger:
   - platform: time_pattern
-    hours: /23
+    hours: '4'
   condition: []
   action:
   - service: switch.turn_off
@@ -346,6 +342,14 @@
   - service: switch.turn_on
     target:
       entity_id: switch.hvac_temp_box
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.hvac_temp_box
   mode: single
 - id: '1618778612817'
   alias: motion basement big lights
@@ -354,5 +358,30 @@
     path: freakshock88/motion_illuminance_activated_entity.yaml
     input:
       motion_sensor: binary_sensor.ewelink_ms01_motion_ias_zone
-      target_entity: switch.basement_lights
       no_motion_wait: '2'
+      target_entity: switch.basement_big_lights
+- id: '1619149080175'
+  alias: turn off outdoor lights at night 2
+  description: Just in case.
+  trigger:
+  - at: '22:00:00'
+    platform: time
+  condition: []
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id:
+      - switch.front_lights
+  mode: single
+- id: '1620855756768'
+  alias: Switch test
+  description: ''
+  use_blueprint:
+    path: garykrige/zha-sonoff-zigbee-switch.yaml
+    input:
+      sonoff_button: 8ae72a8034c3c3a090b27b9d00d1ade0
+      toggle_action:
+      - service: notify.mobile_app_trickyplus
+        data:
+          title: single press button
+          message: Test

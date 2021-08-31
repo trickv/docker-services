@@ -89,7 +89,7 @@ climate:
     target_sensor: sensor.bedroom_temperature_2
     target_temp: 74
     min_cycle_duration:
-      minutes: 10
+      minutes: 1
 
 solaredge:
   api_key: R3QWABJRVG0V88WGDSQDI3X997W9IU8Q

@@ -42,6 +42,9 @@ switch:
       - address: c3
         name: HVAC temp box
         comm_type: rf
+      - address: c5
+        name: Dehumidifier
+        comm_type: rf
       - address: c7
         name: Office temp box
         comm_type: rf

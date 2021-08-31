@@ -82,6 +82,13 @@ climate:
     target_temp: 69
     min_cycle_duration:
       minutes: 1
+  - platform: generic_thermostat
+    name: BR Fan
+    heater: switch.ewelink_sa_003_zigbee_1545981f_on_off
+    target_sensor: sensor.bedroom_temperature_2
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 10
 
 solaredge:
   api_key: R3QWABJRVG0V88WGDSQDI3X997W9IU8Q

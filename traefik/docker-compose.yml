@@ -72,6 +72,22 @@ services:
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
 
+  nextcloud:
+    container_name: nextcloud
+    image: nextcloud:21.0.2-apache
+    volumes:
+      - /mnt/foo/nextcloud:/var/www/html
+    restart: always
+    environment:
+      - NEXTCLOUD_TRUSTED_DOMAIN=nextcloud.home.v9n.us"
+      - TRUSTED_PROXIES=172.16.0.0/12
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.home.v9n.us`)"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.tls.certresolver=le"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+
   unifi-poller:
     container_name: unifi-poller
     image: golift/unifi-poller

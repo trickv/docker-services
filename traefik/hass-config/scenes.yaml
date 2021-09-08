@@ -1,28 +1,45 @@
-- id: '1618452713560'
-  name: 'bedtime: lights out'
+- id: '1622245998610'
+  name: bedtime dim
   entities:
-    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off:
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off:
       min_mireds: 153
       max_mireds: 370
-      friendly_name: Lamp
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 5
+      color_temp: 370
+      off_brightness:
+      friendly_name: The Home Depot Ecosmart-ZBT-A19-CCT-Bulb a2242efe level, light_color,
+        on_off
       supported_features: 43
-      state: unavailable
-- id: '1618534635906'
+      state: 'on'
+- id: '1622246040229'
   name: bedtime reading
   entities:
-    light.cree_connected_a_19_60w_equivalent_442b0bfe_level_on_off:
-      brightness: 74
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off:
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 87
+      color_temp: 370
       off_brightness:
-      friendly_name: CREE                             Connected A-19 60W Equivalent    442b0bfe
-        level, on_off
-      supported_features: 41
+      friendly_name: The Home Depot Ecosmart-ZBT-A19-CCT-Bulb a2242efe level, light_color,
+        on_off
+      supported_features: 43
       state: 'on'
-- id: '1618534675680'
-  name: bedtime lights out 2
+- id: '1622246150071'
+  name: lights out
   entities:
-    light.cree_connected_a_19_60w_equivalent_442b0bfe_level_on_off:
+    light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off:
+      min_mireds: 153
+      max_mireds: 370
+      supported_color_modes:
+      - color_temp
       off_brightness:
-      friendly_name: CREE                             Connected A-19 60W Equivalent    442b0bfe
-        level, on_off
-      supported_features: 41
+      friendly_name: The Home Depot Ecosmart-ZBT-A19-CCT-Bulb a2242efe level, light_color,
+        on_off
+      supported_features: 43
       state: 'off'

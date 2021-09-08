@@ -131,7 +131,7 @@
     entity_id: switch.boiler_east_1_25hp
   mode: single
 - id: '1611635037918'
-  alias: hack thermostat top
+  alias: 'heat: hack thermostat top'
   description: ''
   trigger:
   - platform: numeric_state
@@ -146,7 +146,7 @@
     hvac_mode: 'off'
   mode: single
 - id: '1611635088318'
-  alias: hack thermostat bottom
+  alias: 'heat: hack thermostat bottom'
   description: ''
   trigger:
   - platform: numeric_state
@@ -385,3 +385,78 @@
         data:
           title: single press button
           message: Test
+- id: '1620940691453'
+  alias: Remind garage left open
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:00:00'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.garage_door
+    state: open
+  action:
+  - service: notify.mobile_app_trickyplus
+    data:
+      message: It's late. Don't forget to close it!
+      title: Garage door left open
+  mode: single
+- id: '1621976751649'
+  alias: 'cool night: hack thermostat top'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    above: '77'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: cool
+    target:
+      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+  - service: climate.set_temperature
+    target:
+      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    data:
+      temperature: 73
+  mode: single
+- id: '1621976988770'
+  alias: 'cool night: hack thermostat bottom'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    below: '73'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1626726821732'
+  alias: 'vacation: cycle light on'
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:00'
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+      device_id: 56d3bb99a887d39d5d9a37356de710e2
+  mode: single
+- id: '1626832942531'
+  alias: 'vacation: cycle light off'
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:00'
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      device_id: 56d3bb99a887d39d5d9a37356de710e2
+  mode: single

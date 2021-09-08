@@ -1,5 +1,5 @@
 christmastreeon:
-  alias: Turn On Miner
+  alias: Turn On ADSB (A)
   description: Turn On Christmas Tree
   sequence:
   - alias: IFTTT SmartLife A On
@@ -9,7 +9,7 @@ christmastreeon:
       value1: ''
   mode: single
 christmastreeoff:
-  alias: Turn Off Miner
+  alias: Turn Off ADSB (A)
   description: Turn Off Christmas Tree
   sequence:
   - alias: IFTTT SmartLife A Off

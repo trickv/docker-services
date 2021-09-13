@@ -93,19 +93,6 @@
     entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
     domain: light
   mode: single
-- id: '1611235873151'
-  alias: CJ red christmas lights nfc tag
-  description: ''
-  trigger:
-  - platform: tag
-    tag_id: 53aac03f-ad3d-4c9b-b199-5e96d623cdab
-  condition: []
-  action:
-  - type: toggle
-    device_id: 68cbfff1d40d9adcf09446f0a3990b4a
-    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
-    domain: switch
-  mode: single
 - id: '1611545414210'
   alias: boiler scheduled on
   description: ''
@@ -273,22 +260,6 @@
       motion_entity: binary_sensor.ewelink_ms01_motion_ias_zone
       light_target:
         entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_level_light_color_on_off
-- id: '1615695696754'
-  alias: Cycle DR Radiator Sensor Power
-  description: ''
-  trigger:
-  - platform: time_pattern
-    hours: /1
-  condition: []
-  action:
-  - service: switch.turn_on
-    data: {}
-    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
-  - delay: 0:45
-  - service: switch.turn_off
-    data: {}
-    entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
-  mode: single
 - id: '1616132884135'
   alias: boiler on http notify
   description: ''

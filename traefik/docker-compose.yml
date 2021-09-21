@@ -56,7 +56,7 @@ services:
   
   hass:
     container_name: hass
-    image: homeassistant/home-assistant:2021.8
+    image: homeassistant/home-assistant:2021.9
     volumes:
       - ./hass-config:/config
     devices:

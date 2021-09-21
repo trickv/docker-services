@@ -23,11 +23,10 @@
       supported_color_modes:
       - color_temp
       color_mode: color_temp
-      brightness: 87
+      brightness: 66
       color_temp: 370
       off_brightness:
-      friendly_name: The Home Depot Ecosmart-ZBT-A19-CCT-Bulb a2242efe level, light_color,
-        on_off
+      friendly_name: cj zamppp
       supported_features: 43
       state: 'on'
 - id: '1622246150071'

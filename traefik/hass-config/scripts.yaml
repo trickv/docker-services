@@ -62,3 +62,19 @@ boiler_spike_run_45m:
     data: {}
     entity_id: switch.boiler_east_1_25hp
   mode: single
+cj_lamp_down_a_bit:
+  sequence:
+  - device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    domain: light
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off
+    type: brightness_decrease
+  mode: single
+  alias: cj lamp down a bit
+cj_lamp_up_a_bit:
+  alias: cj lamp up a bit
+  sequence:
+  - device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    domain: light
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off
+    type: brightness_increase
+  mode: single

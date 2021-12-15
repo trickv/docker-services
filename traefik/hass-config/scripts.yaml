@@ -1,23 +1,3 @@
-christmastreeon:
-  alias: Turn On ADSB (A)
-  description: Turn On Christmas Tree
-  sequence:
-  - alias: IFTTT SmartLife A On
-    service: ifttt.trigger
-    data:
-      event: SmartLife_A_ON
-      value1: ''
-  mode: single
-christmastreeoff:
-  alias: Turn Off ADSB (A)
-  description: Turn Off Christmas Tree
-  sequence:
-  - alias: IFTTT SmartLife A Off
-    service: ifttt.trigger
-    data:
-      event: SmartLife_A_OFF
-      value1: ''
-  mode: single
 spaceheatertoggle:
   alias: Space Heater Toggle
   description: Toggles the on/off state of the space heater

@@ -69,8 +69,6 @@ switch:
     ports:
       17: Boiler West New Grundfos
       27: Boiler East 1/25hp
-ifttt:
-  key: bWDYaMaVYJf9_2PvfBqsnl
 
 climate:
   - platform: generic_thermostat

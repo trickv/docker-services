@@ -67,7 +67,7 @@ switch:
     host: thermostatpi.home.vanstaveren.us
     invert_logic: true
     ports:
-      17: Boiler West 1/12hp
+      17: Boiler West New Grundfos
       27: Boiler East 1/25hp
 ifttt:
   key: bWDYaMaVYJf9_2PvfBqsnl
@@ -78,6 +78,13 @@ climate:
     heater: switch.boiler_east_1_25hp
     target_sensor: sensor.e_temperature
     target_temp: 69
+    min_cycle_duration:
+      minutes: 1
+  - platform: generic_thermostat
+    name: Boiler West
+    heater: switch.boiler_west_new_grundfos
+    target_sensor: sensor.relay_hack_esp_746cdb
+    target_temp: 70
     min_cycle_duration:
       minutes: 1
 #  - platform: generic_thermostat

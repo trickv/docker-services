@@ -85,6 +85,7 @@ climate:
     target_temp: 70
     min_cycle_duration:
       minutes: 1
+    precision: 0.1
 #  - platform: generic_thermostat
 #    ac_mode: true
 #    name: BR Fan

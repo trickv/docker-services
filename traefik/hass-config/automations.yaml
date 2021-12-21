@@ -280,7 +280,7 @@
     path: freakshock88/motion_illuminance_activated_entity.yaml
     input:
       motion_sensor: binary_sensor.ewelink_ms01_motion_ias_zone
-      no_motion_wait: '2'
+      no_motion_wait: '5'
       target_entity: switch.basement_big_lights
 - id: '1619149080175'
   alias: turn off outdoor lights at night 2
@@ -413,7 +413,7 @@
   trigger:
   - platform: numeric_state
     entity_id: sensor.test3_esp8266_ultrasonic_sensor
-    above: '.2'
+    above: '.195'
     for:
       hours: 0
       minutes: 30
@@ -478,4 +478,23 @@
   - service: switch.turn_off
     target:
       entity_id: switch.socket
+  mode: single
+- id: '1639978625760'
+  alias: distribute humidity
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.my_weather_station_temp
+    below: '15'
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: ecobee.set_fan_min_on_time
+    data:
+      fan_min_on_time: 5
+      entity_id: climate.dining_room_2
   mode: single

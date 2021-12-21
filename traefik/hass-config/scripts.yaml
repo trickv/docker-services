@@ -58,3 +58,23 @@ cj_lamp_up_a_bit:
     entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off
     type: brightness_increase
   mode: single
+'1639976532409':
+  sequence:
+  - service: climate.set_fan_mode
+    target:
+      entity_id:
+      - climate.dining_room_2
+    data:
+      fan_mode: 'on'
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: climate.set_fan_mode
+    target:
+      entity_id: climate.dining_room_2
+    data:
+      fan_mode: auto
+  mode: single
+  alias: hvac fan 20m

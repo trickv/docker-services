@@ -78,6 +78,7 @@ climate:
     target_temp: 69
     min_cycle_duration:
       minutes: 1
+    precision: 0.1
   - platform: generic_thermostat
     name: Boiler West
     heater: switch.boiler_west_new_grundfos

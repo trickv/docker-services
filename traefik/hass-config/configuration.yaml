@@ -82,7 +82,7 @@ climate:
   - platform: generic_thermostat
     name: Boiler West
     heater: switch.boiler_west_new_grundfos
-    target_sensor: sensor.relay_hack_esp_746cdb
+    target_sensor: sensor.d_temperature
     target_temp: 68.5
     min_cycle_duration:
       minutes: 1
@@ -105,3 +105,9 @@ sensor:
     monitored_feeds:
       - type: five_minute
       - type: current_hour_average
+  - platform: template
+    sensors:
+      bedrooms_temp_difference:
+        friendly_name: "Difference between bedrooms"
+        unit_of_measurement: "F"
+        value_template: '{{ float(states("sensor.bedroom_temperature_2")) - float(states("sensor.dining_room_2_temperature")) }}'

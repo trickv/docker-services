@@ -82,7 +82,7 @@ climate:
   - platform: generic_thermostat
     name: Boiler West
     heater: switch.boiler_west_new_grundfos
-    target_sensor: sensor.d_temperature
+    target_sensor: sensor.relay_hack_esp_746cdb
     target_temp: 68.5
     min_cycle_duration:
       minutes: 1

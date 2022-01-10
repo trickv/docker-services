@@ -440,13 +440,18 @@
       entity_id: climate.boiler_east
     data:
       temperature: 67
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_west
+    data:
+      temperature: 67.5
   mode: single
 - id: '1637895613625'
-  alias: Boiler morning
+  alias: Boiler morning east
   description: ''
   trigger:
   - platform: time
-    at: 06:00
+    at: 05:00
   condition: []
   action:
   - service: climate.set_temperature
@@ -497,4 +502,18 @@
     data:
       fan_min_on_time: 5
       entity_id: climate.dining_room_2
+  mode: single
+- id: '1640868490121'
+  alias: Boiler morning west
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:30
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_west
+    data:
+      temperature: 68.5
   mode: single

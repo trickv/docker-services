@@ -53,11 +53,11 @@
     subtype: device_offline
   condition: []
   action:
-  - device_id: 60fa1647d371b49e0622f3cef510be1e
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
-    message: zigbee coord offline
-    title: zigbee coord offline
+    message: ZigBee coord offline
+    title: Check it yo
   mode: single
 - id: '1610686517820'
   alias: space heater on afternoon
@@ -161,11 +161,11 @@
     above: '190'
   condition: []
   action:
-  - device_id: d52a44b77c804db281802af791d8d3ef
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
-    message: boiler hot
-    title: boiker overheating
+    message: Boiler overheat
+    title: Boiler overheat
   mode: single
 - id: '1612029886139'
   alias: Cycle Boiler While Cool
@@ -193,11 +193,11 @@
     for: 0:10
   condition: []
   action:
-  - device_id: d52a44b77c804db281802af791d8d3ef
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
-    message: freeze possible
-    title: boiler freeze warning
+    message: Boiler freeze
+    title: Watch for boiler freeze
   mode: single
 - id: '1614231127176'
   alias: boiler cycle hourly
@@ -317,16 +317,17 @@
   description: ''
   trigger:
   - platform: time
-    at: '17:00:00'
+    at: '17:00'
   condition:
   - condition: state
     entity_id: binary_sensor.garage_door
     state: open
   action:
-  - service: notify.mobile_app_trickyplus
-    data:
-      message: It's late. Don't forget to close it!
-      title: Garage door left open
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Garage door left open
+    title: Close it yo
   mode: single
 - id: '1621976751649'
   alias: 'cool night: hack thermostat top'
@@ -401,11 +402,11 @@
     below: '10'
   condition: []
   action:
-  - device_id: 60fa1647d371b49e0622f3cef510be1e
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
-    title: low battery
     message: Dormi phone low battery
+    title: Dormi
   mode: single
 - id: '1637208622350'
   alias: humidifier low
@@ -421,11 +422,11 @@
       milliseconds: 0
   condition: []
   action:
-  - device_id: 60fa1647d371b49e0622f3cef510be1e
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
-    title: humidifier low
-    message: humidifier low
+    message: Humidifier low
+    title: Fill it up
   mode: single
 - id: '1637895578473'
   alias: Boiler night mode

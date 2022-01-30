@@ -280,8 +280,8 @@
     path: freakshock88/motion_illuminance_activated_entity.yaml
     input:
       motion_sensor: binary_sensor.ewelink_ms01_motion_ias_zone
-      no_motion_wait: '5'
-      target_entity: switch.basement_big_lights
+      no_motion_wait: input_number.basement_big_lights_timeout
+      target_entity: switch.ewelink_sa_003_zigbee_1545981f_on_off
 - id: '1619149080175'
   alias: turn off outdoor lights at night 2
   description: Just in case.

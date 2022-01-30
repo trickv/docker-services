@@ -51,14 +51,8 @@ switch:
       - address: c5
         name: Dehumidifier
         comm_type: rf
-      - address: c7
-        name: Office temp box
-        comm_type: rf
       - address: c8
         name: Garage Lights
-        comm_type: rf
-      - address: c10
-        name: Front Lights
         comm_type: rf
   - platform: remote_rpi_gpio
     host: jimmy.home.vanstaveren.us

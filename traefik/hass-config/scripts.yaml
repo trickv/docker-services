@@ -78,3 +78,21 @@ cj_lamp_up_a_bit:
       fan_mode: auto
   mode: single
   alias: hvac fan 20m
+cj_lamp_down_a_tiny_bit:
+  alias: CJ lamp down a tiny bit
+  sequence:
+  - service: light.turn_on
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    data:
+      brightness_step_pct: -5
+  mode: single
+cj_lamp_up_a_tiny_bit:
+  alias: CJ lamp up a tiny bit
+  sequence:
+  - service: light.turn_on
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    data:
+      brightness_step_pct: 5
+  mode: single

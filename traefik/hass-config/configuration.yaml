@@ -115,3 +115,12 @@ sensor:
         friendly_name: "Combined Solar.Forecast Tomorrow"
         unit_of_measurement: "kWh"
         value_template: '{{ float(states("sensor.forecast_solar_south_energy_production_tomorrow")) + float(states("sensor.forecast_solar_west_energy_production_tomorrow")) + float(states("sensor.forecast_solar_east_energy_production_tomorrow")) }}'
+
+template:
+  - sensor:
+      - name: "Grid Consumption Today Derived"
+        unit_of_measurement: "Wh"
+        state: >
+          {{ float(states("sensor.total_daily_energy")) - float(states("sensor.solaredge_energy_today")) }}
+        device_class: energy
+        state_class: total

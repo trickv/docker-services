@@ -141,8 +141,12 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.boiler_hot_supply
-    above: '190'
+    above: '175'
+    entity_id: sensor.boiler_hot_supply_2
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
   condition: []
   action:
   - device_id: ce85b610490d6cfb8bb295931ab62e7c
@@ -172,9 +176,9 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.boiler_cool_return
-    below: '38'
     for: 0:10
+    entity_id: sensor.boiler_cool_return_west_2
+    below: '50'
   condition: []
   action:
   - device_id: ce85b610490d6cfb8bb295931ab62e7c
@@ -213,6 +217,10 @@
     entity_id: switch.boiler_east_1_25hp
     from: 'off'
     to: 'on'
+  - platform: state
+    from: 'off'
+    to: 'on'
+    entity_id: switch.boiler_west_new_grundfos
   condition: []
   action:
   - service: shell_command.boiler_on
@@ -225,6 +233,10 @@
     entity_id: switch.boiler_east_1_25hp
     from: 'on'
     to: 'off'
+  - platform: state
+    from: 'on'
+    to: 'off'
+    entity_id: switch.boiler_west_new_grundfos
   condition: []
   action:
   - service: shell_command.boiler_off

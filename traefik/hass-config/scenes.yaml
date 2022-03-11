@@ -23,8 +23,18 @@
       supported_color_modes:
       - color_temp
       color_mode: color_temp
-      brightness: 66
+      brightness: 51
       color_temp: 370
+      hs_color:
+      - 28.391
+      - 65.659
+      rgb_color:
+      - 255
+      - 166
+      - 87
+      xy_color:
+      - 0.526
+      - 0.387
       off_brightness:
       friendly_name: cj zamppp
       supported_features: 43

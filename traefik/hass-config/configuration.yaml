@@ -1,20 +1,20 @@
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
-#default_config:
-frontend:
-sun:
-timer:
-updater:
-person:
-logbook:
-config:
-mobile_app:
-system_health:
+default_config:
+#frontend:
+#sun:
+#timer:
+#updater:
+#person:
+#logbook:
+#config:
+#mobile_app:
+#system_health:
 prometheus:
-history:
-my:
-energy:
-input_number:
+#history:
+#my:
+#energy:
+#input_number:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:

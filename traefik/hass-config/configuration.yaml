@@ -24,6 +24,10 @@ http:
   trusted_proxies:
     - 127.0.0.1
 
+homeassistant:
+  allowlist_external_dirs:
+    - "/config/tmp"
+
 # Text to speech
 tts:
   - platform: google_translate

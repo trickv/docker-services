@@ -1,8 +1,7 @@
 
 
 docker run -d \
-    --rm \
-    -it \
+    --restart=unless-stopped \
     --name mosquitto \
     -p 1883:1883 \
     -v /home/trick/docker-services/mqtt:/mosquitto \

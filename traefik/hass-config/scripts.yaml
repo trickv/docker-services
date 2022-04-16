@@ -96,3 +96,17 @@ cj_lamp_up_a_tiny_bit:
     data:
       brightness_step_pct: 5
   mode: single
+baby_br_volume_down:
+  sequence:
+  - service: media_player.volume_down
+    target:
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+  mode: single
+  alias: baby br volume down
+baby_br_volume_up:
+  alias: baby br volume up
+  sequence:
+  - service: media_player.volume_up
+    target:
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+  mode: single

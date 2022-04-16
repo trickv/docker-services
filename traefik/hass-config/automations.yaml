@@ -269,20 +269,22 @@
       - switch.ewelink_sa_003_zigbee_on_off
   mode: single
 - id: '1620855756768'
-  alias: Porch on-off button
+  alias: garage light on-off button
   description: ''
   use_blueprint:
     path: garykrige/zha-sonoff-zigbee-switch.yaml
     input:
       sonoff_button: 8ae72a8034c3c3a090b27b9d00d1ade0
       toggle_action:
-      - service: light.toggle
+      - service: switch.toggle
         target:
-          device_id: a266e7d8a696d21dea8fdffe2a5fe567
+          entity_id:
+          - switch.tasmota2
       off_action:
       - service: switch.toggle
         target:
-          entity_id: switch.ewelink_sa_003_zigbee_1545981f_on_off
+          entity_id:
+          - switch.tasmota
 - id: '1620940691453'
   alias: Remind garage left open
   description: ''
@@ -527,4 +529,89 @@
       device_id: 12a483a80ad8771d1440f967066472ff
     data:
       filename: /config/tmp/snap-{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
+  mode: single
+- id: '1647089602211'
+  alias: 'Boiler add water reminder '
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_hot_supply
+    below: '75'
+    for:
+      hours: 2
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Add water to boiler
+    title: Boiler is cool
+  mode: single
+- id: '1648432698587'
+  alias: 'gardener auto water '
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.wet
+    below: '50'
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.valve
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: switch.turn_off
+    target:
+      entity_id: switch.valve
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  mode: single
+- id: '1648773105964'
+  alias: desk monitor off 1
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:30'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+  mode: single
+- id: '1648773135933'
+  alias: desk monitor off 2
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:30'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+  mode: single
+- id: '1648773174709'
+  alias: desk monitor on
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:25
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
   mode: single

@@ -95,3 +95,20 @@ services:
       - ./unifi-poller/unifi-poller.conf:/config/unifi-poller.conf
     restart: always
     network_mode: host
+
+  octoprint:
+    image: octoprint/octoprint
+    restart: unless-stopped
+    ports:
+      - 8986:80
+    devices:
+      - /dev/ttyUSB1:/dev/ttyUSB1
+    volumes:
+     - octoprint:/octoprint
+    # uncomment the lines below to ensure camera streaming is enabled when
+    # you add a video device
+    #environment:
+    #  - ENABLE_MJPG_STREAMER=true
+
+volumes:
+  octoprint:

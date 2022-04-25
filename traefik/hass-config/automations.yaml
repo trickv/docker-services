@@ -290,11 +290,11 @@
   description: ''
   trigger:
   - platform: time
-    at: '17:00'
+    at: '20:00:00'
   condition:
   - condition: state
-    entity_id: binary_sensor.garage_door
-    state: open
+    entity_id: sensor.esp746cdb_garage_status
+    state: Door open
   action:
   - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
@@ -609,9 +609,26 @@
   trigger:
   - platform: time
     at: 08:25
-  condition: []
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
   action:
   - service: switch.turn_on
     target:
       entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+    data: {}
   mode: single
+- id: '1650160023824'
+  alias: 'Daily backup '
+  description: ''
+  use_blueprint:
+    path: vorion/create-automated-backups-every-day.yaml
+    input:
+      trigger_time: 02:00:00
+      send_notification: true
+      notify_device: ce85b610490d6cfb8bb295931ab62e7c

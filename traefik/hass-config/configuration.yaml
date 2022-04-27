@@ -106,6 +106,16 @@ shell_command:
   boiler_off: !secret boiler_off_notify_shell_command
 
 sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
   - platform: comed_hourly_pricing
     monitored_feeds:
       - type: five_minute

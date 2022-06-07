@@ -100,6 +100,15 @@ climate:
 #    target_temp: 74
 #    min_cycle_duration:
 #      minutes: 1
+  - platform: generic_thermostat
+    name: BR Fan
+    ac_mode: true
+    heater: switch.jeeob_socket # best name ever
+    target_sensor: sensor.bedroom_temperature_2
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+    precision: 0.1
 
 shell_command:
   boiler_on: !secret boiler_on_notify_shell_command

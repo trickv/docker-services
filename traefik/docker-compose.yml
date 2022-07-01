@@ -25,3 +25,19 @@ services:
       - "7082:7082"
     volumes:
       - /root/docker/traefik/conf:/conf
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8077:80
+    environment:
+      WORDPRESS_DB_HOST: 172.16.12.2
+      WORDPRESS_DB_USER: aircaretech_wp
+      WORDPRESS_DB_PASSWORD: ncgdvUaSLc6eU3cmBmd5
+      WORDPRESS_DB_NAME: aircaretech_wordpress_2
+    volumes:
+      - wordpress:/var/www/html
+
+volumes:
+  wordpress:

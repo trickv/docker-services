@@ -1,0 +1,15 @@
+[http]
+  [http.routers]
+    [http.routers.aircaretech]
+      entryPoints = ["websecure"]
+      rule = "Host(`aircaretech.vanstaveren.us`)"
+      service = "aircaretech"
+      [http.routers.aircaretech.tls]
+        certResolver = "le"
+        [[http.routers.aircaretech.tls.domains]]
+          main = "aircaretech.vanstaveren.us"
+    [http.routers.aircaretech_http]
+      entryPoints = ["web"]
+      rule = "Host(`aircaretech.vanstaveren.us`)"
+      middlewares = ["redirectscheme"]
+      service = "aircaretech"

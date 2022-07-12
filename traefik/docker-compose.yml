@@ -109,3 +109,19 @@ services:
       - "traefik.http.services.hello.loadbalancer.server.port=80"
       - "traefik.http.routers.hello.middlewares=hellomiddleware"
       - "traefik.http.middlewares.hellomiddleware.basicauth.users=hello:$$apr1$$eR7AzTiF$$vA358rJ0RC0y8qYtAmETC0"
+
+  tcpproxyhello:
+    container_name: tcpproxyhello
+    image: amaysim/docker-tcp-proxy
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.21.0.4
+      - REMOTE_PORT=80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tcpproxyhello.rule=Host(`tcpproxyhello.home.v9n.us`)"
+      - "traefik.http.routers.tcpproxyhello.entrypoints=websecure"
+      - "traefik.http.routers.tcpproxyhello.tls.certresolver=le"
+      - "traefik.http.services.tcpproxyhello.loadbalancer.server.port=80"
+      - "traefik.http.routers.hello.middlewares=tcpproxyhellomiddleware"
+      - "traefik.http.middlewares.tcpproxyhellomiddleware.basicauth.users=hello:$$apr1$$eR7AzTiF$$vA358rJ0RC0y8qYtAmETC0"

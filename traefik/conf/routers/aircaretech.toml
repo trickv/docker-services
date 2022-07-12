@@ -2,14 +2,14 @@
   [http.routers]
     [http.routers.aircaretech]
       entryPoints = ["websecure"]
-      rule = "Host(`aircaretech.vanstaveren.us`)"
+      rule = "Host(`aircaretech.vanstaveren.us`) || Host(`aircaretechnologies.homes`) || Host(`www.aircaretechnologies.homes`)"
       service = "aircaretech"
       [http.routers.aircaretech.tls]
         certResolver = "le"
         [[http.routers.aircaretech.tls.domains]]
-          main = "aircaretech.vanstaveren.us"
+          main = "aircaretechnologies.homes"
     [http.routers.aircaretech_http]
       entryPoints = ["web"]
-      rule = "Host(`aircaretech.vanstaveren.us`)"
+      rule = "Host(`aircaretech.vanstaveren.us`) || Host(`aircaretechnologies.homes`) || Host(`www.aircaretechnologies.homes`)"
       middlewares = ["redirectscheme"]
       service = "aircaretech"

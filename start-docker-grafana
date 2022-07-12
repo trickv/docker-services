@@ -1,5 +1,5 @@
 version=6.6.1 # released 2020-02-06
 
 docker run -d --name=grafana --restart unless-stopped -v grafana-storage:/var/lib/grafana -p 172.16.12.2:3000:3000 \
-    -e "GF_INSTALL_PLUGINS=grafana-piechart-panel" \
+    -e "GF_INSTALL_PLUGINS=grafana-piechart-panel,flant-statusmap-panel" \
     grafana/grafana:$version

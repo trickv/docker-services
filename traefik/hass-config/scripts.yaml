@@ -82,19 +82,19 @@ cj_lamp_down_a_tiny_bit:
   alias: CJ lamp down a tiny bit
   sequence:
   - service: light.turn_on
-    target:
-      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
     data:
       brightness_step_pct: -5
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
   mode: single
 cj_lamp_up_a_tiny_bit:
   alias: CJ lamp up a tiny bit
   sequence:
   - service: light.turn_on
-    target:
-      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
     data:
       brightness_step_pct: 5
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
   mode: single
 baby_br_volume_down:
   sequence:
@@ -109,4 +109,21 @@ baby_br_volume_up:
   - service: media_player.volume_up
     target:
       device_id: 169e68ffc3e7217abaf8fc9a594f8857
+  mode: single
+gardener_water_for_30m:
+  alias: Gardener water for 30m
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.valve
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.valve
   mode: single

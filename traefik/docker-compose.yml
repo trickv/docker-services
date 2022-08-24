@@ -39,5 +39,29 @@ services:
     volumes:
       - wordpress:/var/www/html
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.36.0
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    expose:
+      - 8080
+    ports:
+      - "8005:8080"
+    networks:
+      - monitoring
+
+
 volumes:
   wordpress:
+
+networks:
+  monitoring:
+    driver: bridge

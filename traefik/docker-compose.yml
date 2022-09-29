@@ -161,6 +161,15 @@ services:
     networks:
       - monitoring
 
+  tftp_for_erlite_backup:
+    image: jumanjiman/tftp-hpa
+    ports:
+      - "69:69/udp"
+    volumes:
+      - /home/trick/tftp/erlite-backups:/backups
+    entrypoint: ['in.tftpd', '-L', '-v', '-v', '-v', '--create', '--permissive', '-u', 'tftp', "-m", "/tftpboot/mapfile", '/backups']
+
+
 networks:
   monitoring:
     driver: bridge

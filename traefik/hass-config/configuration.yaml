@@ -37,27 +37,8 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-mochad:
-  host: mash.home.vanstaveren.us
 
 switch:
-  - platform: mochad
-    devices:
-      - address: c1
-        name: RF box outlet
-        comm_type: rf
-      - address: c2
-        name: Basement big lights
-        comm_type: rf
-      - address: c3
-        name: HVAC temp box
-        comm_type: rf
-      - address: c5
-        name: Dehumidifier
-        comm_type: rf
-      - address: c8
-        name: Garage Lights
-        comm_type: rf
   - platform: remote_rpi_gpio
     host: jimmy.home.vanstaveren.us
     invert_logic: true

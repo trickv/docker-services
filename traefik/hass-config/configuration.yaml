@@ -85,7 +85,17 @@ climate:
     name: BR Fan
     ac_mode: true
     heater: switch.jeeob_socket # best name ever
-    target_sensor: sensor.bedroom_temperature_2
+    # target_sensor: sensor.bedroom_temperature_2 # noisy
+    target_sensor: sensor.f_temperature
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+    precision: 0.1
+  - platform: generic_thermostat
+    name: CJ Fan
+    ac_mode: true
+    heater: switch.jeeoa_socket
+    target_sensor: sensor.dining_room_2_temperature
     target_temp: 74
     min_cycle_duration:
       minutes: 1

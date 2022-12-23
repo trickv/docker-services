@@ -72,12 +72,57 @@ shell_command:
   boiler_off: !secret boiler_off_notify_shell_command
 
 sensor:
+  - platform: history_stats
+    name: Boiler East ON Today
+    entity_id: switch.east
+    state: "on"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler West ON Today
+    entity_id: switch.west
+    state: "on"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler East ON Today Ratio
+    entity_id: switch.east
+    state: "on"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler West ON Today Ratio
+    entity_id: switch.west
+    state: "on"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Forced Air ON Today Time
+    entity_id: sensor.forced_air_action
+    state: "heating"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Forced Air ON Today Ratio
+    entity_id: sensor.forced_air_action
+    state: "heating"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
   - platform: comed_hourly_pricing
     monitored_feeds:
       - type: five_minute
       - type: current_hour_average
   - platform: template
     sensors:
+      forced_air_action:
+        friendly_name: "Forced Air Action"
+        value_template: "{{ state_attr('climate.dining_room_2', 'hvac_action') }}"
       bedrooms_temp_difference:
         friendly_name: "Difference between bedrooms"
         unit_of_measurement: "F"

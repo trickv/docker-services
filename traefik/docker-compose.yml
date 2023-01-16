@@ -74,9 +74,11 @@ services:
 
   nextcloud:
     container_name: nextcloud
-    image: nextcloud:21.0.2-apache
+    image: nextcloud:21.0.9-apache
     volumes:
       - /mnt/foo/nextcloud:/var/www/html
+      - /mnt/pictures:/mnt/pictures
+    mem_limit: 1500m
     restart: always
     environment:
       - NEXTCLOUD_TRUSTED_DOMAIN=nextcloud.home.v9n.us"

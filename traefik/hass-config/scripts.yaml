@@ -1,47 +1,3 @@
-spaceheatertoggle:
-  alias: Space Heater Toggle
-  description: Toggles the on/off state of the space heater
-  sequence:
-  - event: LOGBOOK_ENTRY
-    event_data:
-      name: Space Heater Toggle
-      message: it happened
-  - alias: GPIO on
-    service: switch.turn_on
-    data:
-      entity_id: switch.space_heater_relay
-  - delay:
-      milliseconds: 100
-  - alias: GPIO off
-    service: switch.turn_off
-    data:
-      entity_id: switch.space_heater_relay
-boiler_spike_run:
-  alias: Boiler spike run 15m
-  sequence:
-  - service: switch.turn_on
-    data: {}
-    entity_id: switch.boiler_east_1_25hp
-  - delay: 0:15
-  - service: switch.turn_off
-    data: {}
-    entity_id: switch.boiler_east_1_25hp
-  mode: single
-boiler_spike_run_45m:
-  alias: Boiler spike run 45m
-  sequence:
-  - service: switch.turn_on
-    data: {}
-    entity_id: switch.boiler_east_1_25hp
-  - delay:
-      hours: 0
-      minutes: 45
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    entity_id: switch.boiler_east_1_25hp
-  mode: single
 cj_lamp_down_a_bit:
   sequence:
   - device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
@@ -111,7 +67,7 @@ baby_br_volume_up:
       device_id: 169e68ffc3e7217abaf8fc9a594f8857
   mode: single
 gardener_water_for_30m:
-  alias: Gardener water for 30m
+  alias: Gardener (IC) water for 30m
   sequence:
   - service: switch.turn_on
     data: {}
@@ -127,3 +83,124 @@ gardener_water_for_30m:
     target:
       entity_id: switch.valve
   mode: single
+station_1_phoning_home:
+  alias: Station 1 phoning home
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station receiving beacon (1)
+  mode: single
+station_2_online:
+  alias: Station 2 online
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station online (2)
+  mode: single
+gardener_water_for_30m_2:
+  alias: Gardener (socket) daily water
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.socket_2
+  - delay:
+      hours: 1
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.socket_2
+  mode: single
+stop_and_reset_office_sonos_for_nap:
+  alias: Stop and reset office Sonos for nap
+  sequence:
+  - if:
+    - condition: device
+      device_id: 12fe0a0467268f1ddd5067be89d98466
+      domain: media_player
+      entity_id: media_player.office
+      type: is_playing
+    then:
+    - stop: Media is playing so don't annoy the operator.
+    else: []
+  - service: media_player.media_stop
+    data: {}
+    target:
+      entity_id: media_player.office
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.13
+    target:
+      entity_id: media_player.office
+  mode: single
+  icon: mdi:chat-sleep
+stop_and_reset_kids_br_sonos_for_nap:
+  alias: Stop and reset kids br Sonos for nap
+  sequence:
+  - if:
+    - condition: device
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+      domain: media_player
+      entity_id: media_player.baby_br
+      type: is_playing
+    then:
+    - stop: Media is playing so don't annoy the operator.
+    else: []
+  - service: media_player.media_stop
+    data: {}
+    target:
+      entity_id: media_player.baby_br
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.07
+    target:
+      entity_id: media_player.baby_br
+  mode: single
+  icon: mdi:chat-sleep
+boiler_gone_for_the_day:
+  alias: Boiler - gone for the day
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 62
+    target:
+      entity_id:
+      - climate.east_esp
+      - climate.west_esp
+  - wait_for_trigger:
+    - platform: time
+      at: '17:00:00'
+  - service: climate.set_temperature
+    data:
+      temperature: 68.5
+    target:
+      entity_id:
+      - climate.east_esp
+  - service: climate.set_temperature
+    data:
+      temperature: 69
+    target:
+      entity_id: climate.west_esp
+  mode: single
+  icon: mdi:fire-circle
+octopi_clean_shutdown:
+  alias: OctoPi clean shutdown
+  sequence:
+  - service: shell_command.octopi_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_on_off
+  mode: single
+  icon: mdi:power

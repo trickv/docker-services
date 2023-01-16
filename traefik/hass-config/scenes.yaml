@@ -52,3 +52,165 @@
         on_off
       supported_features: 43
       state: 'off'
+- id: '1670972974862'
+  name: Christmas 1
+  entities:
+    light.front_porch_north_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Front porch north Light
+      supported_features: 40
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      state: 'on'
+    light.ledvance_a19_g2_rgbw_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 135.059
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 64
+      xy_color:
+      - 0.169986
+      - 0.702998
+      off_with_transition: false
+      off_brightness:
+      friendly_name: front porch light Light
+      supported_features: 40
+      state: 'on'
+  metadata: {}
+- id: '1670973037859'
+  name: Christmas 2
+  entities:
+    light.front_porch_north_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Front porch north Light
+      supported_features: 40
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 135.059
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 64
+      xy_color:
+      - 0.17
+      - 0.703
+      state: 'on'
+    light.ledvance_a19_g2_rgbw_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 0
+      - 100
+      rgb_color:
+      - 255
+      - 0
+      - 0
+      xy_color:
+      - 0.701
+      - 0.299
+      off_with_transition: false
+      off_brightness:
+      friendly_name: front porch light Light
+      supported_features: 40
+      state: 'on'
+  metadata: {}
+- id: '1670974402256'
+  name: CJ
+  entities:
+    light.front_porch_north_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 255.422
+      - 97.647
+      rgb_color:
+      - 70
+      - 6
+      - 255
+      xy_color:
+      - 0.157
+      - 0.05
+      off_with_transition: false
+      off_brightness:
+      friendly_name: Front porch north Light
+      supported_features: 40
+      state: 'on'
+    light.ledvance_a19_g2_rgbw_light:
+      min_color_temp_kelvin: 1801
+      max_color_temp_kelvin: 7042
+      min_mireds: 142
+      max_mireds: 555
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 254
+      hs_color:
+      - 299.754
+      - 95.686
+      rgb_color:
+      - 254
+      - 11
+      - 255
+      xy_color:
+      - 0.385
+      - 0.155
+      off_with_transition: false
+      off_brightness:
+      friendly_name: front porch light Light
+      supported_features: 40
+      state: 'on'
+  metadata: {}

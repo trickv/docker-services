@@ -74,7 +74,7 @@ services:
 
   nextcloud:
     container_name: nextcloud
-    image: nextcloud:23.0.12-apache
+    image: nextcloud:24.0.8-apache
     volumes:
       - /mnt/foo/nextcloud:/var/www/html
       - /mnt/pictures:/mnt/pictures

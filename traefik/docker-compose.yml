@@ -173,6 +173,42 @@ services:
     entrypoint: ['in.tftpd', '-L', '-v', '-v', '-v', '--create', '--permissive', '-u', 'tftp', "-m", "/tftpboot/mapfile", '/backups']
 
 
+  whoami:
+    image: containous/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=le"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.home.v9n.us`)"
+      - "traefik.http.routers.whoami.middlewares=traefik-forward-auth"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+  traefik-forward-auth:
+    image: thomseddon/traefik-forward-auth:2
+    environment:
+      - DEFAULT_PROVIDER=generic-oauth
+      - PROVIDERS_GENERIC_OAUTH_AUTH_URL=https://github.com/login/oauth/authorize
+      - PROVIDERS_GENERIC_OAUTH_TOKEN_URL=https://github.com/login/oauth/access_token
+      - PROVIDERS_GENERIC_OAUTH_USER_URL=https://api.github.com/user
+      - PROVIDERS_GENERIC_OAUTH_CLIENT_ID=4126728948d59d9ffe20
+      - PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET=79b0b9de4e48494310436b23d0c97417dc26532d # FIXME
+      # INSECURE_COOKIE is required if not using a https entrypoint
+      #- INSECURE_COOKIE=true
+      - COOKIE_DOMAIN=auth.home.v9n.us
+      - AUTH_HOST=auth.home.v9n.us
+      - LOG_LEVEL=trace
+      - LOG_FORMAT=json
+      - SECRET=2602060ac22d3babdc0a99c23b032101 # FIXME
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-forward-auth.entrypoints=websecure"
+      - "traefik.http.routers.traefik-forward-auth.tls.certresolver=le"
+      #- "traefik.http.services.traefik-forward-auth.loadbalancer.server.port=80"
+      - "traefik.http.routers.traefik-forward-auth.rule=Host(`auth.home.v9n.us`)"
+      - "traefik.http.middlewares.traefik-forward-auth.forwardauth.address=http://traefik-forward-auth:4181"
+      - "traefik.http.middlewares.traefik-forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.services.traefik-forward-auth.loadbalancer.server.port=4181"
+
 networks:
   monitoring:
     driver: bridge

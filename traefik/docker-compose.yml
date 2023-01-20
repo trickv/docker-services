@@ -224,6 +224,29 @@ services:
       - "traefik.http.middlewares.traefik-forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
       - "traefik.http.services.traefik-forward-auth.loadbalancer.server.port=4181"
 
+  github-auth:
+    container_name: github-auth
+    image: thomseddon/traefik-forward-auth:2
+    environment:
+      - DEFAULT_PROVIDER=generic-oauth
+      - PROVIDERS_GENERIC_OAUTH_AUTH_URL=https://github.com/login/oauth/authorize
+      - PROVIDERS_GENERIC_OAUTH_TOKEN_URL=https://github.com/login/oauth/access_token
+      - PROVIDERS_GENERIC_OAUTH_USER_URL=https://api.github.com/user
+      - PROVIDERS_GENERIC_OAUTH_CLIENT_ID=4126728948d59d9ffe20
+      - COOKIE_DOMAIN=home.v9n.us
+      - AUTH_HOST=auth.home.v9n.us
+      - LOG_LEVEL=trace
+      - LOG_FORMAT=json
+      - DOMAIN=vanstaveren.us
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.github-auth.address=http://github-auth:4181"
+      - "traefik.http.middlewares.github-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.services.github-auth.loadbalancer.server.port=4181"
+      - "traefik.http.routers.github-auth.entrypoints=websecure"
+      - "traefik.http.routers.github-auth.tls.certresolver=le"
+      - "traefik.http.routers.github-auth.rule=Host(`auth.home.v9n.us`)"
+
 networks:
   monitoring:
     driver: bridge

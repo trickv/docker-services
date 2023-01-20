@@ -211,12 +211,10 @@ services:
       - PROVIDERS_GENERIC_OAUTH_TOKEN_URL=https://github.com/login/oauth/access_token
       - PROVIDERS_GENERIC_OAUTH_USER_URL=https://api.github.com/user
       - PROVIDERS_GENERIC_OAUTH_CLIENT_ID=09eeb1649470dba8e72b
-      - PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET=41e51fe612cc2b9668c4df554b3797b72e638700 # FIXME
       # INSECURE_COOKIE is required if not using a https entrypoint
       #- INSECURE_COOKIE=true
       - LOG_LEVEL=trace
       - LOG_FORMAT=json
-      - SECRET=3602060ac22d3babdc0a99c23b032101 # FIXME
       - DOMAIN=vanstaveren.us
     labels:
       - "traefik.enable=true"

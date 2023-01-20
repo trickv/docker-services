@@ -12,7 +12,7 @@ services:
       - "--entryPoints.websecure.address=:443"
       - "--entryPoints.web.address=:80"
       - "--certificatesResolvers.le.acme.email=trick@vanstaveren.us"
-      - "--certificatesResolvers.le.acme.storage=/acme.json"
+      - "--certificatesResolvers.le.acme.storage=/acme/acme.json"
       #- "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.le.acme.tlsChallenge=true"
       - "--metrics.prometheus.entryPoint=metrics"
@@ -27,6 +27,7 @@ services:
       - "7082:7082"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./acme/:/acme/"
     network_mode: host
   
   tcpproxy_traefik_metrics:

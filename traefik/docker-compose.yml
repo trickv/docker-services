@@ -2,6 +2,7 @@ version: '2'
 
 services:
   reverse-proxy:
+    container_name: traefik
     image: traefik:v2.9.6
     restart: unless-stopped
     command:
@@ -204,6 +205,7 @@ services:
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
 
   traefik-forward-auth:
+    container_name: traefik-forward-auth
     image: thomseddon/traefik-forward-auth:2
     environment:
       - DEFAULT_PROVIDER=generic-oauth

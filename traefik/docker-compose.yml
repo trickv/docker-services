@@ -137,7 +137,7 @@ services:
     image: amaysim/docker-tcp-proxy
     environment:
       - CONTAINER_PORT=80
-      - REMOTE_HOST=172.21.0.5
+      - REMOTE_HOST=hello
       - REMOTE_PORT=80
     labels:
       - "traefik.enable=true"

@@ -17,6 +17,7 @@ services:
       - "--metrics.prometheus.entryPoint=metrics"
       - "--metrics.prometheus=true"
       - "--entryPoints.metrics.address=:7082"
+      - "--accesslog=true"
 
     ports:
       - "443:443"

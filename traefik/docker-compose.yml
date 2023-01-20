@@ -241,7 +241,7 @@ services:
       - DOMAIN=vanstaveren.us
     labels:
       - "traefik.enable=true"
-      - "traefik.http.middlewares.github-auth.address=http://github-auth:4181"
+      - "traefik.http.middlewares.github-auth.forwardauth.address=http://github-auth:4181"
       - "traefik.http.middlewares.github-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
       - "traefik.http.services.github-auth.loadbalancer.server.port=4181"
       - "traefik.http.routers.github-auth.entrypoints=websecure"

@@ -130,7 +130,7 @@ services:
       - "traefik.http.routers.hello.tls.certresolver=le"
       - "traefik.http.services.hello.loadbalancer.server.port=80"
       - "traefik.http.routers.hello.middlewares=hellomiddleware"
-      - "traefik.http.middlewares.hellomiddleware.basicauth.users=hello:$$apr1$$eR7AzTiF$$vA358rJ0RC0y8qYtAmETC0"
+      - "traefik.http.middlewares.hellomiddleware.basicauth.users=hello:$$2y$$05$$BM8HLQuXwv7huaKOHehfu.AfAt4l8dxPPHnhdFlKJ7yDGx9uucHU2" # hello:hello
 
   tcpproxyhello:
     container_name: tcpproxyhello

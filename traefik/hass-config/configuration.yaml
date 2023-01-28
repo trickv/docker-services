@@ -22,7 +22,10 @@ prometheus:
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - 127.0.0.1
+    - 172.16.17.0/24
+    - 172.21.0.0/16
+    - 173.17.0.0/16
+    - 127.0.0.0/16
 
 homeassistant:
   allowlist_external_dirs:

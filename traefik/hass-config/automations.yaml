@@ -868,19 +868,37 @@
     target:
       entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
   mode: single
-- id: '1674014463071'
-  alias: 'Day-lapse: sunset'
+- id: '1674797396076'
+  alias: Boiler load high
   description: ''
   trigger:
-  - platform: sun
-    event: sunset
-    offset: 0
+  - platform: numeric_state
+    entity_id: sensor.boiler_east_on_rolling_ratio
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    above: 60
   condition: []
   action:
-  - service: camera.snapshot
+  - service: notify.mobile_app_trickypixel
     data:
-      filename: /config/tmp/{{ entity_id }}-sunset-snap-{{ now().strftime("%Y%m%d-%H%M%S")
-        }}.jpg
-    target:
-      entity_id: camera.main_camera
+      message: Boiler load is high, turn up water
+  mode: single
+- id: '1674797437836'
+  alias: Boiler load is low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_east_on_rolling_ratio
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    below: 10
+  condition: []
+  action:
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Boiler load is low, turn down water
   mode: single

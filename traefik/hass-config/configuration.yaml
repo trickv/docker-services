@@ -119,13 +119,21 @@ sensor:
     start: "{{ now().replace(hour=0, minute=0, second=0) }}"
     end: "{{ now() }}"
   - platform: history_stats
-    name: Boiler East ON rolling ratio
+    name: Boiler East ON rolling ratio 24h
     entity_id: switch.east
     state: "on"
     type: ratio
     end: "{{ now() }}"
     duration:
       hours: 24
+  - platform: history_stats
+    name: Boiler East ON rolling ratio 6h
+    entity_id: switch.east
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 6
   - platform: comed_hourly_pricing
     monitored_feeds:
       - type: five_minute

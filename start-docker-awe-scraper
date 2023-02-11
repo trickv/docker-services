@@ -1,5 +1,0 @@
-version=v0.0.4
-
-docker rm --force awe
-docker image rm --force trickv/ambient-weather-exporter
-docker run -d --restart=unless-stopped  -e AMBIENT_API_KEY=5f16a9ee8ec74bdc8db54656a4dbedfb0669622cdabd4b45a9969a4ad3af2ccf -e AMBIENT_APPLICATION_KEY=67a05cffa31946ad9f15ffbc0cbecdcf2e933d488eaa49ef84c8d40f566a0bcb -p 8000:8000 --name awe trickv/ambient-weather-exporter:$version

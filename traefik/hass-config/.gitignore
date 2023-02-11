@@ -1,8 +1,0 @@
-.HA_VERSION
-.storage/
-*.db
-.uuid
-tmp
-home-assistant.log*
-home-assistant_v2.db*
-zigbee.db*

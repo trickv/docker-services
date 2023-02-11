@@ -20,6 +20,18 @@ services:
       - monitoring
 #    command: --disable_metrics=diskIO
 
+  rsync-obd:
+    image: axiom/rsync-server:latest
+    restart: unless-stopped
+    volumes:
+      - ./obd:/data
+    ports:
+      - 8730:873
+    environment:
+      - USERNAME=obd
+      - PASSWORD=obd
+
+
 networks:
   monitoring:
     driver: bridge

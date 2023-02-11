@@ -1,3 +1,1 @@
-traefik/hass-config/secrets.yaml filter=git-crypt diff=git-crypt
-traefik/unifi-poller/unifi-poller.conf filter=git-crypt diff=git-crypt
-traefik/docker-compose.override.yml filter=git-crypt diff=git-crypt
+docker-compose.override.yml filter=git-crypt diff=git-crypt

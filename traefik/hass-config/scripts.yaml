@@ -134,7 +134,7 @@ stop_and_reset_office_sonos_for_nap:
       entity_id: media_player.office
   - service: media_player.volume_set
     data:
-      volume_level: 0.13
+      volume_level: 0.11
     target:
       entity_id: media_player.office
   mode: single
@@ -157,7 +157,7 @@ stop_and_reset_kids_br_sonos_for_nap:
       entity_id: media_player.baby_br
   - service: media_player.volume_set
     data:
-      volume_level: 0.07
+      volume_level: 0.08
     target:
       entity_id: media_player.baby_br
   mode: single

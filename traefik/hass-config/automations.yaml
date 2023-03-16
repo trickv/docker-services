@@ -294,7 +294,7 @@
   - service: light.turn_on
     data: {}
     target:
-      entity_id: light.office_desk_lamp_503b90fe_level_light_color_on_off
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
   mode: single
 - id: '1626832942531'
   alias: 'vacation: cycle light off'
@@ -307,7 +307,7 @@
   - service: light.turn_off
     data: {}
     target:
-      entity_id: light.office_desk_lamp_503b90fe_level_light_color_on_off
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
   mode: single
 - id: '1633783864174'
   alias: dormi phone low batt warning
@@ -382,19 +382,6 @@
     data:
       temperature: 69
   mode: single
-- id: '1639365524147'
-  alias: tree on morning
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:00
-  condition: []
-  action:
-  - service: switch.turn_on
-    data: {}
-    target:
-      entity_id: switch.socket_2
-  mode: single
 - id: '1639365555514'
   alias: tree+mantle off night
   description: ''
@@ -403,16 +390,6 @@
     at: '22:00'
   condition: []
   action:
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id:
-      - switch.socket_2
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 42
-      milliseconds: 0
   - service: switch.turn_off
     data: {}
     target:
@@ -568,7 +545,7 @@
     data: {}
   mode: single
 - id: '1648773174709'
-  alias: desk on
+  alias: desk on morning
   description: ''
   trigger:
   - platform: time
@@ -678,32 +655,6 @@
       entity_id:
       - light.front_porch_north_light
       - light.ledvance_a19_g2_rgbw_light
-  mode: single
-- id: '1667219522647'
-  alias: 3d printer power off on completion (device)
-  description: ''
-  trigger:
-  - type: turned_off
-    platform: device
-    device_id: c2a9e505cbff1d2245c2d31d5d37591e
-    entity_id: binary_sensor.octoprint_printing
-    domain: binary_sensor
-  condition: []
-  action:
-  - device_id: ce85b610490d6cfb8bb295931ab62e7c
-    domain: mobile_app
-    type: notify
-    message: Printer will power off soon.
-    title: 3d print complete
-  - delay:
-      hours: 0
-      minutes: 5
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id: switch.s31_a_relay_2
   mode: single
 - id: '1667252451859'
   alias: 3d printer power off on completion (binary state)
@@ -873,7 +824,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.boiler_east_on_rolling_ratio
+    entity_id: sensor.boiler_east_on_rolling_ratio_6h
     for:
       hours: 1
       minutes: 0
@@ -890,7 +841,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.boiler_east_on_rolling_ratio
+    entity_id: sensor.boiler_east_on_rolling_ratio_24h
     for:
       hours: 1
       minutes: 0
@@ -901,4 +852,61 @@
   - service: notify.mobile_app_trickypixel
     data:
       message: Boiler load is low, turn down water
+  mode: single
+- id: '1675093242375'
+  alias: Garage door just opened
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.esp746cdb_garage_status
+    to: Door open
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Garage door just opened
+  mode: single
+- id: '1675132128023'
+  alias: Tag D is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 74ed1f83-632d-4e22-bc21-ca0cace96fe7
+  condition: []
+  action:
+  - service: media_player.play_media
+    data:
+      media_content_id: Ted Nap
+      media_content_type: playlist
+    target:
+      entity_id: media_player.office
+    enabled: true
+  - service: media_player.play_media
+    data:
+      media_content_id: '  x-file-cifs://minor/Multimedia/Music/Master_Collection/Scrubs%20-%20Season%201/'
+      media_content_type: music
+    target:
+      entity_id: media_player.office
+    enabled: false
+  mode: single
+- id: '1675828963765'
+  alias: 'Kids BR Door opened notification '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_magnet_opening
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Kids BR Door opened
   mode: single

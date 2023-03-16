@@ -79,7 +79,7 @@ services:
   
   hass:
     container_name: hass
-    image: homeassistant/home-assistant:2022.12
+    image: homeassistant/home-assistant:2023.2
     volumes:
       - ./hass-config:/config
     devices:

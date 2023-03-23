@@ -99,8 +99,9 @@ services:
     container_name: nextcloud
     image: nextcloud:25.0.2-apache
     volumes:
-      - /mnt/foo/nextcloud:/var/www/html
+      - /mnt/nextcloud:/var/www/html
       - /mnt/pictures:/mnt/pictures
+      - /mnt/music/Master_Collection:/mnt/music
     mem_limit: 1500m
     restart: always
     environment:

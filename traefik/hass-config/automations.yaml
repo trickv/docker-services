@@ -576,17 +576,17 @@
     - mon
   action:
   - type: turn_on
-    device_id: 3038357b45fd3d7b836a73b0e7b0fcf1
-    entity_id: switch.ewelink_sa_003_zigbee_on_off
+    device_id: 5035549c69e2778c48adcfd3ea6118fe
+    entity_id: switch.s31_g_relay
     domain: switch
   - delay:
-      hours: 1
+      hours: 2
       minutes: 0
       seconds: 0
       milliseconds: 0
-  - type: turn_off
-    device_id: 3038357b45fd3d7b836a73b0e7b0fcf1
-    entity_id: switch.ewelink_sa_003_zigbee_on_off
+  - type: turn_on
+    device_id: 5035549c69e2778c48adcfd3ea6118fe
+    entity_id: switch.s31_g_relay
     domain: switch
   mode: single
 - id: '1661404033493'

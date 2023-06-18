@@ -232,7 +232,7 @@
           entity_id:
           - switch.tasmota
 - id: '1620940691453'
-  alias: Remind garage left open
+  alias: Garage left open reminder
   description: ''
   trigger:
   - platform: time
@@ -247,6 +247,8 @@
     type: notify
     message: Garage door left open
     title: Close it yo
+    data:
+      notification_icon: mdi:garage-open
   mode: single
 - id: '1621976751649'
   alias: 'cool night: hack thermostat top'
@@ -573,7 +575,7 @@
   condition:
   - condition: time
     weekday:
-    - mon
+    - tue
   action:
   - type: turn_on
     device_id: 5035549c69e2778c48adcfd3ea6118fe
@@ -584,7 +586,7 @@
       minutes: 0
       seconds: 0
       milliseconds: 0
-  - type: turn_on
+  - type: turn_off
     device_id: 5035549c69e2778c48adcfd3ea6118fe
     entity_id: switch.s31_g_relay
     domain: switch
@@ -646,7 +648,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '21:00:00'
+    at: '22:00:00'
   condition: []
   action:
   - service: light.turn_off
@@ -672,6 +674,8 @@
     type: notify
     message: Printer will power off soon.
     title: 3d print complete
+    data:
+      notification_icon: mdi:printer-3d
   - delay:
       hours: 0
       minutes: 5
@@ -865,12 +869,18 @@
       hours: 0
       minutes: 0
       seconds: 1
+    from: Door closed, Car In
   condition: []
   action:
   - device_id: ce85b610490d6cfb8bb295931ab62e7c
     domain: mobile_app
     type: notify
     message: Garage door just opened
+    data:
+      icon_url: https://vanstaveren.us/~trick/tmp/bank.png
+      channel: garage
+      notification_icon: mdi:garage
+      timeout: 900
   mode: single
 - id: '1675132128023'
   alias: Tag D is scanned
@@ -896,7 +906,7 @@
     enabled: false
   mode: single
 - id: '1675828963765'
-  alias: 'Kids BR Door opened notification '
+  alias: Kids BR Door opened notification PV
   description: ''
   trigger:
   - platform: state
@@ -909,4 +919,49 @@
   - service: notify.mobile_app_trickypixel
     data:
       message: Kids BR Door opened
+      data:
+        notification_icon: mdi:human-child
+        channel: KidsBRDoor
+        timeout: 3600
+  mode: single
+- id: '1682954833668'
+  alias: Battery charger overnight cycle
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      device_id: 2b858b9501816427b4bf8c05e5788100
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id: 2b858b9501816427b4bf8c05e5788100
+  mode: single
+- id: '1686506956209'
+  alias: Kids BR door opened notification SRW
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_magnet_opening
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_sarahs_iphone
+    data:
+      message: Kids BR Door opened
+      data:
+        notification_icon: mdi:human-child
+        channel: KidsBRDoor
+        timeout: 3600
   mode: single

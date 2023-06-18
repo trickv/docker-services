@@ -204,3 +204,49 @@ octopi_clean_shutdown:
       entity_id: switch.ewelink_sa_003_zigbee_on_off
   mode: single
   icon: mdi:power
+clear_our_hvac_stale_air:
+  alias: Clear our HVAC hot stale air
+  sequence:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.shelly1_98cdac2db9b3
+  - service: climate.set_fan_mode
+    data:
+      fan_mode: 'on'
+    target:
+      device_id: 4803d3a965fa6115be633548e669631b
+  - delay:
+      hours: 0
+      minutes: 4
+      seconds: 0
+      milliseconds: 0
+  - service: climate.set_fan_mode
+    data:
+      fan_mode: auto
+    target:
+      device_id: 4803d3a965fa6115be633548e669631b
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.shelly1_98cdac2db9b3
+  mode: single
+monitor_kids_br:
+  alias: Monitor kids BR 3h
+  sequence:
+  - service: automation.turn_on
+    data: {}
+    target:
+      entity_id: automation.kids_br_door_opened_notification
+  - delay:
+      hours: 3
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: automation.turn_off
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.kids_br_door_opened_notification
+  mode: single
+  icon: mdi:human-child

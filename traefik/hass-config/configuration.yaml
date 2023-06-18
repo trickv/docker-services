@@ -51,6 +51,15 @@ climate:
     min_cycle_duration:
       minutes: 1
   - platform: generic_thermostat
+    ac_mode: true
+    name: Kids BR Fan
+    heater: switch.s31_h_relay
+    # ecobee remote sensor
+    target_sensor: sensor.dining_room_2_temperature
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+  - platform: generic_thermostat
     name: BR Fan
     ac_mode: true
     heater: switch.jeeob_socket # best name ever

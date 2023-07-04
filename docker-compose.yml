@@ -20,6 +20,11 @@ services:
       - monitoring
 #    command: --disable_metrics=diskIO
 
+  sonos-web:
+    image: sonosweb/sonos-web:1.0.0
+    restart: unless-stopped
+    network_mode: host
+
   rsync-obd:
     image: axiom/rsync-server:latest
     restart: unless-stopped

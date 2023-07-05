@@ -250,3 +250,69 @@ monitor_kids_br:
       entity_id: automation.kids_br_door_opened_notification
   mode: single
   icon: mdi:human-child
+water_vegetable_garden:
+  alias: Water vegetable garden
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.s31_g_relay
+  - wait_for_trigger:
+    - type: value
+      platform: device
+      device_id: 5032bb4ca0469ab7e8d2d7089f371c57
+      entity_id: sensor.uptime
+      domain: sensor
+      above: 61
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+    timeout:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.d1_open
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.jeeoa
+  - delay:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.jeeoa
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.d2_close
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.s31_g_relay
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Garden has been watered
+  mode: single
+  icon: mdi:gold

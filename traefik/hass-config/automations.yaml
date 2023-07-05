@@ -488,36 +488,6 @@
     message: Add water to boiler
     title: Boiler is cool
   mode: single
-- id: '1648432698587'
-  alias: 'gardener auto water '
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.wet
-    below: '50'
-    for:
-      hours: 1
-      minutes: 0
-      seconds: 0
-  condition: []
-  action:
-  - service: switch.turn_on
-    target:
-      entity_id: switch.valve
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - service: switch.turn_off
-    target:
-      entity_id: switch.valve
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  mode: single
 - id: '1648773105964'
   alias: desk off 5:30
   description: ''
@@ -964,4 +934,24 @@
         notification_icon: mdi:human-child
         channel: KidsBRDoor
         timeout: 3600
+  mode: single
+- id: '1687575557136'
+  alias: 4am water veg
+  description: ''
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.soil_wet
+      below: 98
+      enabled: false
+    - condition: numeric_state
+      entity_id: sensor.rain_barrel_full
+      above: 5
+  action:
+  - service: script.water_vegetable_garden
+    data: {}
   mode: single

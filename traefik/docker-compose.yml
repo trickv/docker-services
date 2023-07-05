@@ -172,7 +172,7 @@ services:
       - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.36.0
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
     container_name: cadvisor
     restart: unless-stopped
     volumes:
@@ -190,7 +190,10 @@ services:
       - "8005:8080"
     networks:
       - monitoring
-#    command: --disable_metrics=diskIO
+    command:
+      - "--docker_only"
+      - "--disable_metrics=percpu,sched,tcp,udp,disk,diskIO,hugetlb,referenced_memory,cpu_topology,resctrl"
+      - "--housekeeping_interval=30s"
 
   tftp_for_erlite_backup:
     image: jumanjiman/tftp-hpa

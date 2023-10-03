@@ -316,3 +316,11 @@ water_vegetable_garden:
       message: Garden has been watered
   mode: single
   icon: mdi:gold
+station_fallback_online:
+  alias: Station fallback online
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station FALLBACK online
+  mode: single

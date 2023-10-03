@@ -734,7 +734,7 @@
     event: sunrise
     offset: 0
   - platform: time
-    at: '20:45:00'
+    at: '21:30:00'
   condition: []
   action:
   - service: light.turn_off
@@ -894,28 +894,6 @@
         channel: KidsBRDoor
         timeout: 3600
   mode: single
-- id: '1682954833668'
-  alias: Battery charger overnight cycle
-  description: ''
-  trigger:
-  - platform: time
-    at: '23:00:00'
-  condition: []
-  action:
-  - service: switch.turn_on
-    data: {}
-    target:
-      device_id: 2b858b9501816427b4bf8c05e5788100
-  - delay:
-      hours: 12
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
-      device_id: 2b858b9501816427b4bf8c05e5788100
-  mode: single
 - id: '1686506956209'
   alias: Kids BR door opened notification SRW
   description: ''
@@ -950,8 +928,42 @@
       enabled: false
     - condition: numeric_state
       entity_id: sensor.rain_barrel_full
-      above: 5
+      above: 2
+    - condition: template
+      value_template: '{{ as_timestamp(now()) - as_timestamp(states.sensor.pws_last_rain.state)
+        > 86400*1.5 }}'
+      alias: Make sure it hasn't rained recently
   action:
   - service: script.water_vegetable_garden
     data: {}
+  mode: single
+- id: '1690161919461'
+  alias: Station phone home
+  description: 'Dummy automation for station phone home to read and act accordingly '
+  trigger: []
+  condition: []
+  action: []
+  mode: single
+- id: '1693246561454'
+  alias: Finished basement motion light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.finished_basement_motion_iaszone
+      light_target:
+        device_id: a8b1f49057f90cff959cb5036e509d49
+      no_motion_wait: 300
+- id: '1694491711945'
+  alias: Kids br fan / humid cycle
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '10'
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    target:
+      device_id: cc25658d3fb3238910c466fb8c99811e
   mode: single

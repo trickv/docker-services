@@ -690,8 +690,8 @@
   condition: []
   action:
   - type: turn_on
-    device_id: fba8b5c52339b3306c9b96fc681298e1
-    entity_id: switch.shelly1_98cdac2db9b3
+    device_id: 3c6207eba0f583625156fc48d3ef7793
+    entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
     domain: switch
   mode: single
 - id: '1667884213222'
@@ -708,8 +708,8 @@
   condition: []
   action:
   - type: turn_off
-    device_id: fba8b5c52339b3306c9b96fc681298e1
-    entity_id: switch.shelly1_98cdac2db9b3
+    device_id: 3c6207eba0f583625156fc48d3ef7793
+    entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
     domain: switch
   mode: single
 - id: '1670903510953'

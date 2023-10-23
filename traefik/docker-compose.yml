@@ -79,7 +79,7 @@ services:
   
   hass:
     container_name: hass
-    image: homeassistant/home-assistant:2023.2
+    image: homeassistant/home-assistant:stable
     volumes:
       - ./hass-config:/config
     devices:
@@ -94,6 +94,13 @@ services:
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: hass
 
   nextcloud:
     container_name: nextcloud

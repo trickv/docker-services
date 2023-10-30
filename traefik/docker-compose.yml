@@ -278,7 +278,6 @@ services:
       - "traefik.http.routers.whoami44.entrypoints=websecure"
       - "traefik.http.routers.whoami44.tls.certresolver=le"
       - "traefik.http.routers.whoami44.rule=Host(`whoami44.home.v9n.us`, `whoami88.home.v9n.us`)"
-      - "traefik.http.routers.whoami44.middlewares=github-auth"
       - "traefik.http.services.whoami44.loadbalancer.server.port=80"
 
   proxy_autorx_radiopi:

@@ -114,6 +114,8 @@ services:
     environment:
       - NEXTCLOUD_TRUSTED_DOMAIN=nextcloud.home.v9n.us"
       - TRUSTED_PROXIES=172.16.0.0/12
+    ports:
+      - 8819:80 # just here for migration to ltc
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.home.v9n.us`, `nextcloud22.home.v9n.us`)"

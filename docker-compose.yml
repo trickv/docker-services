@@ -128,6 +128,34 @@ services:
       - "traefik.http.routers.hassproxy.entrypoints=websecure"
       - "traefik.http.routers.hassproxy.tls.certresolver=le"
       - "traefik.http.services.hassproxy.loadbalancer.server.port=80"
+  
+  proxy_ultracoin_nextcloud:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.16.17.23
+      - REMOTE_PORT=8819
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nextcloudproxy.rule=Host(`nextcloud.home.v9n.us`)"
+      - "traefik.http.routers.nextcloudproxy.entrypoints=websecure"
+      - "traefik.http.routers.nextcloudproxy.tls.certresolver=le"
+      - "traefik.http.services.nextcloudproxy.loadbalancer.server.port=80"
+  
+  proxy_ultracoin_airsonic:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.16.17.23
+      - REMOTE_PORT=4039
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.airsonicproxy.rule=Host(`airsonic.home.v9n.us`)"
+      - "traefik.http.routers.airsonicproxy.entrypoints=websecure"
+      - "traefik.http.routers.airsonicproxy.tls.certresolver=le"
+      - "traefik.http.services.airsonicproxy.loadbalancer.server.port=80"
 
 
 networks:

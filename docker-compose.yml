@@ -167,6 +167,23 @@ services:
       - "traefik.http.routers.airsonicproxy.entrypoints=websecure"
       - "traefik.http.routers.airsonicproxy.tls.certresolver=le"
       - "traefik.http.services.airsonicproxy.loadbalancer.server.port=80"
+  
+  proxy_prometheus:
+    container_name: tcpproxy_prometheus
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.16.17.23
+      - REMOTE_PORT=9090
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
+      - "traefik.http.routers.prometheus.entrypoints=websecure"
+      - "traefik.http.routers.prometheus.tls.certresolver=le"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=80"
+      - "traefik.http.routers.prometheus.middlewares=prometheusauthmiddleware"
+      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
 
 
 networks:

@@ -26,6 +26,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/acme/:/acme/"
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 #    network_mode: host
 
   whoami44:
@@ -58,6 +60,15 @@ services:
     networks:
       - monitoring
 #    command: --disable_metrics=diskIO
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_LABEL_ENABLE: 1          # Only include containers with enable label
+    #command: -i 10
 
   rsync-obd:
     image: axiom/rsync-server:latest

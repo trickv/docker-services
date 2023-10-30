@@ -1,7 +1,7 @@
 services:
   traefik:
     container_name: traefik
-    image: traefik:v2.9.6
+    image: traefik:saintmarcelin
     restart: unless-stopped
     command:
       - "--api.insecure=true"

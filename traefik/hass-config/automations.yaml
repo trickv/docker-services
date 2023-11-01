@@ -967,3 +967,25 @@
     target:
       device_id: cc25658d3fb3238910c466fb8c99811e
   mode: single
+- id: '1698762561618'
+  alias: Turn on battery charger overnight
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+    entity_id: 7c18137371e0117cee70d8057864aff1
+    domain: switch
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+    entity_id: 7c18137371e0117cee70d8057864aff1
+    domain: switch
+  mode: single

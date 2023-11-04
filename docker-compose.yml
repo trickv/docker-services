@@ -115,6 +115,7 @@ services:
       - /mnt/music/Master_Collection:/music
       #- playlists:/airsonic/playlists
       #- podcasts:/airsonic/podcasts
+    mem_limit: 1000m
     ports:
       - 4039:4040
       - 8444:8443

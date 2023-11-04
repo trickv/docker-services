@@ -111,10 +111,7 @@ services:
       #- JAVA_OPTS=<options> #optional
     volumes:
       - ./airsonic-config:/config
-      #- config:/airsonic/config
       - /mnt/music/Master_Collection:/music
-      #- playlists:/airsonic/playlists
-      #- podcasts:/airsonic/podcasts
     mem_limit: 1000m
     ports:
       - 4039:4040

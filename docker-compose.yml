@@ -143,6 +143,17 @@ services:
       - "traefik.http.routers.nextcloud.tls.certresolver=le"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
+  bb_exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: bb
+    volumes:
+      - ./monitoring/bb:/config
+    ports:
+      - 9115
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    command: --config.file=/config/blackbox.yml
+
   proxy_ultracoin_hass:
     image: amaysim/docker-tcp-proxy
     restart: unless-stopped

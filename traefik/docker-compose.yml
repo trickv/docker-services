@@ -50,33 +50,6 @@ services:
       # echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
       - "traefik.http.middlewares.traefikmetricsauth.basicauth.users=foo:$$2y$$05$$/GTEnG5nDTMb2wAyPiioFeR1igHfvU31f9xRLCOvS0VBDYzY16BPe" # this is in /etc/prometheus/prometheus.yml on hg.v9n.us
 
-  airsonic:
-    container_name: airsonic
-    image: linuxserver/airsonic
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      #- CONTEXT_PATH=<URL_BASE> #optional
-      #- JAVA_OPTS=<options> #optional
-    volumes:
-      - ./config:/config
-      #- config:/airsonic/config
-      - /mnt/music/Master_Collection:/music
-      #- playlists:/airsonic/playlists
-      #- podcasts:/airsonic/podcasts
-    ports:
-      - 4039:4040
-      - 8444:8443
-    restart: unless-stopped
-    #network_mode: host
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.airsonic.rule=Host(`airsonic.home.v9n.us`, `airsonic2.home.v9n.us`)"
-      - "traefik.http.routers.airsonic.entrypoints=websecure"
-      - "traefik.http.routers.airsonic.tls.certresolver=le"
-      - "traefik.http.services.airsonic.loadbalancer.server.port=4040"
-  
   hass:
     container_name: hass
     image: homeassistant/home-assistant:2023.11

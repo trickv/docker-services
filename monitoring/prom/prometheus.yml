@@ -1,0 +1,88 @@
+# my global config
+global:
+  scrape_interval:     10s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+  
+  - job_name: 'sb8200'
+    scrape_interval: 60s
+    scrape_timeout: 50s
+    static_configs:
+    - targets: ['172.17.0.1:9195']
+  
+  - job_name: 'blackboxhttp'
+    scrape_interval: 60s
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+        - https://trick.vanstaveren.us/
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 172.17.0.1:9115 # Blackbox exporter.
+
+  - job_name: 'blackboxinternet'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+        - 8.8.8.8
+        - 8.8.4.4
+        - 1.1.1.1
+        - 64.53.136.1
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 172.17.0.1:9115 # Blackbox exporter.
+  
+  - job_name: 'blackboxlocal'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+        - 172.16.17.62
+        - 172.16.17.63
+        - 172.16.17.160
+        - 172.16.17.66
+        - chi-linux-l-016.local
+        - minor.local
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 172.17.0.1:9115 # Blackbox exporter.
+
+  - job_name: node
+    static_configs:
+      - targets: [
+        'ultracoin:9100',
+        'sparge:9100',
+        'daylapse1:9100',
+        'sensorpi1:9100',
+        'unifi3:9100',
+        'litecoin:9100',
+        'mash:9100',
+        'lappy486.local:9100',
+        ]
+    scrape_interval: 10s
+    scrape_timeout: 5s
+  - job_name: cadvisor
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['ultracoin:8005', 'litecoin:8005']
+

@@ -2,3 +2,4 @@ backup
 airsonic-config
 unifi
 traefik
+monitoring/prom/master

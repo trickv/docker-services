@@ -74,7 +74,7 @@ scrape_configs:
         'sparge:9100',
         'daylapse1:9100',
         'sensorpi1:9100',
-        'litecoin.home.vanstaveten.us:9100',
+        'litecoin.home.vanstaveren.us:9100',
         'mash:9100',
         'lappy486.local:9100',
         ]

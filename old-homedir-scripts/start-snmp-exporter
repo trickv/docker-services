@@ -1,0 +1,7 @@
+version=v0.15.0
+
+docker run -d -p 9116:9116 \
+        --restart unless-stopped \
+        prom/snmp-exporter:$version
+
+

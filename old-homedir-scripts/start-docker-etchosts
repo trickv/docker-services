@@ -1,0 +1,6 @@
+# https://github.com/costela/docker-etchosts
+docker run -d \
+  --name etchosts \
+  --network none --restart always \
+  -v /etc/hosts:/etc/hosts -v /var/run/docker.sock:/var/run/docker.sock \
+  costela/docker-etchosts

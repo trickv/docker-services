@@ -1,0 +1,1 @@
+docker run -d --restart unless-stopped --name sb8200-exporter -p 9195:9195 sbrudenell/sb8200_exporter

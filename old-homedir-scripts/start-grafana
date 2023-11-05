@@ -1,0 +1,11 @@
+version=9.0.2 # 2022-07-12
+
+docker run -d --name=grafana --restart unless-stopped -v grafana-storage:/var/lib/grafana -p 3000:3000 \
+    -e "GF_INSTALL_PLUGINS=grafana-piechart-panel,flant-statusmap-panel" \
+    -e "GF_AUTH_PROXY_ENABLED=true" \
+    -e "GF_AUTH_PROXY_HEADER_NAME=X-Firwarded-User" \
+    -e "GF_USERS_ALLOW_SIGN_UP=false" \
+    -e "GF_USERS_AUTO_ASSIGN_ORG=true" \
+    -e "GF_USERS_AUTO_ASSIGN_ORG_ROLE=Editor" \
+    -e "GF_FOO_BAR=Editor" \
+    grafana/grafana:$version

@@ -1,0 +1,10 @@
+docker run -d -p 8083:8083 -p 8093:8093 \
+    --restart unless-stopped \
+	--name=prom-agent \
+        -e HOSTNAME=${HOSTNAME} \
+        -e AGENT_CONFIG='http://hg.vanstaveren.us/~trick/prometheus-agent.conf' \
+	-e PROXY_HOSTNAME='172.16.17.23:50051' \
+        pambrose/prometheus-agent:1.3.10
+
+
+# -e PROXY_HOSTNAME='hg.vanstaveren.us:8082' \

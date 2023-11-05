@@ -1,0 +1,1 @@
+docker run -d -p 9605:9605 --name fping-exporter --restart unless-stopped wi1dcard/fping-exporter

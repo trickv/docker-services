@@ -1,0 +1,20 @@
+version=v2.42.0
+retention=30d
+
+if [ ! -d /var/lib/prometheus/master/prometheus ]; then
+    sudo mkdir -p /var/lib/prometheus/master/prometheus
+    sudo chown nobody:nogroup /var/lib/prometheus/master/prometheus
+fi
+
+docker run --name=prometheus -p 9090:9090 \
+    -v /var/lib/prometheus/master/prometheus:/prometheus \
+    -v $HOME/prom/prometheus.yml:/etc/prometheus/prometheus.yml \
+    --restart unless-stopped \
+    --detach \
+    prom/prometheus:$version \
+	--config.file=/etc/prometheus/prometheus.yml \
+	--storage.tsdb.path=/prometheus \
+	--storage.tsdb.retention=$retention \
+    --web.enable-admin-api \
+	--web.console.libraries=/usr/share/prometheus/console_libraries \
+	--web.console.templates=/usr/share/prometheus/consoles

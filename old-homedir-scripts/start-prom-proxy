@@ -1,0 +1,6 @@
+docker run --name prom-proxy -d -p 8082:8082 -p 8092:8092 -p 50051:50051 -p 8990:8080 \
+    --restart unless-stopped \
+        -e HOSTNAME=${HOSTNAME} \
+        -e METRICS_ENABLED=true \
+	-e PROXY_CONFIG='http://hg.vanstaveren.us/~trick/prometheus-proxy.conf' \
+        pambrose/prometheus-proxy:1.3.10

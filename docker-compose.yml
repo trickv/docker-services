@@ -150,7 +150,7 @@ services:
     volumes:
       - ./monitoring/bb:/config
     ports:
-      - 9115
+      - 9115:9115
     labels:
       - com.centurylinklabs.watchtower.enable=true
     command: --config.file=/config/blackbox.yml

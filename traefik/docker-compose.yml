@@ -75,14 +75,6 @@ services:
 #      - /var/run/docker.sock:/var/run/docker.sock
 #    command: hass
 
-  unifi-poller:
-    container_name: unifi-poller
-    image: golift/unifi-poller
-    volumes:
-      - ./unifi-poller/unifi-poller.conf:/config/unifi-poller.conf
-    restart: always
-    network_mode: host
-
   hello:
     container_name: hello
     image: nginxdemos/hello

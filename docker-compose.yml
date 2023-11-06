@@ -155,6 +155,13 @@ services:
       - com.centurylinklabs.watchtower.enable=true
     command: --config.file=/config/blackbox.yml
 
+# docker run -d --restart unless-stopped --name sb8200-exporter -p 9195:9195 sbrudenell/sb8200_exporter
+  sb8200_exporter:
+    image: sbrudenell/sb8200_exporter
+    container_name: sb8200_exporter
+    ports:
+      - 9195:9195
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prom

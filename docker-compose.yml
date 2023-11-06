@@ -126,7 +126,7 @@ services:
 
   nextcloud:
     container_name: nextcloud
-    image: nextcloud:26
+    image: nextcloud:production-apache
     volumes:
       - /mnt/nextcloud:/var/www/html
       - /mnt/pictures:/mnt/pictures

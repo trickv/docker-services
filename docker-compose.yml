@@ -172,6 +172,14 @@ services:
       - 9090:9090
     labels:
       - com.centurylinklabs.watchtower.enable=true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
+      - "traefik.http.routers.prometheus.entrypoints=websecure"
+      - "traefik.http.routers.prometheus.tls.certresolver=le"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+      - "traefik.http.routers.prometheus.middlewares=prometheusauthmiddleware"
+      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
@@ -206,12 +214,12 @@ services:
       - REMOTE_PORT=9090
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
-      - "traefik.http.routers.prometheus.entrypoints=websecure"
-      - "traefik.http.routers.prometheus.tls.certresolver=le"
-      - "traefik.http.services.prometheus.loadbalancer.server.port=80"
-      - "traefik.http.routers.prometheus.middlewares=prometheusauthmiddleware"
-      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
+      - "traefik.http.routers.prometheusproxy.rule=Host(`prometheus-utc.home.v9n.us`)"
+      - "traefik.http.routers.prometheusproxy.entrypoints=websecure"
+      - "traefik.http.routers.prometheusproxy.tls.certresolver=le"
+      - "traefik.http.services.prometheusproxy.loadbalancer.server.port=80"
+      - "traefik.http.routers.prometheusproxy.middlewares=prometheusproxyauthmiddleware"
+      - "traefik.http.middlewares.prometheusproxyauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
 
 
 networks:

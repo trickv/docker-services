@@ -86,3 +86,8 @@ scrape_configs:
     static_configs:
       - targets: ['ultracoin:8005', 'litecoin.home.vanstaveren.us:8005']
 
+  - job_name: unifi
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['172.16.17.26:9130']
+

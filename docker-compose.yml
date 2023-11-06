@@ -161,6 +161,17 @@ services:
     container_name: sb8200_exporter
     ports:
       - 9195:9195
+  
+  unifi-poller:
+    container_name: unifi-poller
+    image: golift/unifi-poller
+    volumes:
+      - ./monitoring/unifi-poller/unifi-poller.conf:/config/unifi-poller.conf
+    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    ports:
+      - 9130:9130
 
   prometheus:
     image: prom/prometheus:latest

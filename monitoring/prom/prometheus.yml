@@ -95,3 +95,22 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['172.16.17.26:2112']
+
+  - job_name: 'ups'
+    static_configs:
+      - targets:
+        - ups1
+    metrics_path: /snmp
+    params:
+      module: [apcups]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 172.16.17.26:9116  # actual exporter
+  # Global exporter-level metrics
+  - job_name: 'snmp_exporter'
+    static_configs:
+      - targets: ['172.16.17.26:9116']

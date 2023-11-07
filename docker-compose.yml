@@ -143,6 +143,15 @@ services:
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
       - "traefik.http.routers.nextcloud.tls.certresolver=le"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+  solaredge_exporter:
+    image: dave92082/solaredge-exporter:1.1
+    container_name: solaredge-exporter
+    ports:
+      - 2112:2112
+    environment:
+      - INVERTER_ADDRESS=solaredge-inverter.home.vanstaveren.us
+      - EXPORTER_INTERVAL=5
+      - INVERTER_PORT=1502
 
   bb_exporter:
     image: prom/blackbox-exporter:latest

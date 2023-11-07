@@ -29,10 +29,12 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 #    network_mode: host
+    mem_limit: 100m
 
   whoami44:
     image: containous/whoami
     restart: unless-stopped
+    mem_limit: 20m
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami44.entrypoints=websecure"
@@ -60,6 +62,7 @@ services:
     networks:
       - monitoring
 #    command: --disable_metrics=diskIO
+    mem_limit: 200m
 
   watchtower:
     image: containrrr/watchtower
@@ -69,6 +72,7 @@ services:
     environment:
       WATCHTOWER_LABEL_ENABLE: 1          # Only include containers with enable label
     #command: -i 10
+    mem_limit: 75m
 
   rsync-obd:
     image: axiom/rsync-server:latest
@@ -80,6 +84,7 @@ services:
     environment:
       - USERNAME=obd
       - PASSWORD=obd
+    mem_limit: 15m
 
   unifi-controller:
     image: linuxserver/unifi-controller:LTS
@@ -87,6 +92,9 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - MEM_LIMIT=700M
+      - MEM_STARTUP=700M
+    mem_limit: 900m
     volumes:
       - ./unifi:/config
     ports:
@@ -116,7 +124,7 @@ services:
     ports:
       - 4039:4040
       - 8444:8443
-    restart: unless-stopped                                                        #network_mode: host
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.airsonic.rule=Host(`airsonic.home.v9n.us`)"
@@ -149,6 +157,7 @@ services:
     container_name: snmp-exporter
     ports:
       - 9116:9116
+    mem_limit: 50m
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
@@ -157,6 +166,7 @@ services:
     container_name: solaredge-exporter
     ports:
       - 2112:2112
+    mem_limit: 50m
     environment:
       - INVERTER_ADDRESS=solaredge-inverter.home.vanstaveren.us
       - EXPORTER_INTERVAL=5
@@ -169,6 +179,7 @@ services:
       - ./monitoring/bb:/config
     ports:
       - 9115:9115
+    mem_limit: 30m
     labels:
       - com.centurylinklabs.watchtower.enable=true
     command: --config.file=/config/blackbox.yml
@@ -179,6 +190,7 @@ services:
     container_name: sb8200_exporter
     ports:
       - 9195:9195
+    mem_limit: 60m
   
   unifi-poller:
     container_name: unifi-poller
@@ -190,6 +202,7 @@ services:
       - com.centurylinklabs.watchtower.enable=true
     ports:
       - 9130:9130
+    mem_limit: 20m
 
   prometheus:
     image: prom/prometheus:latest
@@ -201,6 +214,7 @@ services:
       - 9090:9090
     labels:
       - com.centurylinklabs.watchtower.enable=true
+    mem_limit: 700m
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
@@ -226,6 +240,7 @@ services:
       - CONTAINER_PORT=80
       - REMOTE_HOST=172.16.17.23
       - REMOTE_PORT=8123
+    mem_limit: 10m
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hassproxy.rule=Host(`hass-ltc.home.v9n.us`, `hass.vanstaveren.us`)"
@@ -242,6 +257,7 @@ services:
       - CONTAINER_PORT=80
       - REMOTE_HOST=172.16.17.23
       - REMOTE_PORT=9090
+    mem_limit: 10m
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prometheusproxy.rule=Host(`prometheus-utc.home.v9n.us`)"

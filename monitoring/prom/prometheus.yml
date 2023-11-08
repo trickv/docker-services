@@ -78,6 +78,7 @@ scrape_configs:
         'mash:9100',
         'lappy486.local:9100',
         'compy386.local:9100',
+        'minor:9100',
         ]
     scrape_interval: 10s
     scrape_timeout: 5s

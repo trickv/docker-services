@@ -235,8 +235,8 @@ services:
       - "traefik.http.routers.prometheus.tls.certresolver=le"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
       - "traefik.http.routers.prometheus.middlewares=prometheusauthmiddleware"
-# hgscripts:z1htX9koyx7bLKdIrq7t
-      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1,hgscripts:$$apr1$$O9tmVDFi$$Jc7RMzL8fUqszgdAaQDR4/"
+      # to create a password: echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1,hgscripts:$$apr1$$lMM3tlNn$$jaJu0WEaL2JzeTpgAkfs40"
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus

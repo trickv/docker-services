@@ -11,24 +11,19 @@ services:
       - "--entryPoints.web.address=:80"
       - "--certificatesResolvers.le.acme.email=trick@vanstaveren.us"
       - "--certificatesResolvers.le.acme.storage=/acme/acme.json"
+      #- "--certificatesResolvers.le.acme.storage=/acme/acme-staging.json"
       #- "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.le.acme.tlsChallenge=true"
       - "--metrics.prometheus.entryPoint=metrics"
       - "--metrics.prometheus=true"
       - "--entryPoints.metrics.address=:7082"
       #- "--accesslog=true"
-
-    ports:
-      - "443:443"
-      - "80:80"
-      - "8079:8080"
-      - "7082:7082"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/acme/:/acme/"
     labels:
       - com.centurylinklabs.watchtower.enable=true
-#    network_mode: host
+    network_mode: host
     mem_limit: 100m
 
   whoami44:
@@ -92,21 +87,39 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - MEM_LIMIT=700M
-      - MEM_STARTUP=700M
-    mem_limit: 900m
+      - MEM_LIMIT=1400M
+      - MEM_STARTUP=1400M
+    mem_limit: 1500m
     volumes:
       - ./unifi:/config
     ports:
       - 3478:3478/udp
       - 10001:10001/udp
-      - 8080:8080
+#      - 8080:8080
       - 8081:8081
       - 8443:8443
       - 8843:8843
       - 8880:8880
       - 6789:6789
     restart: unless-stopped
+  
+  hass:
+    container_name: hass
+    image: homeassistant/home-assistant:2023.11
+    volumes:
+      - ./hass-config:/config
+    devices:
+      - /dev/ttyUSB0
+    environment:
+      - TZ=America/Chicago
+    restart: always
+    network_mode: host
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hass.rule=Host(`hass.vanstaveren.us`)"
+      - "traefik.http.routers.hass.entrypoints=websecure"
+      - "traefik.http.routers.hass.tls.certresolver=le"
+      - "traefik.http.services.hass.loadbalancer.server.port=8123"
 
   airsonic:
     container_name: airsonic
@@ -232,23 +245,6 @@ services:
       - --web.console.libraries=/usr/share/prometheus/console_libraries
       - --web.console.templates=/usr/share/prometheus/consoles
 
-
-  proxy_ultracoin_hass:
-    image: amaysim/docker-tcp-proxy
-    restart: unless-stopped
-    environment:
-      - CONTAINER_PORT=80
-      - REMOTE_HOST=172.16.17.23
-      - REMOTE_PORT=8123
-    mem_limit: 10m
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hassproxy.rule=Host(`hass-ltc.home.v9n.us`, `hass.vanstaveren.us`)"
-      - "traefik.http.routers.hassproxy.entrypoints=websecure"
-      - "traefik.http.routers.hassproxy.tls.certresolver=le"
-      - "traefik.http.services.hassproxy.loadbalancer.server.port=80"
-  
-  
   proxy_prometheus:
     container_name: tcpproxy_prometheus
     image: amaysim/docker-tcp-proxy

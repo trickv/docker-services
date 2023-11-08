@@ -1,0 +1,3 @@
+q='select * from states where entity_id = "switch.boiler_east_1_25hp";'
+
+sqlite3 home-assistant_v2.db "$q"

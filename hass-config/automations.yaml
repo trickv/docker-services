@@ -1,0 +1,991 @@
+- id: '1610601254900'
+  alias: Zigbee coord offline
+  description: ''
+  trigger:
+  - device_id: d32453256e3baa07fd98fa84f9ebfe79
+    domain: zha
+    platform: device
+    type: device_offline
+    subtype: device_offline
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: ZigBee coord offline
+    title: Check it yo
+  mode: single
+- id: '1611114482176'
+  alias: Tag A scan in office
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: e664296e-0823-42b9-8c84-afa287ccfd02
+  condition: []
+  action:
+  - type: toggle
+    device_id: 56d3bb99a887d39d5d9a37356de710e2
+    entity_id: light.closet_ceiling_lamp
+    domain: light
+  - type: toggle
+    device_id: 470a9ae157247c582dbd6e332ca4d777
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
+    domain: light
+  mode: single
+- id: '1611635037918'
+  alias: 'heat: hack thermostat top'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    above: '67.5'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1611635088318'
+  alias: 'heat: hack thermostat bottom'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    below: '66.5'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: heat
+  mode: single
+- id: '1611837767885'
+  alias: boiler overheat
+  description: ''
+  trigger:
+  - platform: numeric_state
+    above: 205
+    entity_id: sensor.boiler_hot_exit
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Boiler overheat
+    title: Boiler overheat
+  mode: single
+- id: '1612029886139'
+  alias: Cycle Boiler While Cool
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '3'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  - delay: 0:15
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.boiler_east_1_25hp
+  mode: single
+- id: '1612066319156'
+  alias: boiler freeze warning
+  description: ''
+  trigger:
+  - platform: numeric_state
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+    entity_id: sensor.boiler_cool_return_west
+    below: '50'
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Boiler freeze
+    title: Watch for boiler freeze
+  mode: single
+- id: '1614231127176'
+  alias: boiler cycle hourly
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+    minutes: '50'
+  condition: []
+  action:
+  - service: script.boiler_spike_run
+    data: {}
+  mode: single
+- id: '1614353754547'
+  alias: motion light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      no_motion_wait: 120
+      motion_entity: binary_sensor.ms_y_ias_zone
+      light_target:
+        entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_level_light_color_on_off
+- id: '1616132884135'
+  alias: boiler on http notify
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.west
+    from: 'off'
+    to: 'on'
+  - platform: state
+    from: 'off'
+    to: 'on'
+    entity_id:
+    - switch.east
+  condition: []
+  action:
+  - service: shell_command.boiler_on
+    data: {}
+  mode: single
+- id: '1616132903319'
+  alias: boiler off http notify
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - switch.east
+    from: 'on'
+    to: 'off'
+  - platform: state
+    from: 'on'
+    to: 'off'
+    entity_id:
+    - switch.west
+  condition: []
+  action:
+  - service: shell_command.boiler_off
+    data: {}
+  mode: single
+- id: '1617891510203'
+  alias: Cycle HVAC temperature sensor box
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '4'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.hvac_temp_box
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.hvac_temp_box
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.hvac_temp_box
+  mode: single
+- id: '1618778612817'
+  alias: motion basement big lights
+  description: ''
+  use_blueprint:
+    path: freakshock88/motion_illuminance_activated_entity.yaml
+    input:
+      motion_sensor: binary_sensor.ms_y_ias_zone
+      no_motion_wait: input_number.basement_big_lights_timeout
+      target_entity: switch.ewelink_sa_003_zigbee_1545981f_on_off
+- id: '1620855756768'
+  alias: garage light on-off button
+  description: ''
+  use_blueprint:
+    path: garykrige/zha-sonoff-zigbee-switch.yaml
+    input:
+      sonoff_button: 8ae72a8034c3c3a090b27b9d00d1ade0
+      toggle_action:
+      - service: switch.toggle
+        target:
+          entity_id:
+          - switch.tasmota2
+      off_action:
+      - service: switch.toggle
+        target:
+          entity_id:
+          - switch.tasmota
+- id: '1620940691453'
+  alias: Garage left open reminder
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:00:00'
+  condition:
+  - condition: state
+    entity_id: sensor.esp746cdb_garage_status
+    state: Door open
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Garage door left open
+    title: Close it yo
+    data:
+      notification_icon: mdi:garage-open
+  mode: single
+- id: '1621976751649'
+  alias: 'cool night: hack thermostat top'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    above: '77'
+  condition: []
+  action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: cool
+    target:
+      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+  - service: climate.set_temperature
+    target:
+      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    data:
+      temperature: 73
+  mode: single
+- id: '1621976988770'
+  alias: 'cool night: hack thermostat bottom'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.bedroom_temperature
+    below: '73'
+  condition: []
+  action:
+  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
+    domain: climate
+    entity_id: climate.dining_room
+    type: set_hvac_mode
+    hvac_mode: 'off'
+  mode: single
+- id: '1626726821732'
+  alias: 'vacation: cycle light on'
+  description: ''
+  trigger:
+  - platform: time
+    at: '18:09:00'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
+  mode: single
+- id: '1626832942531'
+  alias: 'vacation: cycle light off'
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:03:00'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
+  mode: single
+- id: '1633783864174'
+  alias: dormi phone low batt warning
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.wileyfox_swift_battery_level
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
+    below: '10'
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Dormi phone low battery
+    title: Dormi
+  mode: single
+- id: '1637208622350'
+  alias: humidifier low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.test3_esp8266_ultrasonic_sensor
+    above: '.195'
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Humidifier low
+    title: Fill it up
+  mode: single
+- id: '1637895578473'
+  alias: Boiler night mode
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:03'
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_east
+    data:
+      temperature: 67
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_west
+    data:
+      temperature: 67.5
+  mode: single
+- id: '1637895613625'
+  alias: Boiler morning east
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_east
+    data:
+      temperature: 69
+  mode: single
+- id: '1639365555514'
+  alias: tree+mantle off night
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.jeeob_socket
+  mode: single
+- id: '1639978625760'
+  alias: distribute humidity
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.my_weather_station_temp
+    below: '15'
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: ecobee.set_fan_min_on_time
+    data:
+      fan_min_on_time: 5
+      entity_id: climate.dining_room_2
+  mode: single
+- id: '1640868490121'
+  alias: Boiler morning west
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:30
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      entity_id: climate.boiler_west
+    data:
+      temperature: 69.5
+  mode: single
+- id: '1644574452429'
+  alias: CJ BR lamp off AM
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+  mode: single
+- id: '1644574557408'
+  alias: CJ BR lamp on PM
+  description: ''
+  trigger:
+  - platform: time
+    at: '18:00'
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+  - scene: scene.bedtime_reading_2
+  mode: single
+- id: '1645160009440'
+  alias: snapshot test
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /15
+  condition: []
+  action:
+  - service: camera.snapshot
+    target:
+      device_id: 12a483a80ad8771d1440f967066472ff
+    data:
+      filename: /config/tmp/snap-{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
+  mode: single
+- id: '1647089602211'
+  alias: 'Boiler add water reminder '
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_hot_supply
+    below: '75'
+    for:
+      hours: 2
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Add water to boiler
+    title: Boiler is cool
+  mode: single
+- id: '1648773105964'
+  alias: desk off 5:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '17:30'
+  - platform: time
+    at: 05:30:00
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+    data: {}
+  mode: single
+- id: '1648773135933'
+  alias: desk off 11:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:30'
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+    data: {}
+  mode: single
+- id: '1648773174709'
+  alias: desk on morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:25
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
+    data: {}
+  mode: single
+- id: '1654404533150'
+  alias: Weekly adsb1 cycle
+  description: ''
+  trigger:
+  - platform: time
+    at: '10:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - tue
+  action:
+  - type: turn_on
+    device_id: 5035549c69e2778c48adcfd3ea6118fe
+    entity_id: switch.s31_g_relay
+    domain: switch
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 5035549c69e2778c48adcfd3ea6118fe
+    entity_id: switch.s31_g_relay
+    domain: switch
+  mode: single
+- id: '1661404033493'
+  alias: 'Daily water garden '
+  description: ''
+  trigger:
+  - platform: time
+    at: '12:00:00'
+  condition: []
+  action:
+  - service: script.gardener_water_for_30m_2
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Check garden
+  mode: single
+- id: '1665975460308'
+  alias: Nightly Sonos off
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.s31_h_relay
+  mode: single
+- id: '1666318883458'
+  alias: Front porch light on
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition: []
+  action:
+  - type: turn_on
+    device_id: a8b1f49057f90cff959cb5036e509d49
+    entity_id: light.ledvance_a19_g2_rgbw_light
+    domain: light
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.front_porch_north_light
+  mode: single
+- id: '1666318916233'
+  alias: Front porch light off
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.front_porch_north_light
+      - light.ledvance_a19_g2_rgbw_light
+  mode: single
+- id: '1667252451859'
+  alias: 3d printer power off on completion (binary state)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.octoprint_printing
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Printer will power off soon.
+    title: 3d print complete
+    data:
+      notification_icon: mdi:printer-3d
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - condition: state
+    entity_id: binary_sensor.octoprint_printing
+    state: 'off'
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.s31_a_relay_2
+  mode: single
+- id: '1667349409204'
+  alias: Reset office Sonos for nap help
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  - platform: time
+    at: '11:00:00'
+  - platform: time
+    at: '17:00:00'
+  - platform: time
+    at: '21:00:00'
+  condition: []
+  action:
+  - service: script.stop_and_reset_office_sonos_for_nap
+    data: {}
+  mode: single
+- id: '1667884163397'
+  alias: HVAC warm, boost
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.hvac_sensor_supply
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 30
+    above: '100'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 3c6207eba0f583625156fc48d3ef7793
+    entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
+    domain: switch
+  mode: single
+- id: '1667884213222'
+  alias: HVAC heat off, no boost
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.hvac_sensor_supply
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    below: '100'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 3c6207eba0f583625156fc48d3ef7793
+    entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
+    domain: switch
+  mode: single
+- id: '1670903510953'
+  alias: Mantle on evening
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.jeeob_socket
+  mode: single
+- id: '1671685104560'
+  alias: Office chair light off regularly
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 0
+  - platform: time
+    at: '21:30:00'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
+  mode: single
+- id: '1672556092706'
+  alias: 'Reset kids br Sonos '
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  - platform: time
+    at: '23:00:00'
+  - platform: time
+    at: '17:00:00'
+  - platform: time
+    at: '21:00:00'
+  condition: []
+  action:
+  - service: script.stop_and_reset_kids_br_sonos_for_nap
+    data: {}
+  mode: single
+- id: '1672669898769'
+  alias: Regular backup
+  description: ''
+  trigger:
+  - platform: time
+    at: '14:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    after: '11:00:00'
+    before: '18:00:00'
+  action:
+  - service: backup.create
+    data: {}
+  mode: single
+- id: '1673202395378'
+  alias: Tag C is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 416d64c5-a14f-4e65-a7b2-b6353ff27897
+  condition: []
+  action:
+  - service: media_player.media_play_pause
+    data: {}
+    target:
+      entity_id: media_player.office
+    enabled: true
+  - service: light.toggle
+    data: {}
+    target:
+      entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
+  mode: single
+- id: '1674797396076'
+  alias: Boiler load high
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_east_on_rolling_ratio_6h
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    above: 60
+  condition: []
+  action:
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Boiler load is high, turn up water
+  mode: single
+- id: '1674797437836'
+  alias: Boiler load is low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.boiler_east_on_rolling_ratio_24h
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    below: 10
+  condition: []
+  action:
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Boiler load is low, turn down water
+  mode: single
+- id: '1675093242375'
+  alias: Garage door just opened
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.esp746cdb_garage_status
+    to: Door open
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+    from: Door closed, Car In
+  condition: []
+  action:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Garage door just opened
+    data:
+      icon_url: https://vanstaveren.us/~trick/tmp/bank.png
+      channel: garage
+      notification_icon: mdi:garage
+      timeout: 900
+  mode: single
+- id: '1675132128023'
+  alias: Tag D is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 74ed1f83-632d-4e22-bc21-ca0cace96fe7
+  condition: []
+  action:
+  - service: media_player.play_media
+    data:
+      media_content_id: Ted Nap
+      media_content_type: playlist
+    target:
+      entity_id: media_player.office
+    enabled: true
+  - service: media_player.play_media
+    data:
+      media_content_id: '  x-file-cifs://minor/Multimedia/Music/Master_Collection/Scrubs%20-%20Season%201/'
+      media_content_type: music
+    target:
+      entity_id: media_player.office
+    enabled: false
+  mode: single
+- id: '1675828963765'
+  alias: Kids BR Door opened notification PV
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_magnet_opening
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Kids BR Door opened
+      data:
+        notification_icon: mdi:human-child
+        channel: KidsBRDoor
+        timeout: 3600
+  mode: single
+- id: '1686506956209'
+  alias: Kids BR door opened notification SRW
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_magnet_opening
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_sarahs_iphone
+    data:
+      message: Kids BR Door opened
+      data:
+        notification_icon: mdi:human-child
+        channel: KidsBRDoor
+        timeout: 3600
+  mode: single
+- id: '1687575557136'
+  alias: 4am water veg
+  description: ''
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition:
+  - condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.soil_wet
+      below: 98
+      enabled: false
+    - condition: numeric_state
+      entity_id: sensor.rain_barrel_full
+      above: 2
+    - condition: template
+      value_template: '{{ as_timestamp(now()) - as_timestamp(states.sensor.pws_last_rain.state)
+        > 86400*1.5 }}'
+      alias: Make sure it hasn't rained recently
+  action:
+  - service: script.water_vegetable_garden
+    data: {}
+  mode: single
+- id: '1690161919461'
+  alias: Station phone home
+  description: 'Dummy automation for station phone home to read and act accordingly '
+  trigger: []
+  condition: []
+  action: []
+  mode: single
+- id: '1693246561454'
+  alias: Finished basement motion light
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.finished_basement_motion_iaszone
+      light_target:
+        device_id: a8b1f49057f90cff959cb5036e509d49
+      no_motion_wait: 300
+- id: '1694491711945'
+  alias: Kids br fan / humid cycle
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '10'
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    target:
+      device_id: cc25658d3fb3238910c466fb8c99811e
+  mode: single
+- id: '1698762561618'
+  alias: Turn on battery charger overnight
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+    entity_id: 7c18137371e0117cee70d8057864aff1
+    domain: switch
+  - delay:
+      hours: 12
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+    entity_id: 7c18137371e0117cee70d8057864aff1
+    domain: switch
+  mode: single

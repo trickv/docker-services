@@ -1,0 +1,168 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+#frontend:
+#sun:
+#timer:
+#updater:
+#person:
+#logbook:
+#config:
+#mobile_app:
+#system_health:
+prometheus:
+#history:
+#my:
+#energy:
+#input_number:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.16.17.0/24
+    - 172.21.0.0/16
+    - 172.17.0.0/16
+    - 172.18.0.0/16
+    - 172.19.0.0/16
+    - 127.0.0.0/16
+
+homeassistant:
+  allowlist_external_dirs:
+    - "/config/tmp"
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+
+climate:
+  - platform: generic_thermostat
+    ac_mode: true
+    name: Kids BR Fan
+    heater: switch.s31_h_relay
+    # ecobee remote sensor
+    target_sensor: sensor.dining_room_2_temperature
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+  - platform: generic_thermostat
+    name: BR Fan
+    ac_mode: true
+    heater: switch.socket # best name ever
+    # target_sensor: sensor.bedroom_temperature_2 # noisy
+    target_sensor: sensor.f_temperature
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+  - platform: generic_thermostat
+    name: CJ Fan
+    ac_mode: true
+    heater: switch.jeeoa_socket
+    target_sensor: sensor.dining_room_2_temperature
+    target_temp: 74
+    min_cycle_duration:
+      minutes: 1
+    precision: 0.1
+
+shell_command:
+  boiler_on: !secret boiler_on_notify_shell_command
+  boiler_off: !secret boiler_off_notify_shell_command
+  octopi_off: !secret octopi_shutdown_command
+
+sensor:
+  - platform: history_stats
+    name: Boiler East ON Today
+    entity_id: switch.east
+    state: "on"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler West ON Today
+    entity_id: switch.west
+    state: "on"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler East ON Today Ratio
+    entity_id: switch.east
+    state: "on"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler West ON Today Ratio
+    entity_id: switch.west
+    state: "on"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Forced Air ON Today Time
+    entity_id: sensor.forced_air_action
+    state: "heating"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Forced Air ON Today Ratio
+    entity_id: sensor.forced_air_action
+    state: "heating"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Boiler East ON rolling ratio 24h
+    entity_id: switch.east
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Boiler East ON rolling ratio 6h
+    entity_id: switch.east
+    state: "on"
+    type: ratio
+    end: "{{ now() }}"
+    duration:
+      hours: 6
+  - platform: comed_hourly_pricing
+    monitored_feeds:
+      - type: five_minute
+      - type: current_hour_average
+  - platform: template
+    sensors:
+      forced_air_action:
+        friendly_name: "Forced Air Action"
+        value_template: "{{ state_attr('climate.dining_room_2', 'hvac_action') }}"
+      bedrooms_temp_difference:
+        friendly_name: "Difference between bedrooms"
+        unit_of_measurement: "F"
+        value_template: '{{ float(states("sensor.bedroom_temperature_2")) - float(states("sensor.dining_room_2_temperature")) }}'
+      combined_solar_forecast_today:
+        friendly_name: "Combined Solar.Forecast Today"
+        unit_of_measurement: "kWh"
+        value_template: '{{ float(states("sensor.forecast_solar_south_energy_production_today")) + float(states("sensor.forecast_solar_west_energy_production_today")) + float(states("sensor.forecast_solar_east_energy_production_today")) }}'
+      combined_solar_forecast_tomorrow:
+        friendly_name: "Combined Solar.Forecast Tomorrow"
+        unit_of_measurement: "kWh"
+        value_template: '{{ float(states("sensor.forecast_solar_south_energy_production_tomorrow")) + float(states("sensor.forecast_solar_west_energy_production_tomorrow")) + float(states("sensor.forecast_solar_east_energy_production_tomorrow")) }}'
+
+template:
+  - sensor:
+      - name: "Grid Consumption Today Derived"
+        unit_of_measurement: "Wh"
+        state: >
+          {{ float(states("sensor.total_daily_energy")) - float(states("sensor.solaredge_energy_today")) }}
+        device_class: energy
+        state_class: total

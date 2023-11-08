@@ -1,0 +1,326 @@
+cj_lamp_down_a_bit:
+  sequence:
+  - device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    domain: light
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off
+    type: brightness_decrease
+  mode: single
+  alias: cj lamp down a bit
+cj_lamp_up_a_bit:
+  alias: cj lamp up a bit
+  sequence:
+  - device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+    domain: light
+    entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_a2242efe_level_light_color_on_off
+    type: brightness_increase
+  mode: single
+'1639976532409':
+  sequence:
+  - service: climate.set_fan_mode
+    target:
+      entity_id:
+      - climate.dining_room_2
+    data:
+      fan_mode: 'on'
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: climate.set_fan_mode
+    target:
+      entity_id: climate.dining_room_2
+    data:
+      fan_mode: auto
+  mode: single
+  alias: hvac fan 20m
+cj_lamp_down_a_tiny_bit:
+  alias: CJ lamp down a tiny bit
+  sequence:
+  - service: light.turn_on
+    data:
+      brightness_step_pct: -5
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+  mode: single
+cj_lamp_up_a_tiny_bit:
+  alias: CJ lamp up a tiny bit
+  sequence:
+  - service: light.turn_on
+    data:
+      brightness_step_pct: 5
+    target:
+      device_id: cf63c1a10bbcb7d8325f17e5e1ca3f24
+  mode: single
+baby_br_volume_down:
+  sequence:
+  - service: media_player.volume_down
+    target:
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+  mode: single
+  alias: baby br volume down
+baby_br_volume_up:
+  alias: baby br volume up
+  sequence:
+  - service: media_player.volume_up
+    target:
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+  mode: single
+gardener_water_for_30m:
+  alias: Gardener (IC) water for 30m
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.valve
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.valve
+  mode: single
+station_1_phoning_home:
+  alias: Station 1 phoning home
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station receiving beacon (1)
+  mode: single
+station_2_online:
+  alias: Station 2 online
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station online (2)
+  mode: single
+gardener_water_for_30m_2:
+  alias: Gardener (socket) daily water
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.socket_2
+  - delay:
+      hours: 1
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.socket_2
+  mode: single
+stop_and_reset_office_sonos_for_nap:
+  alias: Stop and reset office Sonos for nap
+  sequence:
+  - if:
+    - condition: device
+      device_id: 12fe0a0467268f1ddd5067be89d98466
+      domain: media_player
+      entity_id: media_player.office
+      type: is_playing
+    then:
+    - stop: Media is playing so don't annoy the operator.
+    else: []
+  - service: media_player.media_stop
+    data: {}
+    target:
+      entity_id: media_player.office
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.11
+    target:
+      entity_id: media_player.office
+  mode: single
+  icon: mdi:chat-sleep
+stop_and_reset_kids_br_sonos_for_nap:
+  alias: Stop and reset kids br Sonos for nap
+  sequence:
+  - if:
+    - condition: device
+      device_id: 169e68ffc3e7217abaf8fc9a594f8857
+      domain: media_player
+      entity_id: media_player.baby_br
+      type: is_playing
+    then:
+    - stop: Media is playing so don't annoy the operator.
+    else: []
+  - service: media_player.media_stop
+    data: {}
+    target:
+      entity_id: media_player.baby_br
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.08
+    target:
+      entity_id: media_player.baby_br
+  mode: single
+  icon: mdi:chat-sleep
+boiler_gone_for_the_day:
+  alias: Boiler - gone for the day
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 62
+    target:
+      entity_id:
+      - climate.east_esp
+      - climate.west_esp
+  - wait_for_trigger:
+    - platform: time
+      at: '17:00:00'
+  - service: climate.set_temperature
+    data:
+      temperature: 68.5
+    target:
+      entity_id:
+      - climate.east_esp
+  - service: climate.set_temperature
+    data:
+      temperature: 69
+    target:
+      entity_id: climate.west_esp
+  mode: single
+  icon: mdi:fire-circle
+octopi_clean_shutdown:
+  alias: OctoPi clean shutdown
+  sequence:
+  - service: shell_command.octopi_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.ewelink_sa_003_zigbee_on_off
+  mode: single
+  icon: mdi:power
+clear_our_hvac_stale_air:
+  alias: Clear our HVAC hot stale air
+  sequence:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.shelly1_98cdac2db9b3
+  - service: climate.set_fan_mode
+    data:
+      fan_mode: 'on'
+    target:
+      device_id: 4803d3a965fa6115be633548e669631b
+  - delay:
+      hours: 0
+      minutes: 4
+      seconds: 0
+      milliseconds: 0
+  - service: climate.set_fan_mode
+    data:
+      fan_mode: auto
+    target:
+      device_id: 4803d3a965fa6115be633548e669631b
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.shelly1_98cdac2db9b3
+  mode: single
+monitor_kids_br:
+  alias: Monitor kids BR 3h
+  sequence:
+  - service: automation.turn_on
+    data: {}
+    target:
+      entity_id: automation.kids_br_door_opened_notification
+  - delay:
+      hours: 3
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: automation.turn_off
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.kids_br_door_opened_notification
+  mode: single
+  icon: mdi:human-child
+water_vegetable_garden:
+  alias: Water vegetable garden
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.s31_g_relay
+  - wait_for_trigger:
+    - type: value
+      platform: device
+      device_id: 5032bb4ca0469ab7e8d2d7089f371c57
+      entity_id: sensor.uptime
+      domain: sensor
+      above: 61
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
+    timeout:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.d1_open
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id:
+      - switch.jeeoa
+  - delay:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id:
+      - switch.jeeoa
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.d2_close
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.s31_g_relay
+  - service: notify.mobile_app_trickypixel
+    data:
+      message: Garden has been watered
+  mode: single
+  icon: mdi:gold
+station_fallback_online:
+  alias: Station fallback online
+  sequence:
+  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+    domain: mobile_app
+    type: notify
+    message: Station FALLBACK online
+  mode: single

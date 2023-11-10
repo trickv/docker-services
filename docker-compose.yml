@@ -255,6 +255,70 @@ services:
       - --web.enable-admin-api
       - --web.console.libraries=/usr/share/prometheus/console_libraries
       - --web.console.templates=/usr/share/prometheus/consoles
+  
+  grafana:
+    image: grafana/grafana:9.0.2
+    container_name: grafana
+    volumes:
+      - ./monitoring/grafana:/var/lib/grafana
+    mem_limit: 250m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.home.v9n.us`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=le"
+      - "traefik.http.routers.grafana.middlewares=github-auth"
+    environment:
+      - "GF_INSTALL_PLUGINS=grafana-piechart-panel,flant-statusmap-panel"
+      - "GF_AUTH_PROXY_ENABLED=true"
+      - "GF_AUTH_PROXY_HEADER_NAME=X-Firwarded-User"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_USERS_AUTO_ASSIGN_ORG=true"
+      - "GF_USERS_AUTO_ASSIGN_ORG_ROLE=Editor"
+      - "GF_FOO_BAR=Editor"
+
+  github-auth:
+    container_name: github-auth
+    image: thomseddon/traefik-forward-auth:latest # must run latest for auth mode because https://github.com/thomseddon/traefik-forward-auth/pull/217
+    restart: unless-stopped
+    mem_limit: 20m
+    environment:
+      - DEFAULT_PROVIDER=generic-oauth
+      - PROVIDERS_GENERIC_OAUTH_AUTH_URL=https://github.com/login/oauth/authorize
+      - PROVIDERS_GENERIC_OAUTH_TOKEN_URL=https://github.com/login/oauth/access_token
+      - PROVIDERS_GENERIC_OAUTH_USER_URL=https://api.github.com/user
+      - PROVIDERS_GENERIC_OAUTH_CLIENT_ID=4126728948d59d9ffe20
+      - COOKIE_DOMAIN=home.v9n.us
+      - AUTH_HOST=auth.home.v9n.us
+      - LOG_LEVEL=trace
+      - LOG_FORMAT=json
+      - DOMAIN=vanstaveren.us
+      - COOKIE_NAME=_fw_gh_auth2
+      - CSRF_COOKIE_NAME=_fw_csrf_gh_auth2
+    ports:
+      - 4181:4181
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.github-auth.forwardauth.address=http://172.17.0.1:4181"
+      - "traefik.http.middlewares.github-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
+      - "traefik.http.services.github-auth.loadbalancer.server.port=4181"
+      - "traefik.http.routers.github-auth.entrypoints=websecure"
+      - "traefik.http.routers.github-auth.tls.certresolver=le"
+      - "traefik.http.routers.github-auth.rule=Host(`auth.home.v9n.us`)"
+
+  whoami:
+    image: containous/whoami
+    restart: unless-stopped
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=le"
+      - "traefik.http.routers.whoami.rule=Host(`whoami212.home.v9n.us`)"
+      - "traefik.http.routers.whoami.middlewares=github-auth"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
 
   proxy_prometheus:
     container_name: tcpproxy_prometheus

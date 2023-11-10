@@ -3,3 +3,4 @@ airsonic-config
 unifi
 traefik
 monitoring/prom/master
+monitoring/grafana

@@ -25,6 +25,27 @@ services:
       - com.centurylinklabs.watchtower.enable=true
     network_mode: host
     mem_limit: 100m
+  
+  tcpproxy_traefik_metrics:
+    container_name: tcpproxy_traefik_metrics
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.17.0.1
+      - REMOTE_PORT=7082
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefikmetrics.rule=Host(`traefikmetrics.home.v9n.us`, `tm22.home.v9n.us`)"
+      - "traefik.http.routers.traefikmetrics.entrypoints=websecure"
+      - "traefik.http.routers.traefikmetrics.tls.certresolver=le"
+      - "traefik.http.services.traefikmetrics.loadbalancer.server.port=80"
+      - "traefik.http.routers.traefikmetrics.middlewares=traefikmetricsauth"
+      # Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping.
+      # To create user:password pair, it's possible to use this command:
+      # echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.traefikmetricsauth.basicauth.users=foo:$$2y$$05$$/GTEnG5nDTMb2wAyPiioFeR1igHfvU31f9xRLCOvS0VBDYzY16BPe" # this is in /etc/prometheus/prometheus.yml on hg.v9n.us
 
   whoami44:
     image: containous/whoami
@@ -337,6 +358,101 @@ services:
       - "traefik.http.services.prometheusproxy.loadbalancer.server.port=80"
       - "traefik.http.routers.prometheusproxy.middlewares=prometheusproxyauthmiddleware"
       - "traefik.http.middlewares.prometheusproxyauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1"
+  
+  proxy_autorx_radiopi:
+    container_name: autorx_radiopi
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=radiopi.home.vanstaveren.us
+      - REMOTE_PORT=5000
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.autorx-radiopi.rule=Host(`autorxradiopi.home.v9n.us`)"
+      - "traefik.http.routers.autorx-radiopi.entrypoints=websecure"
+      - "traefik.http.routers.autorx-radiopi.tls.certresolver=le"
+      - "traefik.http.routers.autorx-radiopi.middlewares=github-auth"
+      - "traefik.http.services.autorx-radiopi.loadbalancer.server.port=80"
+
+  proxy_daylapse1:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=daylapse1.home.vanstaveren.us
+      - REMOTE_PORT=8080
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.daylapse.rule=Host(`daylapse.home.v9n.us`)"
+      - "traefik.http.routers.daylapse.entrypoints=websecure"
+      - "traefik.http.routers.daylapse.tls.certresolver=le"
+      - "traefik.http.services.daylapse.loadbalancer.server.port=80"
+
+  proxy_traefik_dashboard:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.17.0.1
+      - REMOTE_PORT=8080
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.home.v9n.us`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.traefik-dashboard.tls.certresolver=le"
+      - "traefik.http.routers.traefik-dashboard.middlewares=github-auth"
+      - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=80"
+  
+  proxy_openwebrx:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=172.16.17.57
+      - REMOTE_PORT=8073
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openwebrx.rule=Host(`openwebrx.home.v9n.us`)"
+      - "traefik.http.routers.openwebrx.entrypoints=websecure"
+      - "traefik.http.routers.openwebrx.tls.certresolver=le"
+      - "traefik.http.routers.openwebrx.middlewares=github-auth"
+      - "traefik.http.services.openwebrx.loadbalancer.server.port=80"
+  
+  proxy_octoprint:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=octopi.home.vanstaveren.us
+      - REMOTE_PORT=80
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.octoprint.rule=Host(`octoprint.home.v9n.us`)"
+      - "traefik.http.routers.octoprint.entrypoints=websecure"
+      - "traefik.http.routers.octoprint.tls.certresolver=le"
+      - "traefik.http.routers.octoprint.middlewares=github-auth"
+      - "traefik.http.services.octoprint.loadbalancer.server.port=80"
+  
+  proxy_adsb1:
+    image: amaysim/docker-tcp-proxy
+    restart: unless-stopped
+    environment:
+      - CONTAINER_PORT=80
+      - REMOTE_HOST=adsb1.home.vanstaveren.us
+      - REMOTE_PORT=8080
+    mem_limit: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adsb1.rule=Host(`adsb1.home.v9n.us`)"
+      - "traefik.http.routers.adsb1.entrypoints=websecure"
+      - "traefik.http.routers.adsb1.tls.certresolver=le"
+      - "traefik.http.services.adsb1.loadbalancer.server.port=80"
 
 
 networks:

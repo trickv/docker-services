@@ -121,6 +121,17 @@ services:
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
 
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:2
+    ports:
+      - 1883:1883
+    volumes:
+      - ./mqtt:/mosquitto
+    mem_limit: 50m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
   airsonic:
     container_name: airsonic
     image: linuxserver/airsonic

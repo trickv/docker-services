@@ -110,7 +110,7 @@ services:
       - PGID=1000
       - MEM_LIMIT=1400M
       - MEM_STARTUP=1400M
-    mem_limit: 1500m
+#    mem_limit: 1500m
     volumes:
       - ./unifi:/config
     ports:

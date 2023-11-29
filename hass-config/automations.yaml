@@ -395,7 +395,34 @@
   - service: switch.turn_off
     data: {}
     target:
-      entity_id: switch.jeeob_socket
+      device_id: 6eefc093a4c6faa82393857583397d05
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id: f2ee11a0e538fe8445a6109e62943f80
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id: 5035549c69e2778c48adcfd3ea6118fe
   mode: single
 - id: '1639978625760'
   alias: distribute humidity
@@ -581,20 +608,6 @@
     type: notify
     message: Check garden
   mode: single
-- id: '1665975460308'
-  alias: Nightly Sonos off
-  description: ''
-  trigger:
-  - platform: time
-    at: 06:00:00
-  condition: []
-  action:
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id:
-      - switch.s31_h_relay
-  mode: single
 - id: '1666318883458'
   alias: Front porch light on
   description: ''
@@ -705,7 +718,10 @@
       minutes: 0
       seconds: 2
     below: '100'
-  condition: []
+  condition:
+  - condition: time
+    after: '21:00:00'
+    before: 07:00:00
   action:
   - type: turn_off
     device_id: 3c6207eba0f583625156fc48d3ef7793
@@ -713,7 +729,7 @@
     domain: switch
   mode: single
 - id: '1670903510953'
-  alias: Mantle on evening
+  alias: Tree+Mantle on evening
   description: ''
   trigger:
   - platform: sun
@@ -724,7 +740,25 @@
   - service: switch.turn_on
     data: {}
     target:
-      entity_id: switch.jeeob_socket
+      device_id: 6eefc093a4c6faa82393857583397d05
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      device_id: f2ee11a0e538fe8445a6109e62943f80
   mode: single
 - id: '1671685104560'
   alias: Office chair light off regularly
@@ -954,19 +988,6 @@
       light_target:
         device_id: a8b1f49057f90cff959cb5036e509d49
       no_motion_wait: 300
-- id: '1694491711945'
-  alias: Kids br fan / humid cycle
-  description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: '10'
-  condition: []
-  action:
-  - service: switch.toggle
-    data: {}
-    target:
-      device_id: cc25658d3fb3238910c466fb8c99811e
-  mode: single
 - id: '1698762561618'
   alias: Turn on battery charger overnight
   description: ''

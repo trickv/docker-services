@@ -759,6 +759,15 @@
     data: {}
     target:
       device_id: f2ee11a0e538fe8445a6109e62943f80
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      device_id: 5035549c69e2778c48adcfd3ea6118fe
   mode: single
 - id: '1671685104560'
   alias: Office chair light off regularly

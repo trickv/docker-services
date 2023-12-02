@@ -127,7 +127,7 @@ services:
   
   hass:
     container_name: hass
-    image: homeassistant/home-assistant:2023.11
+    image: homeassistant/home-assistant:2023.12.0b1
     volumes:
       - ./hass-config:/config
     devices:

@@ -735,6 +735,8 @@
   - platform: sun
     event: sunset
     offset: 0
+  - platform: time
+    at: '15:45:00'
   condition: []
   action:
   - service: switch.turn_on

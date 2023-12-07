@@ -348,6 +348,15 @@ services:
       - "traefik.http.routers.whoami.middlewares=github-auth"
       - "traefik.http.services.whoami.loadbalancer.server.port=80"
 
+  tftp_for_erlite_backup:
+    image: jumanjiman/tftp-hpa
+    restart: unless-stopped
+    ports:
+      - "69:69/udp"
+    volumes:
+      - ./erlite-backups:/backups
+    entrypoint: ['in.tftpd', '-L', '-v', '-v', '-v', '--create', '--permissive', '-u', 'tftp', "-m", "/tftpboot/mapfile", '/backups']
+
 
   proxy_prometheus:
     container_name: tcpproxy_prometheus

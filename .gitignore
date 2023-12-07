@@ -4,3 +4,5 @@ unifi
 traefik
 monitoring/prom/master
 monitoring/grafana
+hass-config/custom_components/
+hass-config/www/

@@ -358,6 +358,38 @@ services:
       - ./erlite-backups:/backups
     entrypoint: ['in.tftpd', '-L', '-v', '-v', '-v', '--create', '--permissive', '-u', 'tftp', "-m", "/tftpboot/mapfile", '/backups']
 
+  # https://community.home-assistant.io/t/openwakeword-docker/626131/5
+  openwakeword:
+    container_name: openwakeword
+    image: rhasspy/wyoming-openwakeword
+    user: 1001:1001
+    volumes:
+      - ./wakeword/data:/data
+      - ./wakeword/custom:/custom
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Australia/Melbourne
+    command: --preload-model 'ok_nabu' --custom-model-dir /custom
+    restart: unless-stopped
+    ports:
+      - 12202:12202/udp
+      - 10400:10400/tcp
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  whisper:
+    image: rhasspy/wyoming-whisper:latest
+    container_name: whisper
+    ports:
+      - 10300:10300
+    restart: unless-stopped
+    volumes:
+      - ./whisper-data:/data
+    command: [ "--model", "base-int8", "--language", "en" ]
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
 
   proxy_prometheus:
     container_name: tcpproxy_prometheus

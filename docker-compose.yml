@@ -142,6 +142,7 @@ services:
       - "traefik.http.routers.hass.entrypoints=websecure"
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
+      - com.centurylinklabs.watchtower.enable=true
 
   mqtt:
     container_name: mqtt

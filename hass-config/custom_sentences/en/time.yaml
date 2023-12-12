@@ -1,0 +1,7 @@
+language: "en"
+intents:
+  GetTime:
+    data:
+      - sentences:
+        - "What time is it"
+        - "What is the time"

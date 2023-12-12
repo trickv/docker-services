@@ -166,3 +166,8 @@ template:
           {{ float(states("sensor.total_daily_energy")) - float(states("sensor.solaredge_energy_today")) }}
         device_class: energy
         state_class: total
+
+intent_script:
+  GetTime:
+    speech:
+      text: The time is {{ now().strftime('%-I:%M') }}

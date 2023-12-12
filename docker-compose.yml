@@ -375,6 +375,7 @@ services:
     ports:
       - 12202:12202/udp
       - 10400:10400/tcp
+    mem_limit: 100m
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
@@ -386,9 +387,22 @@ services:
     restart: unless-stopped
     volumes:
       - ./whisper-data:/data
-    command: [ "--model", "base-int8", "--language", "en" ]
+    command: [ "--model", "tiny-int8", "--language", "en" ]
+    mem_limit: 250m
     labels:
       - com.centurylinklabs.watchtower.enable=true
+
+#  piper:
+#    image: rhasspy/wyoming-piper:latest
+#    container_name: piper
+#    ports:
+#      - 10200:10200
+#    restart: unless-stopped
+#    volumes:
+#      - ./piper-data:/data
+#    command: [ "--voice", "en_US-lessac-medium" ]
+#    labels:
+#      - com.centurylinklabs.watchtower.enable=true
 
 
   proxy_prometheus:

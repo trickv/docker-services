@@ -9,3 +9,4 @@ hass-config/www/
 hass-config/tts/
 erlite-backups
 whisper-data
+piper-data

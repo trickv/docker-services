@@ -392,17 +392,18 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
-#  piper:
-#    image: rhasspy/wyoming-piper:latest
-#    container_name: piper
-#    ports:
-#      - 10200:10200
-#    restart: unless-stopped
-#    volumes:
-#      - ./piper-data:/data
-#    command: [ "--voice", "en_US-lessac-medium" ]
-#    labels:
-#      - com.centurylinklabs.watchtower.enable=true
+  piper:
+    image: rhasspy/wyoming-piper:latest
+    container_name: piper
+    ports:
+      - 10200:10200
+    restart: unless-stopped
+    volumes:
+      - ./piper-data:/data
+    command: [ "--voice", "en_US-lessac-medium" ]
+    mem_limit: 250m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
 
   proxy_prometheus:

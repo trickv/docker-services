@@ -43,34 +43,34 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 
-climate:
-  - platform: generic_thermostat
-    ac_mode: true
-    name: Kids BR Fan
-    heater: switch.s31_h_relay
-    # ecobee remote sensor
-    target_sensor: sensor.dining_room_2_temperature
-    target_temp: 74
-    min_cycle_duration:
-      minutes: 1
-  - platform: generic_thermostat
-    name: BR Fan
-    ac_mode: true
-    heater: switch.socket # best name ever
-    # target_sensor: sensor.bedroom_temperature_2 # noisy
-    target_sensor: sensor.f_temperature
-    target_temp: 74
-    min_cycle_duration:
-      minutes: 1
-  - platform: generic_thermostat
-    name: CJ Fan
-    ac_mode: true
-    heater: switch.jeeoa_socket
-    target_sensor: sensor.dining_room_2_temperature
-    target_temp: 74
-    min_cycle_duration:
-      minutes: 1
-    precision: 0.1
+#climate:
+#  - platform: generic_thermostat
+#    ac_mode: true
+#    name: Kids BR Fan
+#    heater: switch.s31_h_relay
+#    # ecobee remote sensor
+#    target_sensor: sensor.dining_room_2_temperature
+#    target_temp: 74
+#    min_cycle_duration:
+#      minutes: 1
+#  - platform: generic_thermostat
+#    name: BR Fan
+#    ac_mode: true
+#    heater: switch.socket # best name ever
+#    # target_sensor: sensor.bedroom_temperature_2 # noisy
+#    target_sensor: sensor.f_temperature
+#    target_temp: 74
+#    min_cycle_duration:
+#      minutes: 1
+#  - platform: generic_thermostat
+#    name: CJ Fan
+#    ac_mode: true
+#    heater: switch.jeeoa_socket
+#    target_sensor: sensor.dining_room_2_temperature
+#    target_temp: 74
+#    min_cycle_duration:
+#      minutes: 1
+#    precision: 0.1
 
 shell_command:
   boiler_on: !secret boiler_on_notify_shell_command

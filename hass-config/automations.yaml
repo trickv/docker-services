@@ -413,7 +413,7 @@
   - service: switch.turn_off
     data: {}
     target:
-      device_id: f2ee11a0e538fe8445a6109e62943f80
+      entity_id: switch.socket
   - delay:
       hours: 1
       minutes: 0
@@ -760,7 +760,7 @@
   - service: switch.turn_on
     data: {}
     target:
-      device_id: f2ee11a0e538fe8445a6109e62943f80
+      entity_id: switch.socket
   - delay:
       hours: 0
       minutes: 0

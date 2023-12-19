@@ -79,6 +79,7 @@ scrape_configs:
         'lappy486.local:9100',
         'compy386.local:9100',
         'minor:9100',
+        'pong:9100',
         ]
     scrape_interval: 10s
     scrape_timeout: 5s

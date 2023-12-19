@@ -1021,3 +1021,30 @@
     entity_id: 7c18137371e0117cee70d8057864aff1
     domain: switch
   mode: single
+- id: '1702949308358'
+  alias: Office chair lamp on 6:30
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '18'
+    minutes: '30'
+    seconds: '0'
+  condition:
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: ce85b610490d6cfb8bb295931ab62e7c
+      domain: device_tracker
+      entity_id: 285cbed3377423ae08939f90551b0128
+      type: is_home
+    - condition: device
+      device_id: 6f1e7d9f5006ae7dbe1d4f573b4f26e4
+      domain: device_tracker
+      entity_id: 466d1552a215802fe07ac6cae8c8dd0a
+      type: is_home
+  action:
+  - service: light.turn_on
+    target:
+      device_id: 56d3bb99a887d39d5d9a37356de710e2
+    data: {}
+  mode: single

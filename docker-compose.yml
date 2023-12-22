@@ -143,6 +143,23 @@ services:
       - "traefik.http.routers.hass.tls.certresolver=le"
       - "traefik.http.services.hass.loadbalancer.server.port=8123"
       - com.centurylinklabs.watchtower.enable=true
+  
+  esphome:
+    image: esphome/esphome:stable
+    container_name: esphome
+    restart: unless-stopped
+    volumes:
+      - /home/trick/src/github.com/trickv/my-esphome:/config
+    mem_limit: 100m
+    network_mode: host
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.esphome.rule=Host(`esphome.home.v9n.us`)"
+      - "traefik.http.routers.esphome.entrypoints=websecure"
+      - "traefik.http.routers.esphome.tls.certresolver=le"
+      - "traefik.http.routers.esphome.middlewares=github-auth"
+      - "traefik.http.services.esphome.loadbalancer.server.port=6052"
 
   mqtt:
     container_name: mqtt

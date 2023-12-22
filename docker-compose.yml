@@ -385,12 +385,15 @@ services:
       - ./wakeword/custom:/custom
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    environment:
-      - TZ=Australia/Melbourne
-    command: --preload-model 'ok_nabu' --custom-model-dir /custom
+    command:
+      --preload-model 'ok_nabu'
+      --custom-model-dir /custom
+      --debug
+      #--trigger-level 1
+# --threshold Wake word model threshold (0-1, default: 0.5); hass uses 0.5 as default too
+# --trigger-level Number of activations before detection (default: 4); hass uses 1 as default?!
     restart: unless-stopped
     ports:
-      - 12202:12202/udp
       - 10400:10400/tcp
     mem_limit: 100m
     labels:

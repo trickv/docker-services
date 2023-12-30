@@ -161,6 +161,22 @@ services:
       - "traefik.http.routers.esphome.middlewares=github-auth"
       - "traefik.http.services.esphome.loadbalancer.server.port=6052"
 
+
+  matter-server:
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    container_name: matter-server
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./matter:/data
+      - /run/dbus:/run/dbus:ro
+    mem_limit: 300m
+    security_opt:
+      - apparmor=unconfined
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    
+
   mqtt:
     container_name: mqtt
     image: eclipse-mosquitto:2

@@ -404,7 +404,7 @@
   - service: switch.turn_off
     data: {}
     target:
-      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+      device_id: efdc52980cd6abdb7094a849e3d1d9b4
   - delay:
       hours: 0
       minutes: 0
@@ -751,7 +751,7 @@
   - service: switch.turn_on
     data: {}
     target:
-      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
+      device_id: efdc52980cd6abdb7094a849e3d1d9b4
   - delay:
       hours: 0
       minutes: 0
@@ -999,28 +999,6 @@
       light_target:
         device_id: a8b1f49057f90cff959cb5036e509d49
       no_motion_wait: 300
-- id: '1698762561618'
-  alias: Turn on battery charger overnight
-  description: ''
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
-    entity_id: 7c18137371e0117cee70d8057864aff1
-    domain: switch
-  - delay:
-      hours: 12
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 35b04c0abb4a5f034bb37cb92666c8c2
-    entity_id: 7c18137371e0117cee70d8057864aff1
-    domain: switch
-  mode: single
 - id: '1702949308358'
   alias: Office chair lamp on 6:30
   description: ''

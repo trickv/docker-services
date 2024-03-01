@@ -150,7 +150,7 @@ services:
     restart: unless-stopped
     volumes:
       - /home/trick/src/github.com/trickv/my-esphome:/config
-    mem_limit: 100m
+    mem_limit: 200m
     network_mode: host
     labels:
       - com.centurylinklabs.watchtower.enable=true

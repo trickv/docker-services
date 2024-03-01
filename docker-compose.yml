@@ -423,8 +423,9 @@ services:
     restart: unless-stopped
     volumes:
       - ./whisper-data:/data
-    command: [ "--model", "tiny-int8", "--language", "en" ]
-    mem_limit: 250m
+    command: [ "--model", "tiny", "--language", "en" ]
+# models are {{tiny,base,small,medium,large},-int8}
+    mem_limit: 500m
     labels:
       - com.centurylinklabs.watchtower.enable=true
 

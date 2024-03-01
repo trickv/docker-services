@@ -32,36 +32,6 @@
     entity_id: light.the_home_depot_ecosmart_zbt_a19_cct_bulb_627e93fe_level_light_color_on_off
     domain: light
   mode: single
-- id: '1611635037918'
-  alias: 'heat: hack thermostat top'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.bedroom_temperature
-    above: '67.5'
-  condition: []
-  action:
-  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
-    domain: climate
-    entity_id: climate.dining_room
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  mode: single
-- id: '1611635088318'
-  alias: 'heat: hack thermostat bottom'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.bedroom_temperature
-    below: '66.5'
-  condition: []
-  action:
-  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
-    domain: climate
-    entity_id: climate.dining_room
-    type: set_hvac_mode
-    hvac_mode: heat
-  mode: single
 - id: '1611837767885'
   alias: boiler overheat
   description: ''
@@ -250,41 +220,6 @@
     data:
       notification_icon: mdi:garage-open
   mode: single
-- id: '1621976751649'
-  alias: 'cool night: hack thermostat top'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.bedroom_temperature
-    above: '77'
-  condition: []
-  action:
-  - service: climate.set_hvac_mode
-    data:
-      hvac_mode: cool
-    target:
-      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
-  - service: climate.set_temperature
-    target:
-      device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
-    data:
-      temperature: 73
-  mode: single
-- id: '1621976988770'
-  alias: 'cool night: hack thermostat bottom'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.bedroom_temperature
-    below: '73'
-  condition: []
-  action:
-  - device_id: 7c2f464e4c06d2662de0f72a30aa4c7f
-    domain: climate
-    entity_id: climate.dining_room
-    type: set_hvac_mode
-    hvac_mode: 'off'
-  mode: single
 - id: '1626726821732'
   alias: 'vacation: cycle light on'
   description: ''
@@ -395,34 +330,12 @@
   - service: switch.turn_off
     data: {}
     target:
-      device_id: 6eefc093a4c6faa82393857583397d05
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
       device_id: efdc52980cd6abdb7094a849e3d1d9b4
   - delay:
       hours: 0
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
-      entity_id: switch.socket
-  - delay:
-      hours: 1
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    data: {}
-    target:
-      device_id: 5035549c69e2778c48adcfd3ea6118fe
   mode: single
 - id: '1639978625760'
   alias: distribute humidity
@@ -562,31 +475,6 @@
     target:
       entity_id: switch.ewelink_sa_003_zigbee_4141991f_on_off
     data: {}
-  mode: single
-- id: '1654404533150'
-  alias: Weekly adsb1 cycle
-  description: ''
-  trigger:
-  - platform: time
-    at: '10:00:00'
-  condition:
-  - condition: time
-    weekday:
-    - tue
-  action:
-  - type: turn_on
-    device_id: 5035549c69e2778c48adcfd3ea6118fe
-    entity_id: switch.s31_g_relay
-    domain: switch
-  - delay:
-      hours: 2
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 5035549c69e2778c48adcfd3ea6118fe
-    entity_id: switch.s31_g_relay
-    domain: switch
   mode: single
 - id: '1661404033493'
   alias: 'Daily water garden '
@@ -737,17 +625,9 @@
     offset: 0
   - platform: time
     at: '15:45:00'
+    enabled: false
   condition: []
   action:
-  - service: switch.turn_on
-    data: {}
-    target:
-      device_id: 6eefc093a4c6faa82393857583397d05
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
   - service: switch.turn_on
     data: {}
     target:
@@ -757,19 +637,6 @@
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: switch.turn_on
-    data: {}
-    target:
-      entity_id: switch.socket
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - service: switch.turn_on
-    data: {}
-    target:
-      device_id: 5035549c69e2778c48adcfd3ea6118fe
   mode: single
 - id: '1671685104560'
   alias: Office chair light off regularly
@@ -931,7 +798,7 @@
     to: 'on'
   condition: []
   action:
-  - service: notify.mobile_app_trickypixel
+  - service: notify.mobile_app_pixel_6
     data:
       message: Kids BR Door opened
       data:
@@ -1025,4 +892,35 @@
     target:
       device_id: 56d3bb99a887d39d5d9a37356de710e2
     data: {}
+  mode: single
+- id: '1706675380122'
+  alias: Kids BR Door opened notification TrickyPlus 5t
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_magnet_opening
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_trickyplus
+    data:
+      message: Kids BR door opened
+      data:
+        channel: KidsBRDoor
+        timeout: 1800
+        notification_icon: mdi:human-child
+  mode: single
+- id: '1707534276968'
+  alias: 'assist: what is net metering'
+  description: ''
+  trigger:
+  - platform: conversation
+    command:
+    - What is my net meter
+  condition: []
+  action:
+  - set_conversation_response: The net meter is at {{ sensor.my_current_net_metering
+      }} kilowatt hours.
   mode: single

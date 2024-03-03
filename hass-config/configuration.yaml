@@ -171,3 +171,30 @@ intent_script:
   GetTime:
     speech:
       text: The time is {{ now().strftime('%-I:%M') }}
+
+mqtt:
+  sensor:
+    - name: "solaredge2mqtt Solaredge Total Energy"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energytotal }}"
+      json_attributes_topic: "solaredge/modbus/inverter"
+      expire_after: 60
+    - name: "solaredge2mqtt Powerflow"
+      state_topic: "solaredge/powerflow"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.pv_production}}"
+      json_attributes_topic: "solaredge/powerflow"
+      expire_after: 60
+    - name: "solaredge2mqtt AC Power"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "W"
+      value_template: "{{ value_json.ac.power.actual}}"
+      json_attributes_topic: "solaredge/modbus/inverter"
+      expire_after: 60

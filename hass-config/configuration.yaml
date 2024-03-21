@@ -158,6 +158,65 @@ sensor:
         unit_of_measurement: "kWh"
         value_template: '{{ float(states("sensor.forecast_solar_south_energy_production_tomorrow")) + float(states("sensor.forecast_solar_west_energy_production_tomorrow")) + float(states("sensor.forecast_solar_east_energy_production_tomorrow")) }}'
 
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F8879-92 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f8879_92_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F7E57-66 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f7e57_66_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127DB2F1-32 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127db2f1_32_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F55D8-BE Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f55d8_be_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F829C-AF Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f829c_af_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F4BC6-A2 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f4bc6_a2_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127FC84B-A4 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127fc84b_a4_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 12709E7E-9E Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_12709e7e_9e_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127DB1A0-E0 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127db1a0_e0_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F827E-91 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f827e_91_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127E58F6-DE Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127e58f6_de_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127FD1F6-58 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127fd1f6_58_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127E588B-73 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127e588b_73_energy
+    unit_time: h
+  - platform: derivative
+    name: "solaredge2mqtt Module 127F80CF-E0 Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_127f80cf_e0_energy
+    unit_time: h
+
+
+
 template:
   - sensor:
       - name: "Grid Consumption Today Derived"
@@ -182,6 +241,44 @@ mqtt:
       value_template: "{{ value_json.energytotal }}"
       json_attributes_topic: "solaredge/modbus/inverter"
       expire_after: 60
+    - name: "solaredge2mqtt Solaredge Power Actual"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      value_template: "{{ value_json.power.actual}}"
+      expire_after: 60
+    - name: "solaredge2mqtt Solaredge Power Reactive"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      value_template: "{{ value_json.ac.power.reactive}}"
+      expire_after: 60
+    - name: "solaredge2mqtt Solaredge Power Apparent"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.ac.power.apparent }}"
+      expire_after: 60
+    - name: "solaredge2mqtt Solaredge Power Factor"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      value_template: "{{ value_json.ac.power.factor }}"
+      expire_after: 60
+    - name: "solaredge2mqtt Solaredge Power Frequency"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Hz"
+      value_template: "{{ value_json.ac.frequency }}"
+      expire_after: 60
+    - name: "solaredge2mqtt Solaredge Status"
+      state_topic: "solaredge/modbus/inverter"
+      availability:
+        - topic: "solaredge/status"
+      value_template: "{{ value_json.status }}"
+      expire_after: 60
     - name: "solaredge2mqtt Powerflow"
       state_topic: "solaredge/powerflow"
       availability:
@@ -198,3 +295,118 @@ mqtt:
       value_template: "{{ value_json.ac.power.actual}}"
       json_attributes_topic: "solaredge/modbus/inverter"
       expire_after: 60
+
+      # panels:
+    - name: "solaredge2mqtt Module 127F8879-92 Energy"
+      state_topic: "solaredge/monitoring/module/127F8879-92"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F8879-92"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F7E57-66 Energy"
+      state_topic: "solaredge/monitoring/module/127F7E57-66"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F7E57-66"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127DB2F1-32 Energy"
+      state_topic: "solaredge/monitoring/module/127DB2F1-32"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127DB2F1-32"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F55D8-BE Energy"
+      state_topic: "solaredge/monitoring/module/127F55D8-BE"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F55D8-BE"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F829C-AF Energy"
+      state_topic: "solaredge/monitoring/module/127F829C-AF"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F829C-AF"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F4BC6-A2 Energy"
+      state_topic: "solaredge/monitoring/module/127F4BC6-A2"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F4BC6-A2"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127FC84B-A4 Energy"
+      state_topic: "solaredge/monitoring/module/127FC84B-A4"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127FC84B-A4"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 12709E7E-9E Energy"
+      state_topic: "solaredge/monitoring/module/12709E7E-9E"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/12709E7E-9E"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127DB1A0-E0 Energy"
+      state_topic: "solaredge/monitoring/module/127DB1A0-E0"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127DB1A0-E0"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F827E-91 Energy"
+      state_topic: "solaredge/monitoring/module/127F827E-91"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F827E-91"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127E58F6-DE Energy"
+      state_topic: "solaredge/monitoring/module/127E58F6-DE"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127E58F6-DE"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127FD1F6-58 Energy"
+      state_topic: "solaredge/monitoring/module/127FD1F6-58"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127FD1F6-58"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127E588B-73 Energy"
+      state_topic: "solaredge/monitoring/module/127E588B-73"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127E588B-73"
+      expire_after: 1200
+    - name: "solaredge2mqtt Module 127F80CF-E0 Energy"
+      state_topic: "solaredge/monitoring/module/127F80CF-E0"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/127F80CF-E0"
+      expire_after: 1200
+

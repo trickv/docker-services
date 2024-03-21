@@ -924,3 +924,18 @@
   - set_conversation_response: The net meter is at {{ sensor.my_current_net_metering
       }} kilowatt hours.
   mode: single
+- id: '1710996081221'
+  alias: Notify solar fault
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.solaredge2mqtt_solaredge_status
+    to: Fault
+  condition: []
+  action:
+  - device_id: a54c38b61418a07ff604bdf7ddd888b4
+    domain: mobile_app
+    type: notify
+    message: Solar fault
+  mode: single

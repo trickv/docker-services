@@ -258,27 +258,17 @@ services:
   solaredge2mqtt:
     container_name: solaredge2mqtt
     image: ghcr.io/deroetzi/solaredge2mqtt:latest
-    #secrets:
-    # 55 - se2mqtt_mqtt__password
-    # - se2mqtt_monitoring__password
-    # - se2mqtt_wallbox__password
-    # - se2mqtt_influxdb__token
-    # - se2mqtt_weather__api_key
     environment:
       - SE2MQTT_LOGGING_LEVEL=DEBUG
-      - SE2MQTT_LOCATION__LATITUDE
-      - SE2MQTT_LOCATION__LONGITUDE
       - SE2MQTT_MODBUS__HOST=solaredge-inverter.home.vanstaveren.us
       - SE2MQTT_MQTT__BROKER=litecoin.home.vanstaveren.us
       - SE2MQTT_MQTT__USERNAME=anonymous
       - SE2MQTT_MQTT__PASSWORD=x
-      - SE2MQTT_MONITORING__SITE_ID=1735273
-      - SE2MQTT_MONITORING__PASSWORD=KwyAM2wzKSYWJ4cmHsw7
       - SE2MQTT_MONITORING__USERNAME=sp@vanstaveren.us
-      - SE2MQTT_INFLUXDB__HOST=foo
-    #  - TZ=Europe/Berlin
       - TZ="America/Chicago"
     restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   bb_exporter:
     image: prom/blackbox-exporter:latest

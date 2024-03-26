@@ -939,3 +939,18 @@
     type: notify
     message: Solar fault
   mode: single
+- id: '1711227208652'
+  alias: Net meter is low
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.my_current_net_metering
+    below: 20
+  condition: []
+  action:
+  - device_id: a54c38b61418a07ff604bdf7ddd888b4
+    domain: mobile_app
+    type: notify
+    message: Net meter low
+  mode: single

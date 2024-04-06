@@ -245,7 +245,7 @@ mqtt:
       state_topic: "solaredge/modbus/inverter"
       availability:
         - topic: "solaredge/status"
-      value_template: "{{ value_json.power.actual}}"
+      value_template: "{{ value_json.ac.power.actual}}"
       expire_after: 60
     - name: "solaredge2mqtt Solaredge Power Reactive"
       state_topic: "solaredge/modbus/inverter"

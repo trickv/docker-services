@@ -265,6 +265,9 @@ services:
       - SE2MQTT_MQTT__USERNAME=anonymous
       - SE2MQTT_MQTT__PASSWORD=x
       - SE2MQTT_MONITORING__USERNAME=sp@vanstaveren.us
+      - SE2MQTT_LOCATION__LATITUDE=41.8781
+      - SE2MQTT_LOCATION__LONGITUDE=-88.0754
+      - SE2MQTT_FORECAST__ENABLE=true
       - TZ="America/Chicago"
     restart: unless-stopped
     labels:

@@ -324,3 +324,28 @@ station_fallback_online:
     type: notify
     message: Station FALLBACK online
   mode: single
+turn_on_3d_printer:
+  alias: Turn on 3d printer
+  sequence:
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.s31_a_relay_2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: octoprint.printer_connect
+    data:
+      device_id: c2a9e505cbff1d2245c2d31d5d37591e
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: octoprint.printer_connect
+    data:
+      device_id: c2a9e505cbff1d2245c2d31d5d37591e
+  mode: single

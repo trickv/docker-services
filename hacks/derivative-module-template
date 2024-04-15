@@ -1,0 +1,4 @@
+  - platform: derivative
+    name: "solaredge2mqtt Module XXX Power (Derivative)"
+    source: sensor.solaredge2mqtt_module_YYY_energy
+    unit_time: h

@@ -1,0 +1,8 @@
+    - name: "solaredge2mqtt Module XXX Energy"
+      state_topic: "solaredge/monitoring/module/XXX"
+      availability:
+        - topic: "solaredge/status"
+      unit_of_measurement: "Wh"
+      value_template: "{{ value_json.energy }}"
+      json_attributes_topic: "solaredge/monitoring/module/XXX"
+      expire_after: 60

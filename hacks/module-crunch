@@ -1,0 +1,6 @@
+for a in $(cat module-list); do cat module-template | sed s:XXX:$a:g; done
+
+for a in $(cat module-list); do
+    b=$(echo $a | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+    cat derivative-module-template | sed s:XXX:$a:g | sed s:YYY:$b:g
+done

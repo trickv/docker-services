@@ -4,6 +4,7 @@ unifi
 traefik
 monitoring/prom/master
 monitoring/grafana
+monitoring/influxdb
 hass-config/custom_components/
 hass-config/www/
 hass-config/tts/

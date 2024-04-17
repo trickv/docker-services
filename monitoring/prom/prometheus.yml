@@ -71,6 +71,7 @@ scrape_configs:
     static_configs:
       - targets: [
         'adsb1:9100',
+        'radiopi:9100',
         'ultracoin:9100',
         'sparge:9100',
         'daylapse1:9100',

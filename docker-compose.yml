@@ -213,6 +213,26 @@ services:
       - "traefik.http.routers.airsonic.tls.certresolver=le"
       - "traefik.http.services.airsonic.loadbalancer.server.port=4040"
 
+  minidlna:
+    image: giof71/minidlna
+    container_name: minidlna
+    network_mode: host
+    environment:
+      - MINIDLNA_ROOT_CONTAINER=M
+      - MINIDLNA_DIR_A_1=/music
+      - MINIDLNA_ENABLE_INOTIFY=YES
+      - MINIDLNA_FRIENDLY_NAME=minidlna-desktop
+      - MINIDLNA_FORCE_SORT_CRITERIA=+upnp:class,-dc:date,+upnp:album,+upnp:originalTrackNumber,+dc:title
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /mnt/music/Master_Collection:/music:ro
+      - ./minidlna/config/log:/log
+      - ./minidlna/config/db:/db
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
   nextcloud:
     container_name: nextcloud
     image: nextcloud:production-apache

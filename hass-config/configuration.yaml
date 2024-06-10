@@ -58,10 +58,12 @@ climate:
     ac_mode: true
     heater: switch.s31_m_relay
     # target_sensor: sensor.bedroom_temperature_2 # noisy
-    target_sensor: sensor.f_temperature
+    target_sensor: sensor.f_temperature # bat died Apr 24, this is better...
+    #target_sensor: sensor.bedroom_temperature_2
     target_temp: 74
     min_cycle_duration:
       minutes: 1
+    precision: 0.1
 #  - platform: generic_thermostat
 #    name: CJ Fan
 #    ac_mode: true

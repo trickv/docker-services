@@ -300,7 +300,7 @@ services:
       - SE2MQTT_LOCATION__LONGITUDE=-88.0754
       - SE2MQTT_FORECAST__ENABLE=true
       - SE2MQTT_INFLUXDB__HOST=litecoin.home.vanstaveren.us
-      - SE2MQTT_INFLUXDB__ORG=myorg
+      - SE2MQTT_INFLUXDB__ORG=e783cb08b19c36d7
       - TZ="America/Chicago"
     restart: unless-stopped
     labels:
@@ -309,6 +309,7 @@ services:
   influxdb:
     container_name: influxdb
     image: influxdb:2
+    restart: unless-stopped
     ports:
       - 8086:8086
     mem_limit: 200m
@@ -386,7 +387,7 @@ services:
       - --web.console.templates=/usr/share/prometheus/consoles
   
   grafana:
-    image: grafana/grafana:9.0.2
+    image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
     volumes:

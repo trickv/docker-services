@@ -124,6 +124,17 @@ services:
       - 8880:8880
       - 6789:6789
     restart: unless-stopped
+
+  music-assistant:
+    container_name: music-assistant
+    image: ghcr.io/music-assistant/server:latest
+    network_mode: host
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - ./music-assistant/data:/data
+      - /mnt/music:/mnt/music
+
   
   hass:
     container_name: hass

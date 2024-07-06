@@ -84,6 +84,7 @@ scrape_configs:
         'pong:9100',
         'octopi:9100',
         'vs1:9100',
+        'green.local:9100',
         ]
     scrape_interval: 10s
     scrape_timeout: 5s

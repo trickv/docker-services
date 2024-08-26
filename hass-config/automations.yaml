@@ -233,15 +233,34 @@
     data: {}
     target:
       entity_id: light.chair_lamp_office_503b90fe_level_light_color_on_off
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      entity_id: switch.tasmota2
+    data: {}
   mode: single
 - id: '1626832942531'
   alias: 'vacation: cycle light off'
   description: ''
   trigger:
   - platform: time
-    at: '21:03:00'
+    at: '22:34:00'
   condition: []
   action:
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.tasmota2
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
   - service: light.turn_off
     data: {}
     target:
@@ -430,13 +449,14 @@
     title: Boiler is cool
   mode: single
 - id: '1648773105964'
-  alias: desk off 5:30
+  alias: desk off 5:30 pm
   description: ''
   trigger:
   - platform: time
     at: '17:30'
   - platform: time
     at: 05:30:00
+    enabled: false
   condition: []
   action:
   - service: switch.turn_off
@@ -958,4 +978,62 @@
       transition: 1
     target:
       device_id: 470a9ae157247c582dbd6e332ca4d777
+  mode: single
+- id: '1719336300062'
+  alias: Power cycle wonky dehumidifier s31-h
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '33'
+    seconds: '33'
+  condition: []
+  action:
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.s31_h_relay
+  - delay:
+      hours: 0
+      minutes: 45
+      seconds: 0
+      milliseconds: 0
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.s31_h_relay
+  mode: single
+- id: '1719721903366'
+  alias: Basement water sensor
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.basement_water_esp32_touch_pad_gpio27
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - device_id: a54c38b61418a07ff604bdf7ddd888b4
+    domain: mobile_app
+    type: notify
+    message: Basement wet
+  mode: single
+- id: '1720942666101'
+  alias: Turn off kids br fan socket
+  description: ''
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: efdc52980cd6abdb7094a849e3d1d9b4
+    entity_id: 61fbe8bb4f11a140bb3e65639e854060
+    domain: switch
   mode: single

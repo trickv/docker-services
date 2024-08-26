@@ -123,6 +123,20 @@ sensor:
     start: "{{ now().replace(hour=0, minute=0, second=0) }}"
     end: "{{ now() }}"
   - platform: history_stats
+    name: Forced Air Cooling ON Today Ratio
+    entity_id: sensor.forced_air_action
+    state: "cooling"
+    type: ratio
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Forced Air Cooling ON Today Time
+    entity_id: sensor.forced_air_action
+    state: "cooling"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
     name: Boiler East ON rolling ratio 24h
     entity_id: switch.east
     state: "on"

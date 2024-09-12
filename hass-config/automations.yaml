@@ -339,24 +339,6 @@
     data:
       temperature: 69
   mode: single
-- id: '1639365555514'
-  alias: tree+mantle off night
-  description: ''
-  trigger:
-  - platform: time
-    at: '22:00'
-  condition: []
-  action:
-  - service: switch.turn_off
-    data: {}
-    target:
-      device_id: efdc52980cd6abdb7094a849e3d1d9b4
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  mode: single
 - id: '1639978625760'
   alias: distribute humidity
   description: ''
@@ -640,28 +622,6 @@
     device_id: 3c6207eba0f583625156fc48d3ef7793
     entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
     domain: switch
-  mode: single
-- id: '1670903510953'
-  alias: Tree+Mantle on evening
-  description: ''
-  trigger:
-  - platform: sun
-    event: sunset
-    offset: 0
-  - platform: time
-    at: '15:45:00'
-    enabled: false
-  condition: []
-  action:
-  - service: switch.turn_on
-    data: {}
-    target:
-      device_id: efdc52980cd6abdb7094a849e3d1d9b4
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
   mode: single
 - id: '1671685104560'
   alias: Office chair light off regularly
@@ -1023,17 +983,4 @@
     domain: mobile_app
     type: notify
     message: Basement wet
-  mode: single
-- id: '1720942666101'
-  alias: Turn off kids br fan socket
-  description: ''
-  trigger:
-  - platform: time
-    at: 04:00:00
-  condition: []
-  action:
-  - type: turn_off
-    device_id: efdc52980cd6abdb7094a849e3d1d9b4
-    entity_id: 61fbe8bb4f11a140bb3e65639e854060
-    domain: switch
   mode: single

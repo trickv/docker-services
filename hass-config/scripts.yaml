@@ -237,10 +237,10 @@ monitor_kids_br:
 water_vegetable_garden:
   alias: Water vegetable garden
   sequence:
-  - service: switch.turn_on
-    data: {}
+  - data: {}
     target:
       entity_id: switch.s31_g_relay
+    action: switch.turn_on
   - wait_for_trigger:
     - type: value
       platform: device
@@ -257,47 +257,49 @@ water_vegetable_garden:
       minutes: 5
       seconds: 0
       milliseconds: 0
-  - service: switch.turn_on
-    data: {}
+  - data: {}
     target:
       entity_id:
       - switch.d1_open
+    action: switch.turn_on
   - delay:
       hours: 0
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: switch.turn_on
-    data: {}
+  - data: {}
     target:
       entity_id:
       - switch.jeeoa
+    action: switch.turn_on
+    enabled: false
   - delay:
       hours: 0
       minutes: 15
       seconds: 0
       milliseconds: 0
-  - service: switch.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id:
       - switch.jeeoa
-  - service: switch.turn_on
-    data: {}
+    action: switch.turn_off
+    enabled: false
+  - data: {}
     target:
       entity_id: switch.d2_close
+    action: switch.turn_on
   - delay:
       hours: 0
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - service: switch.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: switch.s31_g_relay
-  - service: notify.mobile_app_trickypixel
-    data:
+    action: switch.turn_off
+  - data:
       message: Garden has been watered
+    action: notify.mobile_app_trickypixel
   mode: single
   icon: mdi:gold
 station_fallback_online:
@@ -333,3 +335,24 @@ turn_on_3d_printer:
     data:
       device_id: c2a9e505cbff1d2245c2d31d5d37591e
   mode: single
+pause_boost_fan_for_30_minutes:
+  alias: 'Pause boost fan for 30 minutes '
+  sequence:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.shellyplus1_b8d61a8815b8_switch_0
+    data: {}
+  description: ''
+  icon: mdi:air-conditioner
+  mode: restart

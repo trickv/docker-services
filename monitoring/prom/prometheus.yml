@@ -59,6 +59,7 @@ scrape_configs:
         - 172.16.17.66
         - minor.local
         - ci-wwan.home.vanstaveren.us
+        - 172.16.17.154
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

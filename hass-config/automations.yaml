@@ -772,25 +772,6 @@
       entity_id: media_player.office
     enabled: false
   mode: single
-- id: '1675828963765'
-  alias: Kids BR Door opened notification PV
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.lumi_lumi_sensor_magnet_opening
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: notify.mobile_app_pixel_6
-    data:
-      message: Kids BR Door opened
-      data:
-        notification_icon: mdi:human-child
-        channel: KidsBRDoor
-        timeout: 3600
-  mode: single
 - id: '1686506956209'
   alias: Kids BR door opened notification SRW
   description: ''

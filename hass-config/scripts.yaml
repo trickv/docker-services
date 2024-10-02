@@ -70,10 +70,10 @@ gardener_water_for_30m:
 station_1_phoning_home:
   alias: Station 1 phoning home
   sequence:
-  - device_id: ce85b610490d6cfb8bb295931ab62e7c
+  - device_id: a54c38b61418a07ff604bdf7ddd888b4
     domain: mobile_app
     type: notify
-    message: Station receiving beacon (1)
+    message: station 1 phoning home
   mode: single
 station_2_online:
   alias: Station 2 online

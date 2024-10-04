@@ -126,15 +126,17 @@ services:
       - 8443:8443
       - 3478:3478/udp
       - 10001:10001/udp
-      #- 8080:8080
-      - 8081:8080
+      #- 8080:8080 # standard inform port; we don't use it due to conflict with traefik
+      - 8081:8080 # non-standard inform port; must customize unifi system.properties to make this work
       #- 1900:1900/udp #optional
       - 8843:8843 #optional
       - 8880:8880 #optional
       - 6789:6789 #optional
       - 5514:5514/udp #optional
     restart: unless-stopped
-    #mem_limit: 1000m
+    mem_limit: 1200m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   unifi-db:
     image: docker.io/mongo:7
@@ -150,7 +152,9 @@ services:
       - ./unifi-network-controller/mongodb/data:/data/db
       - ./unifi-network-controller/mongodb/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
     restart: unless-stopped
-    mem_limit: 500m
+    mem_limit: 300m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
 
   music-assistant:

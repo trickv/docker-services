@@ -335,6 +335,11 @@ services:
       - SE2MQTT_INFLUXDB__ORG=e783cb08b19c36d7
       - TZ="America/Chicago"
     restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
     labels:
       - com.centurylinklabs.watchtower.enable=true
 

@@ -1,0 +1,15 @@
+http:
+  routers:
+    immich:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`immich.home.v9n.us`)"
+      service: "immich"
+      tls:
+        certResolver: le
+
+  services:
+    immich:
+      loadBalancer:
+        servers:
+          - url: "http://minor:2283"

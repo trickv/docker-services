@@ -1,7 +1,7 @@
 backup
 airsonic-config
 unifi
-traefik
+traefik/acme
 monitoring/prom/master
 monitoring/grafana
 monitoring/influxdb

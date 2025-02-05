@@ -7,3 +7,4 @@ home-assistant.log*
 home-assistant_v2.db*
 zigbee.db*
 blueprints
+.schluter.conf

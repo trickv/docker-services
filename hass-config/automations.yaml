@@ -822,7 +822,6 @@
     data: {}
     target:
       entity_id:
-      - switch.s31_m_relay
       - switch.s31_k_relay
   mode: single
 - id: '1733752143389'
@@ -846,7 +845,6 @@
     data: {}
     target:
       entity_id:
-      - switch.s31_m_relay
       - switch.s31_k_relay
   mode: single
 - id: '1733837931949'
@@ -1015,4 +1013,81 @@
       domain: mobile_app
       type: notify
       message: Laptop left plugged into offline dock
+  mode: single
+- id: '1739122634255'
+  alias: Laundry wash done
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: c5bc4eb0a67cf61627be39e104e3d918
+    entity_id: 2e98772e60585708604472a37b1cc885
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: eeffac4fec4d4fd55747896f15cdfbec
+    domain: mobile_app
+    type: notify
+    message: "\U0001F514 laundry wash done "
+  mode: single
+- id: '1739222992026'
+  alias: Turn off 2F Heat evening if empty
+  description: ''
+  triggers:
+  - trigger: time
+    at: '17:45:00'
+  conditions:
+  - type: is_not_occupied
+    condition: device
+    device_id: dab2bab0e2376b20d553cd5cf74108db
+    entity_id: ac688f0b30900229e25caa5bfde4558b
+    domain: binary_sensor
+  - type: is_not_occupied
+    condition: device
+    device_id: 4fd0631621dd0d723fce00f95f0f8e5a
+    entity_id: c31773a454e9f1943dcea54a8f5a6c71
+    domain: binary_sensor
+  actions:
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.turn_off_2f_heat
+  mode: single
+- id: '1739501981216'
+  alias: Turn on floor heat AM schedule
+  description: ''
+  triggers:
+  - trigger: time
+    at: 07:30:00
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      hvac_mode: heat
+      temperature: 74
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+  mode: single
+- id: '1739502038606'
+  alias: Turn off floor heat night
+  description: ''
+  triggers:
+  - trigger: time
+    at: '21:00:00'
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      hvac_mode: 'off'
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+    enabled: false
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: climate.ditra_heat_e_rs1
   mode: single

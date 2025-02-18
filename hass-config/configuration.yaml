@@ -426,7 +426,3 @@ mqtt:
       json_attributes_topic: "solaredge/monitoring/module/127F80CF-E0"
       expire_after: 1200
 
-schluter:
-  username: trick@vanstaveren.us
-  password: !secret schluter_password
-

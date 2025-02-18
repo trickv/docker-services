@@ -130,3 +130,13 @@ scrape_configs:
   - job_name: 'tncexporter'
     static_configs:
       - targets: ['radiopi:9110']
+
+  - job_name: immich_api
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['minor:8081']
+
+  - job_name: immich_microservices
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['minor:8082']

@@ -453,7 +453,7 @@ baby_br_jt:
           hours: 0
           minutes: 0
           seconds: 0
-          milliseconds: 100
+          milliseconds: 200
         enabled: true
       while:
       - condition: template
@@ -489,3 +489,22 @@ work_in_basement_for_2h_lights_on:
     target:
       entity_id: automation.motion_basement_big_lights
     data: {}
+floor_heat_off_1h:
+  sequence:
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - action: climate.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+  alias: Floor heat off 1h
+  description: ''

@@ -137,6 +137,13 @@ sensor:
     start: "{{ now().replace(hour=0, minute=0, second=0) }}"
     end: "{{ now() }}"
   - platform: history_stats
+    name: Bathroom Floor Heating Daily
+    entity_id: sensor.bathroom_floor_heating_action
+    state: "heating"
+    type: time
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
     name: Boiler East ON rolling ratio 24h
     entity_id: switch.east
     state: "on"
@@ -161,6 +168,17 @@ sensor:
       forced_air_action:
         friendly_name: "Forced Air Action"
         value_template: "{{ state_attr('climate.dining_room_2', 'hvac_action') }}"
+      bathroom_floor_heating_action:
+        friendly_name: "Bathroom floor heating action"
+        value_template: "{{ state_attr('climate.ditra_heat_e_rs1', 'hvac_action') }}"
+      bathroom_floor_heating_energy_daily:
+        # FIXME: delete this when done, and delete the HELPER too
+        friendly_name: "Bathroom floor heating energy daily"
+        #name: "Bathroom floor heating energy daily"
+        unit_of_measurement: "kWh"
+        value_template: "{{ (states('sensor.bathroom_floor_heating_daily') | float * 0.475) | round(2) }}"
+        device_class: "energy"
+        #state_class: "total"
       bedrooms_temp_difference:
         friendly_name: "Difference between bedrooms"
         unit_of_measurement: "F"
@@ -241,6 +259,12 @@ template:
           {{ float(states("sensor.total_daily_energy")) - float(states("sensor.solaredge_energy_today")) }}
         device_class: energy
         state_class: total
+      - name: "TEST Bathroom floor heating energy daily different template format"
+        unit_of_measurement: "kWh"
+        state: >
+          {{ (states('sensor.bathroom_floor_heating_daily') | float * 0.475) | round(2) }}
+        device_class: "energy"
+        state_class: "total"
 
 intent_script:
   GetTime:

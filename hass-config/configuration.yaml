@@ -450,3 +450,22 @@ mqtt:
       json_attributes_topic: "solaredge/monitoring/module/127F80CF-E0"
       expire_after: 1200
 
+rest_command:
+  radiopi_pan_left:
+    url: "http://radiopi:8070/pan/left"
+    method: "get"
+  radiopi_pan_right:
+    url: "http://radiopi:8070/pan/right"
+    method: "get"
+  radiopi_tilt_up:
+    url: "http://radiopi:8070/tilt/up"
+    method: "get"
+  radiopi_tilt_down:
+    url: "http://radiopi:8070/tilt/down"
+    method: "get"
+  radiopi_reset:
+    url: "http://radiopi:8070/reset"
+    method: "get"
+  radiopi_focus_infinity:
+    url: "http://radiopi:8070/focus/infinity"
+    method: "get"

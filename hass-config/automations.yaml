@@ -920,7 +920,7 @@
       hours: 0
       minutes: 5
       seconds: 0
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
+  - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
     domain: mobile_app
     type: notify
     message: Laptop left plugged into offline dock
@@ -930,7 +930,7 @@
       entity_id: binary_sensor.desk_power_status
       state: 'on'
     then:
-    - device_id: eeffac4fec4d4fd55747896f15cdfbec
+    - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
       domain: mobile_app
       type: notify
       message: Laptop left plugged into offline dock
@@ -946,7 +946,7 @@
     trigger: device
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
+  - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
     domain: mobile_app
     type: notify
     message: "\U0001F514 laundry wash done "

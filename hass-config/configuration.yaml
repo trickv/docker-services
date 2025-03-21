@@ -273,6 +273,11 @@ intent_script:
 
 mqtt:
   sensor:
+    - name: "OctoPrint Z Height"
+      state_topic: "octoPrint/event/ZChange"
+      unit_of_measurement: "mm"
+      value_template: "{{ value_json.new }}"
+      icon: "mdi:axis-z-arrow"
     - name: "solaredge2mqtt Solaredge Total Energy"
       state_topic: "solaredge/modbus/inverter"
       availability:
@@ -469,3 +474,24 @@ rest_command:
   radiopi_focus_infinity:
     url: "http://radiopi:8070/focus/infinity"
     method: "get"
+  octoprint_z100:
+    url: "http://octopi/api/printer/command"
+    method: "post"
+    headers:
+      X-Api-Key: !secret octoprint_api_key
+      Content-Type: "application/json"
+    payload: '{"commands": ["G0 Z100"]}'
+  octoprint_hotend_warm:
+    url: "http://octopi/api/printer/command"
+    method: "post"
+    headers:
+      X-Api-Key: !secret octoprint_api_key
+      Content-Type: "application/json"
+    payload: '{"commands": ["M104 S180"]}'
+  octoprint_hotend_off:
+    url: "http://octopi/api/printer/command"
+    method: "post"
+    headers:
+      X-Api-Key: !secret octoprint_api_key
+      Content-Type: "application/json"
+    payload: '{"commands": ["M104 S0"]}'

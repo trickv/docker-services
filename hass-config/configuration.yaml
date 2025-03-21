@@ -462,6 +462,12 @@ rest_command:
   radiopi_pan_right:
     url: "http://radiopi:8070/pan/right"
     method: "get"
+  radiopi_zoom_in:
+    url: "http://radiopi:8070/zoom/in"
+    method: "get"
+  radiopi_zoom_out:
+    url: "http://radiopi:8070/zoom/out"
+    method: "get"
   radiopi_tilt_up:
     url: "http://radiopi:8070/tilt/up"
     method: "get"

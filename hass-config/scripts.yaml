@@ -135,15 +135,15 @@ stop_and_reset_kids_br_sonos_for_nap:
     then:
     - stop: Media is playing so don't annoy the operator.
     else: []
-  - service: media_player.media_stop
-    data: {}
+  - data: {}
     target:
       entity_id: media_player.baby_br
-  - service: media_player.volume_set
-    data:
-      volume_level: 0.08
+    action: media_player.media_stop
+  - data:
+      volume_level: 0.36
     target:
       entity_id: media_player.baby_br
+    action: media_player.volume_set
   mode: single
   icon: mdi:chat-sleep
 boiler_gone_for_the_day:
@@ -508,3 +508,107 @@ floor_heat_off_1h:
       entity_id: climate.ditra_heat_e_rs1
   alias: Floor heat off 1h
   description: ''
+baby_br_cj_auld_lang_syne:
+  sequence:
+  - action: script.baby_br_back_to_top
+    metadata: {}
+    data: {}
+  - repeat:
+      sequence:
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.baby_br
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 200
+        enabled: true
+      while:
+      - condition: template
+        value_template: '{{ not is_state_attr(''media_player.baby_br'',''media_title'',
+          ''Auld Lang Syne'') }}'
+      - condition: template
+        value_template: '{{ repeat.index <= 200 }}'
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.baby_br
+  alias: 'Baby BR: CJ Auld Lang Syne'
+  description: ''
+baby_br_ted_daughters:
+  sequence:
+  - action: script.baby_br_back_to_top
+    metadata: {}
+    data: {}
+  - repeat:
+      sequence:
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.baby_br
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 500
+        enabled: true
+      while:
+      - condition: template
+        value_template: '{{ not is_state_attr(''media_player.baby_br'',''media_title'',
+          ''Daughters'') }}'
+      - condition: template
+        value_template: '{{ repeat.index <= 200 }}'
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.baby_br
+  alias: 'Baby BR: Ted - Daughters'
+  description: ''
+seek_sonos_track_kids_br:
+  alias: Seek Sonos Track Kids BR
+  description: Skips tracks until a specified song is found.
+  mode: single
+  fields:
+    target_title:
+      description: The title of the song to seek.
+      example: Daughters
+      required: true
+      selector:
+        text:
+  sequence:
+  - variables:
+      target_track: '{{ target_title }}'
+  - action: script.baby_br_back_to_top
+    metadata: {}
+    data: {}
+  - repeat:
+      sequence:
+      - variables:
+          current_track: '{{ state_attr(''media_player.baby_br'', ''media_title'')
+            }}'
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          entity_id: media_player.baby_br
+      - wait_template: "{{ state_attr('media_player.baby_br', 'media_title') != current_track
+          \n   and states.media_player.baby_br.attributes.media_title is not none
+          }}\n"
+        timeout: 00:00:05
+      while:
+      - condition: template
+        value_template: '{{ not is_state_attr(''media_player.baby_br'', ''media_title'',
+          target_track) }}'
+      - condition: template
+        value_template: '{{ repeat.index <= 200 }}'
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.baby_br

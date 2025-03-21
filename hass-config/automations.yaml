@@ -318,39 +318,6 @@
     type: notify
     message: Garden watered
   mode: single
-- id: '1666318883458'
-  alias: Front porch light on
-  description: ''
-  trigger:
-  - platform: sun
-    event: sunset
-    offset: 0
-  condition: []
-  action:
-  - type: turn_on
-    device_id: a8b1f49057f90cff959cb5036e509d49
-    entity_id: light.ledvance_a19_g2_rgbw_light
-    domain: light
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.front_porch_north_light
-  mode: single
-- id: '1666318916233'
-  alias: Front porch light off
-  description: ''
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id:
-      - light.front_porch_north_light
-      - light.ledvance_a19_g2_rgbw_light
-  mode: single
 - id: '1667252451859'
   alias: 3d printer power off on completion (binary state)
   description: ''
@@ -801,52 +768,6 @@
     type: notify
     message: Auto desk power + heat
   mode: single
-- id: '1733752052385'
-  alias: Turn off outdoor lights dual condition
-  description: ''
-  triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.pws_solar_radiation_w_m2
-    for:
-      hours: 0
-      minutes: 10
-      seconds: 0
-    above: 50
-  - trigger: time
-    at: '23:00:00'
-  conditions: []
-  actions:
-  - action: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id:
-      - switch.s31_k_relay
-  mode: single
-- id: '1733752143389'
-  alias: Turn outdoor lights on when it’s getting dark
-  description: ''
-  triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.pws_solar_radiation_w_m2
-    for:
-      hours: 0
-      minutes: 10
-      seconds: 0
-    below: 30
-  conditions:
-  - condition: time
-    after: '14:00:00'
-  actions:
-  - action: switch.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id:
-      - switch.s31_k_relay
-  mode: single
 - id: '1733837931949'
   alias: mantle morning
   description: ''
@@ -1059,7 +980,7 @@
   description: ''
   triggers:
   - trigger: time
-    at: 07:30:00
+    at: 07:00:00
   conditions: []
   actions:
   - action: climate.set_temperature
@@ -1090,4 +1011,178 @@
     data: {}
     target:
       entity_id: climate.ditra_heat_e_rs1
+  mode: single
+- id: '1740088496535'
+  alias: Bare Conductive board media player handler
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.any_bare_conductive_touch
+    from: 'off'
+    to: 'on'
+  conditions:
+  - condition: or
+    conditions:
+    - condition: device
+      device_id: f86966f82182d00430b8a3c19170e6cd
+      domain: media_player
+      entity_id: a0af7052becd6ac79e46445b71797ca1
+      type: is_idle
+    - condition: device
+      device_id: f86966f82182d00430b8a3c19170e6cd
+      domain: media_player
+      entity_id: a0af7052becd6ac79e46445b71797ca1
+      type: is_paused
+  actions:
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.mama_room
+      data:
+        media_content_type: album
+        media_content_id: A:ALBUMARTIST/Greg & Steve/On the Move
+        enqueue: replace
+  mode: single
+- id: '1740403673499'
+  alias: Turn on floor heat when showering
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.shower_hot
+    above: 90
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 78
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 75
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+  mode: single
+- id: '1740748988349'
+  alias: Floor heat down afternoon
+  description: ''
+  triggers:
+  - trigger: time
+    at: '11:00:00'
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 72
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+    enabled: true
+  mode: single
+- id: '1740749024730'
+  alias: Floor heat up evening
+  description: ''
+  triggers:
+  - trigger: time
+    at: '18:00:00'
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 74
+    target:
+      entity_id: climate.ditra_heat_e_rs1
+    enabled: true
+  mode: single
+- id: '1740834018689'
+  alias: East zone use main sensor AM
+  description: ''
+  triggers:
+  - trigger: time
+    at: 07:00:00
+  conditions: []
+  actions:
+  - device_id: b1e59acd5c8a2379cfd94a2ef7a4428b
+    domain: select
+    entity_id: 952a9ffacf99608516ad6f78a5fb34de
+    type: select_option
+    option: Dining Room Sensor
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 68.5
+    target:
+      entity_id: climate.east_esp
+  mode: single
+- id: '1740834123743'
+  alias: East zone kids BR sensor PM
+  description: ''
+  triggers:
+  - trigger: time
+    at: '16:30:00'
+  conditions: []
+  actions:
+  - device_id: b1e59acd5c8a2379cfd94a2ef7a4428b
+    domain: select
+    entity_id: 952a9ffacf99608516ad6f78a5fb34de
+    type: select_option
+    option: Kids BR Sensor
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 69.5
+    target:
+      entity_id: climate.east_esp
+  mode: single
+- id: '1742404651635'
+  alias: Boiler control sensor error notify
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.east_encap_sensor
+    above: 100
+  - trigger: numeric_state
+    entity_id:
+    - sensor.west_encap_sensor
+    above: 100
+  - trigger: numeric_state
+    entity_id:
+    - sensor.east_kids_br
+    above: 100
+  conditions: []
+  actions:
+  - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
+    domain: mobile_app
+    type: notify
+    message: Boiler thermostat sensor unbelievably high
+  - action: notify.notify
+    data:
+      message: Boiler   X thermostat sensor unbelievably high
+      target:
+        user_id: 39e3b8070b1e4a79a3ab362df41ebb03
   mode: single

@@ -1,0 +1,18 @@
+http:
+  routers:
+    autorx:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`autorx.home.v9n.us`)"
+      service: "autorx"
+      tls:
+        certResolver: le
+      middlewares:
+        - "github-auth@docker"
+
+  services:
+    autorx:
+      loadBalancer:
+        servers:
+          - url: "http://172.16.17.181:5000"
+

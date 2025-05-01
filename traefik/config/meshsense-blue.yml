@@ -1,0 +1,17 @@
+http:
+  routers:
+    meshsense-blue:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`meshsense-blue.home.v9n.us`)"
+      service: "meshsense-blue"
+      tls:
+        certResolver: le
+      middlewares:
+        - "github-auth@docker"
+
+  services:
+    meshsense-blue:
+      loadBalancer:
+        servers:
+          - url: "http://litecoin:5920"

@@ -95,19 +95,6 @@ services:
     #command: -i 10
     mem_limit: 75m
 
-  rsync-obd:
-    image: axiom/rsync-server:latest
-    restart: unless-stopped
-    volumes:
-      - ./obd:/data
-    ports:
-      - 8730:873
-    environment:
-      - USERNAME=obd
-      - PASSWORD=obd
-    mem_limit: 15m
-
-
   unifi-network-application:
     image: lscr.io/linuxserver/unifi-network-application:latest
     container_name: unifi-network-application

@@ -1176,3 +1176,18 @@
       motion_sensor: binary_sensor.pantry_motion
       target_entity: light.ledvance_a19_g2_rgbw
       no_motion_wait: input_number.basement_big_lights_timeout
+- id: '1745983321410'
+  alias: Turn off driveway, deck and porch lights
+  description: ''
+  triggers:
+  - device_id: 8ae72a8034c3c3a090b27b9d00d1ade0
+    domain: zha
+    type: remote_button_double_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.turn_off_driveway_and_deck_and_porch_lights
+    metadata: {}
+    data: {}
+  mode: single

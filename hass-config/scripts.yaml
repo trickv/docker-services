@@ -633,3 +633,21 @@ seek_sonos_track:
     data: {}
     target:
       entity_id: '{{ media_player }}'
+turn_off_driveway_and_deck_and_porch_lights:
+  sequence:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - fa4e417e54969ea89e00936ea61c672a
+      - 308aa6e60b2fdbf3248c697ae8219a17
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.tasmota2
+      - switch.shellyplus1_b8d61a87fa48_switch_0
+  alias: Turn off driveway and deck and porch lights
+  description: ''

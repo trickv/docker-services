@@ -14,5 +14,5 @@ http:
     chasemapper:
       loadBalancer:
         servers:
-          - url: "http://172.16.17.181:5001"
+          - url: "http://green:5001"
 

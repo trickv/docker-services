@@ -1,0 +1,18 @@
+http:
+  routers:
+    uploadserver:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`uploadserver.home.v9n.us`)"
+      service: "uploadserver"
+      tls:
+        certResolver: le
+
+  services:
+    uploadserver:
+      loadBalancer:
+        servers:
+          - url: "http://litecoin:9987"
+
+
+

@@ -734,6 +734,7 @@
     data: {}
     target:
       entity_id: script.turn_on_2f_heat
+    enabled: false
   - device_id: eeffac4fec4d4fd55747896f15cdfbec
     domain: mobile_app
     type: notify

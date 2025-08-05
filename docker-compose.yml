@@ -466,6 +466,23 @@ services:
       - "traefik.http.routers.github-auth.tls.certresolver=le"
       - "traefik.http.routers.github-auth.rule=Host(`auth.home.v9n.us`)"
 
+  metra-timetable:
+    image: nginx:alpine
+    container_name: metra-timetable
+    volumes:
+      - /home/trick/src/github.com/trickv/metra-timetable:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metra.rule=Host(`metra-timetable.home.v9n.us`)"
+      - "traefik.http.routers.metra.entrypoints=websecure"
+      - "traefik.http.routers.metra.tls.certresolver=le"
+      # If using HTTPS:
+      # - "traefik.http.routers.static-site.entrypoints=websecure"
+      # - "traefik.http.routers.static-site.tls=true"
+    environment:
+      - NGINX_HOST=example.local
+    restart: unless-stopped
+
   # https://community.home-assistant.io/t/openwakeword-docker/626131/5
   openwakeword:
     container_name: openwakeword

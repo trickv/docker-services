@@ -534,6 +534,24 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
+  codeserver:
+    image: codercom/code-server:latest
+    container_name: code-server
+    volumes:
+      - $HOME:/home/coder/home
+    restart: unless-stopped
+    ports:
+      - 7808:8080
+    environment:
+      - PASSWORD=freewilly
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.codeserver.rule=Host(`codeserver.home.v9n.us`)"
+      - "traefik.http.routers.codeserver.entrypoints=websecure"
+      - "traefik.http.routers.codeserver.tls.certresolver=le"
+      - "traefik.http.routers.codeserver.middlewares=github-auth"
+
 
   proxy_prometheus:
     container_name: tcpproxy_prometheus

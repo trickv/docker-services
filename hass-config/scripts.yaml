@@ -74,6 +74,12 @@ station_1_phoning_home:
     domain: mobile_app
     type: notify
     message: station 1 phoning home
+  - action: script.notify_a_person_on_all_devices
+    metadata: {}
+    data:
+      person: person.patrick_van_staveren
+      title: station 1 phoning home
+      message: station 1 phoning home
   mode: single
 station_2_online:
   alias: Station 2 online
@@ -82,6 +88,12 @@ station_2_online:
     domain: mobile_app
     type: notify
     message: Station 2 online
+  - action: script.notify_a_person_on_all_devices
+    metadata: {}
+    data:
+      person: person.patrick_van_staveren
+      title: station 2 online
+      message: station 2 online
   mode: single
 gardener_water_for_30m_2:
   alias: Gardener (socket) daily water
@@ -195,74 +207,6 @@ monitor_kids_br:
       entity_id: automation.notify_kids_br_door_opened_trickyiphone16
   mode: single
   icon: mdi:human-child
-water_vegetable_garden:
-  alias: Water vegetable garden
-  sequence:
-  - data: {}
-    target:
-      entity_id: switch.s31_g_relay
-    action: switch.turn_on
-  - wait_for_trigger:
-    - type: value
-      platform: device
-      device_id: 5032bb4ca0469ab7e8d2d7089f371c57
-      entity_id: sensor.uptime
-      domain: sensor
-      above: 61
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 5
-    timeout:
-      hours: 0
-      minutes: 5
-      seconds: 0
-      milliseconds: 0
-  - data: {}
-    target:
-      entity_id:
-      - switch.d1_open
-    action: switch.turn_on
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - data: {}
-    target:
-      entity_id:
-      - switch.jeeoa
-    action: switch.turn_on
-    enabled: false
-  - delay:
-      hours: 0
-      minutes: 15
-      seconds: 0
-      milliseconds: 0
-  - data: {}
-    target:
-      entity_id:
-      - switch.jeeoa
-    action: switch.turn_off
-    enabled: false
-  - data: {}
-    target:
-      entity_id: switch.d2_close
-    action: switch.turn_on
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - data: {}
-    target:
-      entity_id: switch.s31_g_relay
-    action: switch.turn_off
-  - data:
-      message: Garden has been watered
-    action: notify.mobile_app_trickypixel
-  mode: single
-  icon: mdi:gold
 station_fallback_online:
   alias: Station fallback online
   sequence:
@@ -270,6 +214,12 @@ station_fallback_online:
     domain: mobile_app
     type: notify
     message: 'Station fallback online '
+  - action: script.notify_a_person_on_all_devices
+    metadata: {}
+    data:
+      person: person.patrick_van_staveren
+      title: station fallback online
+      message: station fallback online
   mode: single
 turn_on_3d_printer:
   alias: Turn on 3d printer

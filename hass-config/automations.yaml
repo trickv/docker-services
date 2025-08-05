@@ -1192,3 +1192,174 @@
     metadata: {}
     data: {}
   mode: single
+- id: '1752118818480'
+  alias: Toggle boost fan to keep with ground floor
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: /5
+  conditions: []
+  actions:
+  - if:
+    - condition: numeric_state
+      entity_id: sensor.bedroom_temperature
+      above: sensor.dining_room_current_temperature
+    then:
+    - action: switch.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
+    else:
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: switch.shellyplus1_b8d61a8815b8_switch_0
+  mode: single
+- id: '1752187916924'
+  alias: 'Kitchen buttons: 8 M&S Delta'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_8_red_left
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen
+    data:
+      media_content_type: album
+      media_content_id: A:ALBUMARTIST/Mumford & Sons/Delta
+      enqueue: replace
+  mode: single
+- id: '1752188454637'
+  alias: 'Kitchen buttons: 1 volume up'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_1_green_right
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.volume_up
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.kitchen
+  mode: single
+- id: '1752188494780'
+  alias: 'Kitchen buttons: 2 volume down'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_2_green_left
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.volume_down
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.kitchen
+  mode: single
+- id: '1752190887151'
+  alias: 'Button 3: play/pause'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_3_blue_right
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.media_play_pause
+    metadata: {}
+    data: {}
+    target:
+      entity_id: media_player.kitchen
+  mode: single
+- id: '1752949285800'
+  alias: Button 7 ellipse
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_7_red_right
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen
+    data:
+      media_content_type: album
+      media_content_id: A:ALBUMARTIST/Imogen Heap/Ellipse
+      enqueue: replace
+  mode: single
+- id: '1752949321665'
+  alias: Button 6 sparks
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_6_yellow_left
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen
+    data:
+      media_content_type: album
+      media_content_id: A:ALBUMARTIST/Imogen Heap/Sparks (Deluxe Version)
+      enqueue: replace
+  mode: single
+- id: '1752949343764'
+  alias: Button 5 two lights FFF
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_5_yellow_right
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen
+    data:
+      media_content_type: album
+      media_content_id: A:ALBUMARTIST/Five For Fighting/Two Lights
+      enqueue: replace
+  mode: single
+- id: '1752949365817'
+  alias: Button 4
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.eightbuttons_button_4_blue_left
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.kitchen
+    data:
+      media_content_type: album
+      media_content_id: A:ALBUMARTIST/Mumford & Sons/Delta
+      enqueue: replace
+  mode: single

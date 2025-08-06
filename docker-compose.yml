@@ -483,6 +483,55 @@ services:
       - NGINX_HOST=example.local
     restart: unless-stopped
 
+  goatcounter:
+    image: ghcr.io/riesinger/goatcounter-docker:2
+    container_name: goatcounter
+    restart: unless-stopped
+    ports:
+      - 8580:8080
+    volumes:
+      - ./goatcounter:/goatcounter/db
+    environment:
+      - GOATCOUNTER_DOMAIN=stats.home.v9n.us
+      - GOATCOUNTER_EMAIL=trick@vanstaveren.us
+      - GOATCOUNTER_PASSWORD=Mintel123!
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+
+      # 📈 Protected main route (dashboard)
+      - "traefik.http.routers.goatcounter.rule=Host(`stats.home.v9n.us`)"
+      - "traefik.http.routers.goatcounter.entrypoints=websecure"
+      - "traefik.http.routers.goatcounter.tls.certresolver=le"
+      - "traefik.http.routers.goatcounter.middlewares=github-auth"
+
+      # ✅ Public router for tracking scripts/beacons
+      - "traefik.http.routers.goatcounter-public.rule=Host(`stats.home.v9n.us`) && (Path(`/count`) || Path(`/count.js`))"
+      - "traefik.http.routers.goatcounter-public.entrypoints=websecure"
+      - "traefik.http.routers.goatcounter-public.priority=100"
+      - "traefik.http.routers.goatcounter-public.service=goatcounter@docker"
+
+
+
+# docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - 3001:8080
+    volumes:
+      - ./open-webui:/app/backend/data
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.open-webui.rule=Host(`oi.home.v9n.us`)"
+      - "traefik.http.routers.open-webui.entrypoints=websecure"
+      - "traefik.http.routers.open-webui.tls.certresolver=le"
+      - "traefik.http.routers.open-webui.middlewares=github-auth"
+
   # https://community.home-assistant.io/t/openwakeword-docker/626131/5
   openwakeword:
     container_name: openwakeword

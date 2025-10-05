@@ -267,26 +267,6 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
-  nextcloud:
-    container_name: nextcloud
-    image: nextcloud:production-apache
-    volumes:
-      - /mnt/nextcloud:/var/www/html
-      - /mnt/pictures:/mnt/pictures
-      - /mnt/music/Master_Collection:/mnt/music
-    mem_limit: 1500m
-    restart: unless-stopped
-    environment:
-      - NEXTCLOUD_TRUSTED_DOMAIN=nextcloud.home.v9n.us"
-      - TRUSTED_PROXIES=172.16.0.0/12
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-      - "traefik.enable=true"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.home.v9n.us`)"
-      - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.routers.nextcloud.tls.certresolver=le"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
-
   snmp_exporter:
     image: prom/snmp-exporter:latest
     container_name: snmp-exporter

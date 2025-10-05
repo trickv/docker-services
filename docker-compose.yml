@@ -680,6 +680,28 @@ services:
       - "traefik.http.routers.adsb1.tls.certresolver=le"
       - "traefik.http.services.adsb1.loadbalancer.server.port=80"
 
+#  plex:
+#    image: lscr.io/linuxserver/plex:latest
+#    container_name: plex
+#    network_mode: host
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/Chicago
+#      - VERSION=docker
+#      - PLEX_CLAIM=claim-vQD1tSrsBZfxU_3wvQ4E
+#    volumes:
+#      - ./plex/config:/config
+#      - /mnt/music/Master_Collection:/music
+#    labels:
+##      - "traefik.enable=true"
+##      - "traefik.http.routers.plex.rule=Host(`plex.home.v9n.us`)"
+#      - "traefik.http.routers.plex.entrypoints=websecure"
+#      - "traefik.http.routers.plex.tls.certresolver=le"
+#      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+#    restart: unless-stopped
+
+
 
 networks:
   monitoring:

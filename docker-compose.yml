@@ -451,11 +451,13 @@ services:
     container_name: metra-timetable
     volumes:
       - /home/trick/src/github.com/trickv/metra-timetable:/usr/share/nginx/html:ro
+      - /home/trick/src/github.com/trickv/metra-timetable/gzip.conf:/etc/nginx/conf.d/gzip.conf:ro
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.metra.rule=Host(`metra-timetable.home.v9n.us`)"
       - "traefik.http.routers.metra.entrypoints=websecure"
       - "traefik.http.routers.metra.tls.certresolver=le"
+      #- "traefik.http.routers.metra.middlewares=compress@internal"
       # If using HTTPS:
       # - "traefik.http.routers.static-site.entrypoints=websecure"
       # - "traefik.http.routers.static-site.tls=true"
@@ -480,7 +482,7 @@ services:
       - "traefik.enable=true"
 
       # 📈 Protected main route (dashboard)
-      - "traefik.http.routers.goatcounter.rule=Host(`stats.home.v9n.us`)"
+      - "traefik.http.routers.goatcounter.rule=Host(`stats-admin.home.v9n.us`)"
       - "traefik.http.routers.goatcounter.entrypoints=websecure"
       - "traefik.http.routers.goatcounter.tls.certresolver=le"
       - "traefik.http.routers.goatcounter.middlewares=github-auth"
@@ -488,8 +490,9 @@ services:
       # ✅ Public router for tracking scripts/beacons
       - "traefik.http.routers.goatcounter-public.rule=Host(`stats.home.v9n.us`) && (Path(`/count`) || Path(`/count.js`))"
       - "traefik.http.routers.goatcounter-public.entrypoints=websecure"
+      - "traefik.http.routers.goatcounter-public.tls.certresolver=le"
       - "traefik.http.routers.goatcounter-public.priority=100"
-      - "traefik.http.routers.goatcounter-public.service=goatcounter@docker"
+      - "traefik.http.routers.goatcounter-public.service=goatcounter-docker-services@docker"
 
 
 

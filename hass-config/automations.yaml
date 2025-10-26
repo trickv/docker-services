@@ -973,7 +973,7 @@
   description: ''
   triggers:
   - trigger: time
-    at: '21:00:00'
+    at: '22:00:00'
   conditions: []
   actions:
   - action: climate.set_temperature
@@ -1002,28 +1002,338 @@
   - condition: or
     conditions:
     - condition: device
-      device_id: f86966f82182d00430b8a3c19170e6cd
+      device_id: 6d5374ccf3523575e3979b14a9f2b657
       domain: media_player
-      entity_id: a0af7052becd6ac79e46445b71797ca1
+      entity_id: 1fd854c8ee9e0fe56cb74543f7556681
       type: is_idle
     - condition: device
-      device_id: f86966f82182d00430b8a3c19170e6cd
+      device_id: 6d5374ccf3523575e3979b14a9f2b657
       domain: media_player
-      entity_id: a0af7052becd6ac79e46445b71797ca1
+      entity_id: 1fd854c8ee9e0fe56cb74543f7556681
       type: is_paused
   actions:
   - if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
-      state: '0'
+      state: '0.0'
     then:
     - action: media_player.play_media
       target:
-        entity_id: media_player.mama_room
+        entity_id: media_player.bedroom_sarah
       data:
-        media_content_type: album
-        media_content_id: A:ALBUMARTIST/Greg & Steve/On the Move
         enqueue: replace
+        media:
+          media_content_id: A:ALBUMARTIST/Greg & Steve/On the Move
+          media_content_type: album
+          metadata: {}
+    alias: 0 Greg and Steve
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '1.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: A:ALBUMARTIST/Kambolo/All
+          media_content_type: album
+          metadata: {}
+    alias: 1 Kambolo
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '2.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    alias: 2 Stories
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '3.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2008%20-%20Constellation%20LaPointe.flac
+          media_content_type: track
+          metadata:
+            title: Constellation LaPointe
+            thumbnail: /api/media_player_proxy/media_player.bedroom_sarah/browse_media/track/x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2008%20-%20Constellation%20LaPointe.flac?token=cf773abb8519625b0cef77e12c67d87de021945cc0801de27eaeb4a6a008c450
+            media_class: track
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: library
+              media_content_id: ''
+            - media_content_type: directory
+              media_content_id: 'S:'
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind
+            browse_entity_id: media_player.bedroom_sarah
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: add
+        media:
+          media_content_id: x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2009%20-%20Over%20to%20Old%20LaPointe.flac
+          media_content_type: track
+          metadata:
+            title: Over to Old LaPointe
+            thumbnail: /api/media_player_proxy/media_player.bedroom_sarah/browse_media/track/x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2009%20-%20Over%20to%20Old%20LaPointe.flac?token=cf773abb8519625b0cef77e12c67d87de021945cc0801de27eaeb4a6a008c450
+            media_class: track
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: library
+              media_content_id: ''
+            - media_content_type: directory
+              media_content_id: 'S:'
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson
+            - media_content_type: directory
+              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind
+            browse_entity_id: media_player.bedroom_sarah
+    alias: 3 Over to Lapointe
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '4.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    alias: '4 (fixme: can''t stop the feeling)'
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '5.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '6.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '7.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '8.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '9.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '10.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
+  - if:
+    - condition: state
+      entity_id: sensor.active_bare_conductive_pin
+      state: '11.0'
+    then:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom_sarah
+      data:
+        enqueue: replace
+        media:
+          media_content_id: SQ:19
+          media_content_type: favorite_item_id
+          metadata:
+            title: Cj Story Time
+            thumbnail: ''
+            media_class: playlist
+            children_media_class:
+            navigateIds:
+            - {}
+            - media_content_type: favorites
+              media_content_id: ''
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
+            browse_entity_id: media_player.bedroom_sarah
+    enabled: false
   mode: single
 - id: '1740403673499'
   alias: Turn on floor heat when showering
@@ -1363,3 +1673,12 @@
       media_content_id: A:ALBUMARTIST/Mumford & Sons/Delta
       enqueue: replace
   mode: single
+- id: '1758673497120'
+  alias: Enable bare conductive music control when motion is present
+  description: ''
+  use_blueprint:
+    path: freakshock88/motion_illuminance_activated_entity.yaml
+    input:
+      motion_sensor: binary_sensor.finished_basement_motion_iaszone
+      target_entity: automation.bare_conductive_board_media_player_handler
+      no_motion_wait: input_number.basement_big_lights_timeout

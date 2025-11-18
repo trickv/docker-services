@@ -1073,56 +1073,19 @@
       data:
         enqueue: replace
         media:
-          media_content_id: x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2008%20-%20Constellation%20LaPointe.flac
-          media_content_type: track
+          media_content_id: SQ:20
+          media_content_type: favorite_item_id
           metadata:
-            title: Constellation LaPointe
-            thumbnail: /api/media_player_proxy/media_player.bedroom_sarah/browse_media/track/x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2008%20-%20Constellation%20LaPointe.flac?token=cf773abb8519625b0cef77e12c67d87de021945cc0801de27eaeb4a6a008c450
-            media_class: track
+            title: LaPointe
+            thumbnail: ''
+            media_class: playlist
             children_media_class:
             navigateIds:
             - {}
-            - media_content_type: library
+            - media_content_type: favorites
               media_content_id: ''
-            - media_content_type: directory
-              media_content_id: 'S:'
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind
-            browse_entity_id: media_player.bedroom_sarah
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 10
-        milliseconds: 0
-    - action: media_player.play_media
-      target:
-        entity_id: media_player.bedroom_sarah
-      data:
-        enqueue: add
-        media:
-          media_content_id: x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2009%20-%20Over%20to%20Old%20LaPointe.flac
-          media_content_type: track
-          metadata:
-            title: Over to Old LaPointe
-            thumbnail: /api/media_player_proxy/media_player.bedroom_sarah/browse_media/track/x-file-cifs://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind/Disc%201%20-%2009%20-%20Over%20to%20Old%20LaPointe.flac?token=cf773abb8519625b0cef77e12c67d87de021945cc0801de27eaeb4a6a008c450
-            media_class: track
-            children_media_class:
-            navigateIds:
-            - {}
-            - media_content_type: library
-              media_content_id: ''
-            - media_content_type: directory
-              media_content_id: 'S:'
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson
-            - media_content_type: directory
-              media_content_id: S://minor/Multimedia/Music/Master_Collection/Warren%20Nelson/Riding%20The%20Wind
+            - media_content_type: favorites_folder
+              media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
   - if:
     - condition: state
@@ -1149,8 +1112,9 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    alias: '4 (fixme: can''t stop the feeling)'
-  - if:
+    alias: 4 CJ stories
+  - alias: 5 Basement Music 5
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '5.0'
@@ -1161,10 +1125,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:22
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 5
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1175,8 +1139,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 6 Basement Music 6
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '6.0'
@@ -1187,10 +1151,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:23
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 6
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1201,8 +1165,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 7 Basement Music 7
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '7.0'
@@ -1213,10 +1177,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:24
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 7
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1227,8 +1191,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 8 Basement Music 8
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '8.0'
@@ -1239,10 +1203,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:25
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 8
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1253,8 +1217,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 9 Basement Music 9
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '9.0'
@@ -1265,10 +1229,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:26
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 9
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1279,8 +1243,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 10 Basement Music 10
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '10.0'
@@ -1291,10 +1255,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:27
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 10
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1305,8 +1269,8 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
-  - if:
+  - alias: 11 Basement Music 11
+    if:
     - condition: state
       entity_id: sensor.active_bare_conductive_pin
       state: '11.0'
@@ -1317,10 +1281,10 @@
       data:
         enqueue: replace
         media:
-          media_content_id: SQ:19
+          media_content_id: SQ:28
           media_content_type: favorite_item_id
           metadata:
-            title: Cj Story Time
+            title: Basement Player 11
             thumbnail: ''
             media_class: playlist
             children_media_class:
@@ -1331,7 +1295,6 @@
             - media_content_type: favorites_folder
               media_content_id: object.container.playlistContainer
             browse_entity_id: media_player.bedroom_sarah
-    enabled: false
   mode: single
 - id: '1740403673499'
   alias: Turn on floor heat when showering

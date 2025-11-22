@@ -112,52 +112,6 @@ gardener_water_for_30m_2:
     target:
       entity_id: switch.socket_2
   mode: single
-stop_and_reset_office_sonos_for_nap:
-  alias: Stop and reset office Sonos for nap
-  sequence:
-  - if:
-    - condition: device
-      device_id: 12fe0a0467268f1ddd5067be89d98466
-      domain: media_player
-      entity_id: media_player.office
-      type: is_playing
-    then:
-    - stop: Media is playing so don't annoy the operator.
-    else: []
-  - service: media_player.media_stop
-    data: {}
-    target:
-      entity_id: media_player.office
-  - service: media_player.volume_set
-    data:
-      volume_level: 0.11
-    target:
-      entity_id: media_player.office
-  mode: single
-  icon: mdi:chat-sleep
-stop_and_reset_kids_br_sonos_for_nap:
-  alias: Stop and reset kids br Sonos for nap
-  sequence:
-  - if:
-    - condition: device
-      device_id: 169e68ffc3e7217abaf8fc9a594f8857
-      domain: media_player
-      entity_id: media_player.baby_br
-      type: is_playing
-    then:
-    - stop: Media is playing so don't annoy the operator.
-    else: []
-  - data: {}
-    target:
-      entity_id: media_player.baby_br
-    action: media_player.media_stop
-  - data:
-      volume_level: 0.36
-    target:
-      entity_id: media_player.baby_br
-    action: media_player.volume_set
-  mode: single
-  icon: mdi:chat-sleep
 boiler_gone_for_the_day:
   alias: Boiler - gone for the day
   sequence:
@@ -346,46 +300,23 @@ boiler_away_restore:
     target:
       entity_id: climate.west_esp
   description: ''
-attempt_at_skip_to_certain_track_in_playlist:
-  alias: 'Baby BR: Emoji of a Wave'
-  sequence:
-  - action: script.baby_br_back_to_top
-    metadata: {}
-    data: {}
-  - repeat:
-      sequence:
-      - action: media_player.media_next_track
-        metadata: {}
-        data: {}
-        target:
-          entity_id: media_player.baby_br
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 0
-          milliseconds: 200
-        enabled: true
-      while:
-      - condition: template
-        value_template: '{{ not is_state_attr(''media_player.baby_br'',''media_title'',
-          ''Emoji of a Wave'') }}'
-      - condition: template
-        value_template: '{{ repeat.index <= 200 }}'
-  - action: media_player.media_play
-    metadata: {}
-    data: {}
-    target:
-      entity_id: media_player.baby_br
-  description: ''
-baby_br_back_to_top:
-  alias: 'Baby BR: back to top'
+sonos_back_to_top:
+  alias: 'Sonos: back to top'
+  description: Stops media on a Sonos speaker to reset playlist position.
+  fields:
+    media_player:
+      description: The Sonos media player to reset.
+      example: media_player.baby_br
+      required: true
+      selector:
+        entity:
+          domain: media_player
   sequence:
   - action: media_player.media_stop
     metadata: {}
     data: {}
     target:
-      entity_id: media_player.baby_br
-  description: ''
+      entity_id: '{{ media_player }}'
 work_in_basement_for_2h_lights_on:
   sequence:
   - action: automation.turn_off
@@ -427,79 +358,6 @@ floor_heat_off_1h:
       entity_id: climate.ditra_heat_e_rs1
   alias: Floor heat off 1h
   description: ''
-baby_br_cj_auld_lang_syne:
-  sequence:
-  - action: script.baby_br_back_to_top
-    metadata: {}
-    data: {}
-  - repeat:
-      sequence:
-      - action: media_player.media_next_track
-        metadata: {}
-        data: {}
-        target:
-          entity_id: media_player.baby_br
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 0
-          milliseconds: 200
-        enabled: true
-      while:
-      - condition: template
-        value_template: '{{ not is_state_attr(''media_player.baby_br'',''media_title'',
-          ''Auld Lang Syne'') }}'
-      - condition: template
-        value_template: '{{ repeat.index <= 200 }}'
-  - action: media_player.media_play
-    metadata: {}
-    data: {}
-    target:
-      entity_id: media_player.baby_br
-  alias: 'Baby BR: CJ Auld Lang Syne'
-  description: ''
-seek_sonos_track_kids_br:
-  alias: Seek Sonos Track Kids BR v1
-  description: Skips tracks until a specified song is found.
-  mode: single
-  fields:
-    target_title:
-      description: The title of the song to seek.
-      example: Daughters
-      required: true
-      selector:
-        text:
-  sequence:
-  - variables:
-      target_track: '{{ target_title }}'
-  - action: script.baby_br_back_to_top
-    metadata: {}
-    data: {}
-  - repeat:
-      sequence:
-      - variables:
-          current_track: '{{ state_attr(''media_player.baby_br'', ''media_title'')
-            }}'
-      - action: media_player.media_next_track
-        metadata: {}
-        data: {}
-        target:
-          entity_id: media_player.baby_br
-      - wait_template: "{{ state_attr('media_player.baby_br', 'media_title') != current_track
-          \n   and states.media_player.baby_br.attributes.media_title is not none
-          }}\n"
-        timeout: 00:00:05
-      while:
-      - condition: template
-        value_template: '{{ not is_state_attr(''media_player.baby_br'', ''media_title'',
-          target_track) }}'
-      - condition: template
-        value_template: '{{ repeat.index <= 200 }}'
-  - action: media_player.media_play
-    metadata: {}
-    data: {}
-    target:
-      entity_id: media_player.baby_br
 notify_a_person_on_all_devices:
   description: Send a notification to a specific person entity on all linked devices.
   fields:
@@ -555,9 +413,10 @@ seek_sonos_track:
   - variables:
       target_track: '{{ target_title }}'
       media_player: '{{ target_player }}'
-  - action: script.baby_br_back_to_top
+  - action: script.sonos_back_to_top
     metadata: {}
-    data: {}
+    data:
+      media_player: '{{ media_player }}'
   - variables:
       queue_length: '{{ state_attr(media_player, ''queue_size'') | int(0) }}'
   - repeat:
@@ -601,3 +460,39 @@ turn_off_driveway_and_deck_and_porch_lights:
       - switch.shellyplus1_b8d61a87fa48_switch_0
   alias: Turn off driveway and deck and porch lights
   description: ''
+reset_sonos_for_nap:
+  alias: Reset Sonos for nap (generic)
+  description: Stops media and sets volume if not currently playing
+  fields:
+    media_player:
+      description: The Sonos media player to reset
+      example: media_player.office
+      required: true
+      selector:
+        entity:
+          domain: media_player
+    volume_level:
+      description: Volume level to set (0.0-1.0)
+      example: 0.11
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 1
+          step: 0.01
+  sequence:
+  - if:
+    - condition: template
+      value_template: '{{ is_state(media_player, "playing") }}'
+    then:
+    - stop: Media is playing so don't annoy the operator.
+  - action: media_player.media_stop
+    target:
+      entity_id: '{{ media_player }}'
+  - action: media_player.volume_set
+    data:
+      volume_level: '{{ volume_level }}'
+    target:
+      entity_id: '{{ media_player }}'
+  mode: single
+  icon: mdi:chat-sleep

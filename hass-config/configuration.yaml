@@ -265,6 +265,42 @@ template:
           {{ (states('sensor.bathroom_floor_heating_daily') | float * 0.475) | round(2) }}
         device_class: "energy"
         state_class: "total"
+  - trigger:
+      - platform: event
+        event_type: sonde_alert
+        event_data:
+          user: person.matt
+    sensor:
+      - name: "Sonde Alert Matt"
+        state: "{{ trigger.event.data.sonde_id }}"
+        attributes:
+          sonde_id: "{{ trigger.event.data.sonde_id }}"
+          distance_km: "{{ trigger.event.data.distance_km }}"
+          sonde_lat: "{{ trigger.event.data.sonde_lat }}"
+          sonde_lon: "{{ trigger.event.data.sonde_lon }}"
+          sonde_alt: "{{ trigger.event.data.sonde_alt }}"
+          sonde_url: "{{ trigger.event.data.sonde_url }}"
+          landed_ago: "{{ trigger.event.data.landed_ago }}"
+          message: "{{ trigger.event.data.message }}"
+          last_updated: "{{ now().isoformat() }}"
+  - trigger:
+      - platform: event
+        event_type: sonde_alert
+        event_data:
+          user: person.patrick_van_staveren
+    sensor:
+      - name: "Sonde Alert Trick"
+        state: "{{ trigger.event.data.sonde_id }}"
+        attributes:
+          sonde_id: "{{ trigger.event.data.sonde_id }}"
+          distance_km: "{{ trigger.event.data.distance_km }}"
+          sonde_lat: "{{ trigger.event.data.sonde_lat }}"
+          sonde_lon: "{{ trigger.event.data.sonde_lon }}"
+          sonde_alt: "{{ trigger.event.data.sonde_alt }}"
+          sonde_url: "{{ trigger.event.data.sonde_url }}"
+          landed_ago: "{{ trigger.event.data.landed_ago }}"
+          message: "{{ trigger.event.data.message }}"
+          last_updated: "{{ now().isoformat() }}"
 
 intent_script:
   GetTime:

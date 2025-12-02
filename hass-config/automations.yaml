@@ -1643,3 +1643,100 @@
       motion_sensor: binary_sensor.finished_basement_motion_iaszone
       target_entity: automation.bare_conductive_board_media_player_handler
       no_motion_wait: input_number.basement_big_lights_timeout
+- id: '1763992033374'
+  alias: 'Boiler east: down at night'
+  description: ''
+  triggers:
+  - trigger: time
+    at: '22:00:00'
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 66
+    target:
+      entity_id: climate.east_esp
+  mode: single
+- id: '1763992070798'
+  alias: 'Boiler east: up AM'
+  description: ''
+  triggers:
+  - trigger: time
+    at: 05:00:00
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 69
+    target:
+      entity_id: climate.east_esp
+  mode: single
+- id: '1763992101233'
+  alias: Boiler east afternoon
+  description: ''
+  triggers:
+  - trigger: time
+    at: '11:00:00'
+  conditions: []
+  actions:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: 67.5
+    target:
+      entity_id: climate.east_esp
+  mode: single
+- id: '1763992243979'
+  alias: Sunset
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: cc25658d3fb3238910c466fb8c99811e
+    entity_id: fb45c7ba92a6e549c420fc95d5de885a
+    domain: switch
+  - type: turn_on
+    device_id: 7be88988203aa4792813962ef92877ad
+    entity_id: 4411c8105a5713204510ef369520b741
+    domain: switch
+  - type: turn_on
+    device_id: 5843e25e227cea67b33f3cda11fe8efd
+    entity_id: ec1832b005a137be1054eae64813360e
+    domain: switch
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.dehumidifier_relay
+  mode: single
+- id: '1763992680471'
+  alias: 'Night off '
+  description: ''
+  triggers:
+  - trigger: time
+    at: '22:01:00'
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: cc25658d3fb3238910c466fb8c99811e
+    entity_id: fb45c7ba92a6e549c420fc95d5de885a
+    domain: switch
+  - type: turn_off
+    device_id: 7be88988203aa4792813962ef92877ad
+    entity_id: 4411c8105a5713204510ef369520b741
+    domain: switch
+  - type: turn_off
+    device_id: 5843e25e227cea67b33f3cda11fe8efd
+    entity_id: ec1832b005a137be1054eae64813360e
+    domain: switch
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.dehumidifier_relay
+  mode: single

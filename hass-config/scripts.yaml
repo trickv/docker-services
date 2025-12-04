@@ -380,15 +380,33 @@ notify_a_person_on_all_devices:
       required: true
       selector:
         text:
+    url:
+      description: Optional URL to open when notification is tapped
+      example: /lovelace/cameras
+      required: false
+      selector:
+        text:
   sequence:
+  - variables:
+      notification_targets: '{{ state_attr(person, ''device_trackers'') | default([])
+        | reject(''search'', ''chi_linux'') | map(''replace'', ''device_tracker.'',
+        ''mobile_app_'') | list }}'
+  - repeat:
+      for_each: '{{ notification_targets }}'
+      sequence:
+      - action: notify.{{ repeat.item }}
+        data:
+          title: '{{ title }}'
+          message: '{{ message }}'
+          data: '{% if url is defined and url %}{"url": "{{ url }}"}{% else %}{}{% endif
+            %}'
   - data:
-      title: '{{ title }}'
-      message: '{{ message }}'
-      target: '{{ expand(person) | map(attribute=''entity_id'') | select(''search'',
-        ''mobile_app_'') | list }}
-
-        '
-    action: notify.notify
+      name: Notification Sent
+      message: 'Sent "{{ title }}" to {{ state_attr(person, ''friendly_name'') |
+        default(person) }} on {{ notification_targets | length }} device(s): {{ notification_targets
+        | map(''replace'', ''mobile_app_'', '''') | join('', '') }}'
+      entity_id: '{{ person }}'
+    action: logbook.log
   alias: 'Notify a person on all devices '
   mode: queued
 seek_sonos_track:

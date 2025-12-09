@@ -1,2 +1,3 @@
 docker-compose.override.yml filter=git-crypt diff=git-crypt
 hass-config/secrets.yaml  filter=git-crypt diff=git-crypt
+metra/hooks.json filter=git-crypt diff=git-crypt

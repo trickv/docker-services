@@ -875,16 +875,17 @@
   description: ''
   triggers:
   - type: turned_on
-    device_id: c5bc4eb0a67cf61627be39e104e3d918
+    device_id: 428ae2da8caa2887c1b964733ce4e31c
     entity_id: 2e98772e60585708604472a37b1cc885
     domain: binary_sensor
     trigger: device
   conditions: []
   actions:
-  - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
-    domain: mobile_app
-    type: notify
-    message: "\U0001F514 laundry wash done "
+  - action: script.notify_a_person_on_all_devices
+    metadata: {}
+    data:
+      person: person.patrick_van_staveren
+      message: "\U0001F514 laundry wash done "
   mode: single
 - id: '1739222992026'
   alias: Turn off 2F Heat evening if empty

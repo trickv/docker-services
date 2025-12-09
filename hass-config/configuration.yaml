@@ -253,6 +253,12 @@ sensor:
 
 template:
   - sensor:
+      - name: "Claude Session Reset"
+        device_class: timestamp
+        state: "{{ states('sensor.claude_code_session_reset_time') | as_datetime | as_local }}"
+      - name: "Claude Week Reset"
+        device_class: timestamp
+        state: "{{ states('sensor.claude_code_week_reset_time') | as_datetime | as_local }}"
       - name: "Grid Consumption Today Derived"
         unit_of_measurement: "Wh"
         state: >

@@ -126,15 +126,15 @@ services:
 #      - com.centurylinklabs.watchtower.enable=true
 
 
-  music-assistant:
-    container_name: music-assistant
-    image: ghcr.io/music-assistant/server:latest
-    network_mode: host
-    restart: unless-stopped
-    privileged: true
-    volumes:
-      - ./music-assistant/data:/data
-      - /mnt/music:/mnt/music
+#  music-assistant:
+#    container_name: music-assistant
+#    image: ghcr.io/music-assistant/server:latest
+#    network_mode: host
+#    restart: unless-stopped
+#    privileged: true
+#    volumes:
+#      - ./music-assistant/data:/data
+#      - /mnt/music:/mnt/music
 
   
   hass:

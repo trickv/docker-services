@@ -269,7 +269,7 @@ services:
 
   solaredge2mqtt:
     container_name: solaredge2mqtt
-    image: ghcr.io/deroetzi/solaredge2mqtt:latest
+    image: solaredge2mqtt:dev
     environment:
       - SE2MQTT_LOGGING_LEVEL=DEBUG
       - SE2MQTT_MODBUS__HOST=solaredge-inverter.home.vanstaveren.us

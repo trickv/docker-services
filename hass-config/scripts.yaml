@@ -249,9 +249,10 @@ new_script:
   - variables:
       west: '{{ state_attr(''climate.west_esp'', ''temperature'') }}'
       east: '{{ state_attr(''climate.east_esp'', ''temperature'') }}'
-  - action: notify.mobile_app_trickyiphone16
+  - action: script.notify_a_person_on_all_devices
     metadata: {}
     data:
+      person: person.patrick_van_staveren
       message: '{{ west }}'
     enabled: false
   - action: number.set_value

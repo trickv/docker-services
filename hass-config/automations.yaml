@@ -28,10 +28,10 @@
     trigger: numeric_state
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Boiler overheat
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Boiler overheat
   mode: single
 - id: '1612029886139'
   alias: Cycle Boiler While Cool
@@ -63,10 +63,10 @@
     trigger: numeric_state
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Boiler freeze
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Boiler freeze
   mode: single
 - id: '1614231127176'
   alias: boiler cycle hourly
@@ -117,10 +117,10 @@
     entity_id: sensor.esp746cdb_garage_status
     state: Door open
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Garage door left open
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Garage door left open
   mode: single
 - id: '1626726821732'
   alias: 'vacation: cycle light on'
@@ -181,10 +181,10 @@
     trigger: numeric_state
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Dormi phone low batt
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Dormi phone low batt
   mode: single
 - id: '1637208622350'
   alias: humidifier low
@@ -200,10 +200,10 @@
     trigger: numeric_state
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Humidifier low
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Humidifier low
   mode: single
 - id: '1639978625760'
   alias: distribute humidity
@@ -289,10 +289,10 @@
       minutes: 15
       seconds: 0
       milliseconds: 0
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Garden watered
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Garden watered
   mode: single
 - id: '1667252451859'
   alias: 3d printer power off on completion (binary state)
@@ -305,15 +305,15 @@
     trigger: state
   conditions: []
   actions:
-  - device_id: a54c38b61418a07ff604bdf7ddd888b4
-    domain: mobile_app
-    type: notify
-    message: Printer will power off soon.
-    title: 3d print complete
-  - device_id: a54c38b61418a07ff604bdf7ddd888b4
-    domain: mobile_app
-    type: notify
-    message: 3d print complete
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      title: 3d print complete
+      message: Printer will power off soon.
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: 3d print complete
   - delay:
       hours: 0
       minutes: 5
@@ -468,8 +468,9 @@
     above: 60
   condition: []
   action:
-  - service: notify.mobile_app_trickypixel
+  - action: script.notify_a_person_on_all_devices
     data:
+      person: person.patrick_van_staveren
       message: Boiler load is high, turn up water
   mode: single
 - id: '1674797437836'
@@ -485,8 +486,9 @@
     below: 10
   condition: []
   action:
-  - service: notify.mobile_app_trickypixel
+  - action: script.notify_a_person_on_all_devices
     data:
+      person: person.patrick_van_staveren
       message: Boiler load is low, turn down water
   mode: single
 - id: '1675093242375'
@@ -504,10 +506,10 @@
     trigger: state
   conditions: []
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Garage door opened
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Garage door opened
   mode: single
 - id: '1675132128023'
   alias: Tag D is scanned
@@ -531,25 +533,6 @@
     target:
       entity_id: media_player.office
     enabled: false
-  mode: single
-- id: '1686506956209'
-  alias: Kids BR door opened notification SRW
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.lumi_lumi_sensor_magnet_opening
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: notify.mobile_app_sarahs_iphone
-    data:
-      message: Kids BR Door opened
-      data:
-        notification_icon: mdi:human-child
-        channel: KidsBRDoor
-        timeout: 3600
   mode: single
 - id: '1687575557136'
   alias: 4am water veg
@@ -614,10 +597,10 @@
     below: 20
   condition: []
   action:
-  - device_id: a54c38b61418a07ff604bdf7ddd888b4
-    domain: mobile_app
-    type: notify
-    message: Net meter low
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Net meter low
   mode: single
 - id: '1715638550557'
   alias: Tag E is scanned
@@ -674,28 +657,10 @@
       seconds: 0
   condition: []
   action:
-  - device_id: a54c38b61418a07ff604bdf7ddd888b4
-    domain: mobile_app
-    type: notify
-    message: Basement wet
-  mode: single
-- id: '1732166815079'
-  alias: Notify kids BR door opened trick
-  description: ''
-  triggers:
-  - entity_id:
-    - binary_sensor.kids_br_motion
-    trigger: state
-    from: 'off'
-    to: Detected
-  conditions: []
-  actions:
   - action: script.notify_a_person_on_all_devices
-    metadata: {}
     data:
       person: person.patrick_van_staveren
-      message: Kids BR motion
-      title: Kids BR motion
+      message: Basement wet
   mode: single
 - id: '1732322808500'
   alias: Desk power on when walk into office weekday AM
@@ -728,10 +693,10 @@
     target:
       entity_id: script.turn_on_2f_heat
     enabled: false
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Auto desk power + heat
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Auto desk power + heat
   mode: single
 - id: '1733837931949'
   alias: mantle morning
@@ -840,10 +805,10 @@
       minutes: 0
       seconds: 0
   actions:
-  - device_id: eeffac4fec4d4fd55747896f15cdfbec
-    domain: mobile_app
-    type: notify
-    message: Boiler west relay fault?
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Boiler west relay fault?
   mode: single
 - id: '1737823653280'
   alias: Toggle desk lamp sunrise/sunset
@@ -1424,20 +1389,12 @@
     above: 100
   conditions: []
   actions:
-  - device_id: d73dfcfcde93dbf55eb3f17c12e86cb3
-    domain: mobile_app
-    type: notify
-    message: Boiler thermostat sensor unbelievably high
-  - action: notify.notify
-    data:
-      message: Boiler   X thermostat sensor unbelievably high
-      target:
-        user_id: 39e3b8070b1e4a79a3ab362df41ebb03
   - action: script.notify_a_person_on_all_devices
     metadata: {}
     data:
       person: person.patrick_van_staveren
       title: Boiler thermostat sensor unbelievably high
+      message: Boiler thermostat sensor unbelievably high
   mode: single
 - id: '1745548034162'
   alias: Pantry motion light

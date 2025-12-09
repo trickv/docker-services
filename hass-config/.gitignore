@@ -8,3 +8,4 @@ home-assistant_v2.db*
 zigbee.db*
 blueprints
 .schluter.conf
+.ha_run.lock

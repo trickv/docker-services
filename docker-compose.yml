@@ -409,23 +409,54 @@ services:
       - "traefik.http.routers.github-auth.tls.certresolver=le"
       - "traefik.http.routers.github-auth.rule=Host(`auth.home.v9n.us`)"
 
-  metra-timetable:
+  metra-timetable-dev:
     image: nginx:alpine
-    container_name: metra-timetable
+    container_name: metra-timetable-dev
     volumes:
       - /home/trick/src/github.com/trickv/metra-timetable:/usr/share/nginx/html:ro
       - /home/trick/src/github.com/trickv/metra-timetable/gzip.conf:/etc/nginx/conf.d/gzip.conf:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.metra.rule=Host(`metra-timetable.home.v9n.us`)"
-      - "traefik.http.routers.metra.entrypoints=websecure"
-      - "traefik.http.routers.metra.tls.certresolver=le"
+      - "traefik.http.routers.metra-dev.rule=Host(`metra-timetable-dev.home.v9n.us`)"
+      - "traefik.http.routers.metra-dev.entrypoints=websecure"
+      - "traefik.http.routers.metra-dev.tls.certresolver=le"
       #- "traefik.http.routers.metra.middlewares=compress@internal"
       # If using HTTPS:
       # - "traefik.http.routers.static-site.entrypoints=websecure"
       # - "traefik.http.routers.static-site.tls=true"
     environment:
       - NGINX_HOST=example.local
+    restart: unless-stopped
+  
+  metra-timetable:
+    image: nginx:alpine
+    container_name: metra-timetable
+    volumes:
+      - ./metra/metra-timetable-prod:/usr/share/nginx/html:ro
+      - ./metra/metra-timetable-prod/gzip.conf:/etc/nginx/conf.d/gzip.conf:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metra.rule=Host(`metra-timetable.home.v9n.us`)"
+      - "traefik.http.routers.metra.entrypoints=websecure"
+      - "traefik.http.routers.metra.tls.certresolver=le"
+    environment:
+      - NGINX_HOST=example.local
+    restart: unless-stopped
+
+  webhook:
+    image: almir/webhook
+    container_name: metra-webhook
+    user: "root:root"
+    volumes:
+      - ./metra/hooks.json:/etc/webhook/hooks.json:ro
+      - ./metra/metra-timetable-prod/:/website
+      - ./metra/scripts:/scripts:ro
+    command: -verbose -hooks=/etc/webhook/hooks.json -hotreload
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metra-webhook.rule=Host(`metra-webhook.home.v9n.us`) && Path(`/hooks/git-pull`)"
+      - "traefik.http.routers.metra-webhook.entrypoints=websecure"
+      - "traefik.http.routers.metra-webhook.tls.certresolver=le"
     restart: unless-stopped
 
   goatcounter:

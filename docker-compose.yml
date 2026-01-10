@@ -271,7 +271,7 @@ services:
     container_name: solaredge2mqtt
     image: solaredge2mqtt:dev
     environment:
-      - SE2MQTT_LOGGING_LEVEL=DEBUG
+      - SE2MQTT_LOGGING_LEVEL=INFO
       - SE2MQTT_MODBUS__HOST=solaredge-inverter.home.vanstaveren.us
       - SE2MQTT_MQTT__BROKER=litecoin.home.vanstaveren.us
       - SE2MQTT_MQTT__USERNAME=anonymous

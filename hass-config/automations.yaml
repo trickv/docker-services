@@ -703,14 +703,24 @@
   description: ''
   triggers:
   - trigger: time
-    at: 07:30:00
+    at: 06:00:00
   conditions: []
   actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.s31_f_relay
+  - delay:
+      hours: 2
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
   - action: switch.turn_off
     metadata: {}
     data: {}
     target:
-      device_id: efdc52980cd6abdb7094a849e3d1d9b4
+      entity_id: switch.s31_f_relay
   mode: single
 - id: '1733837968406'
   alias: Before bed tree/mantle
@@ -742,47 +752,6 @@
     target:
       entity_id: switch.garage_door
   mode: single
-- id: '1736225346955'
-  alias: Test Jordan dual PSU with E and J switches
-  description: ''
-  triggers:
-  - trigger: time_pattern
-    minutes: /8
-  conditions: []
-  actions:
-  - action: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
-  - delay:
-      hours: 0
-      minutes: 2
-      seconds: 10
-  - action: switch.turn_on
-    metadata: {}
-    data: {}
-    target:
-      device_id: 35b04c0abb4a5f034bb37cb92666c8c2
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-  - action: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      device_id: 3b21e66ad055352ea833d2ce0f99d42d
-  - delay:
-      hours: 0
-      minutes: 2
-      seconds: 10
-  - action: switch.turn_on
-    metadata: {}
-    data: {}
-    target:
-      device_id: 3b21e66ad055352ea833d2ce0f99d42d
-  mode: single
 - id: '1737009698191'
   alias: Boiler west relay fault?
   description: ''
@@ -794,7 +763,7 @@
       hours: 1
       minutes: 2
       seconds: 0
-    below: 66
+    below: 67
   conditions:
   - condition: state
     entity_id: climate.west_esp
@@ -1574,7 +1543,7 @@
       enqueue: replace
   mode: single
 - id: '1752949365817'
-  alias: Button 4
+  alias: 'Button 4 Florence '
   description: ''
   triggers:
   - trigger: state
@@ -1588,9 +1557,24 @@
     target:
       entity_id: media_player.kitchen
     data:
-      media_content_type: album
-      media_content_id: A:ALBUMARTIST/Mumford & Sons/Delta
       enqueue: replace
+      media:
+        media_content_id: A:ALBUMARTIST/Florence%20%2b%20The%20Machine/Everybody%20Scream
+        media_content_type: album
+        metadata:
+          title: Everybody Scream
+          thumbnail: /api/media_player_proxy/media_player.kitchen/browse_media/album/A:ALBUMARTIST/Florence%20%2b%20The%20Machine/Everybody%20Scream?token=4b1de10ca7c6940e877edc2b3a27fd42369a61f3dcd7cd058fc27cb2b3472d1f
+          media_class: album
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: library
+            media_content_id: ''
+          - media_content_type: artist
+            media_content_id: A:ALBUMARTIST
+          - media_content_type: artist
+            media_content_id: A:ALBUMARTIST/Florence%20%2b%20The%20Machine
+          browse_entity_id: media_player.kitchen
   mode: single
 - id: '1758673497120'
   alias: Enable bare conductive music control when motion is present
@@ -1671,6 +1655,11 @@
     data: {}
     target:
       entity_id: switch.dehumidifier_relay
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      entity_id: switch.s31_f_relay
+    data: {}
   mode: single
 - id: '1763992680471'
   alias: 'Night off '
@@ -1698,3 +1687,397 @@
     target:
       entity_id: switch.dehumidifier_relay
   mode: single
+- id: '1735689600000'
+  alias: Countdown to Midnight
+  description: 10-second countdown starting at 23:59:50, then fireworks celebration
+    at midnight
+  triggers:
+  - trigger: time
+    at: '23:59:50'
+  - trigger: time
+    at: '17:15:00'
+  - trigger: time
+    at: '20:59:50'
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 1000
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 1000
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 1000
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 500
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 500
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 500
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 500
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 300
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 300
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 300
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 300
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 200
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 150
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 250
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 80
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 120
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 90
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 180
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 110
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 200
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 70
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 160
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 100
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 220
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 130
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 90
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 170
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 60
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 140
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 190
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 110
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 85
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 230
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 120
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 95
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 180
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 105
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 150
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 75
+  - action: switch.turn_on
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 210
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 90
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 160
+  - action: switch.turn_off
+    target:
+      entity_id: switch.dehumidifier_relay
+  - delay:
+      milliseconds: 125
+  - action: switch.turn_on
+    target:
+      entity_id: switch.s31_m_relay
+  - delay:
+      milliseconds: 80
+  - action: switch.turn_off
+    target:
+      entity_id: switch.s31_k_relay
+  - delay:
+      milliseconds: 200
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.dehumidifier_relay
+      - switch.s31_m_relay
+      - switch.s31_k_relay
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      entity_id: switch.s31_h_relay
+    data: {}
+  mode: single
+- id: '1767672029633'
+  alias: Radio light motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.ms_y_ias_zone
+      light_target:
+        entity_id: light.basement_radios_light_light
+      no_motion_wait: 1220
+- id: '1767802966640'
+  alias: 'mantle: off when light out'
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.pws_solar_radiation_w_m2
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    above: 25
+  conditions:
+  - condition: sun
+    after: sunrise
+  - condition: sun
+    before: sunset
+  actions:
+  - type: turn_off
+    device_id: 273871cd7eee7ee881459544d7a2b33a
+    entity_id: d6e28d735de5a9e83e0500b134c8e299
+    domain: switch
+  mode: single
+- id: '1767803029639'
+  alias: 'Mantle: on when dim out'
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.pws_solar_radiation_w_m2
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    below: 25
+  conditions:
+  - condition: sun
+    after: sunrise
+  - condition: sun
+    before: sunset
+  actions:
+  - type: turn_on
+    device_id: 273871cd7eee7ee881459544d7a2b33a
+    entity_id: d6e28d735de5a9e83e0500b134c8e299
+    domain: switch
+  mode: single
+- id: '1768015935287'
+  alias: Matter bulb motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.ms_y_ias_zone
+      light_target:
+        device_id: 73e1fd3d1cc978de6aabe8723436d342
+      no_motion_wait: 600

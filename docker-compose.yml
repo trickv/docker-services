@@ -332,10 +332,9 @@ services:
       - ./monitoring/prom/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
     mem_limit: 700m
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - "traefik.enable=true"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
       - "traefik.http.routers.prometheus.entrypoints=websecure"

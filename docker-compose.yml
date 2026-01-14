@@ -225,6 +225,26 @@ services:
       - "traefik.http.routers.airsonic.tls.certresolver=le"
       - "traefik.http.services.airsonic.loadbalancer.server.port=4040"
 
+  gonic:
+    image: sentriz/gonic:latest
+    container_name: gonic
+    restart: unless-stopped
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - ./gonic/data:/data
+      - /mnt/music/Master_Collection:/music:ro
+      - ./gonic/cache:/cache
+      - ./gonic/playlists:/playlists
+    mem_limit: 200m
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - "traefik.enable=true"
+      - "traefik.http.routers.gonic.rule=Host(`gonic.home.v9n.us`)"
+      - "traefik.http.routers.gonic.entrypoints=websecure"
+      - "traefik.http.routers.gonic.tls.certresolver=le"
+      - "traefik.http.services.gonic.loadbalancer.server.port=80"
+
   minidlna:
     image: giof71/minidlna
     container_name: minidlna

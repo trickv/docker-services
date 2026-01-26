@@ -265,15 +265,6 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
-  snmp_exporter:
-    image: prom/snmp-exporter:latest
-    container_name: snmp-exporter
-    restart: unless-stopped
-    ports:
-      - 9116:9116
-    mem_limit: 50m
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
 
 #  solaredge_exporter:
 #    image: dave92082/solaredge-exporter:1.1
@@ -309,95 +300,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
-  bb_exporter:
-    image: prom/blackbox-exporter:latest
-    container_name: bb
-    restart: unless-stopped
-    volumes:
-      - ./monitoring/bb:/config
-    ports:
-      - 9115:9115
-    mem_limit: 30m
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-    command: --config.file=/config/blackbox.yml
 
-# docker run -d --restart unless-stopped --name sb8200-exporter -p 9195:9195 sbrudenell/sb8200_exporter
-  sb8200_exporter:
-    image: sbrudenell/sb8200_exporter
-    container_name: sb8200_exporter
-    restart: unless-stopped
-    ports:
-      - 9195:9195
-    mem_limit: 60m
-  
-  unifi-poller:
-    container_name: unifi-poller
-    image: golift/unifi-poller
-    volumes:
-      - ./monitoring/unifi-poller/unifi-poller.conf:/config/unifi-poller.conf
-    restart: unless-stopped
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-    ports:
-      - 9130:9130
-    mem_limit: 20m
-
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prom
-    restart: unless-stopped
-    volumes:
-      - ./monitoring/prom/master:/prometheus
-      - ./monitoring/prom/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - 9090:9090
-    mem_limit: 700m
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-      - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=Host(`prometheus.home.v9n.us`)"
-      - "traefik.http.routers.prometheus.entrypoints=websecure"
-      - "traefik.http.routers.prometheus.tls.certresolver=le"
-      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
-      - "traefik.http.routers.prometheus.middlewares=prometheusauthmiddleware"
-      # to create a password: echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
-      - "traefik.http.middlewares.prometheusauthmiddleware.basicauth.users=prometheus:$$apr1$$u13f5Obh$$ERJ3TfhQ/Wsz3gpwGj9gd1,hgscripts:$$apr1$$lMM3tlNn$$jaJu0WEaL2JzeTpgAkfs40"
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --storage.tsdb.retention=30d
-      - --web.enable-admin-api
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
-  
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    volumes:
-      - ./monitoring/grafana:/var/lib/grafana
-    mem_limit: 250m
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
-      - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.home.v9n.us`)"
-      - "traefik.http.routers.grafana.entrypoints=websecure"
-      - "traefik.http.routers.grafana.tls.certresolver=le"
-      - "traefik.http.routers.grafana.middlewares=github-auth"
-    environment:
-      - "GF_INSTALL_PLUGINS=grafana-piechart-panel,flant-statusmap-panel"
-      - "GF_AUTH_PROXY_ENABLED=true"
-      - "GF_AUTH_PROXY_HEADER_NAME=X-Firwarded-User"
-      - "GF_USERS_ALLOW_SIGN_UP=false"
-      - "GF_USERS_AUTO_ASSIGN_ORG=true"
-      - "GF_USERS_AUTO_ASSIGN_ORG_ROLE=Editor"
-      - "GF_FOO_BAR=Editor"
 
   github-auth:
     container_name: github-auth

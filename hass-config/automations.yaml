@@ -617,31 +617,6 @@
     target:
       device_id: 470a9ae157247c582dbd6e332ca4d777
   mode: single
-- id: '1719336300062'
-  alias: Power cycle wonky dehumidifier s31-h
-  description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: '33'
-    seconds: '33'
-  condition: []
-  action:
-  - service: switch.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: switch.s31_h_relay
-  - delay:
-      hours: 0
-      minutes: 45
-      seconds: 0
-      milliseconds: 0
-  - service: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: switch.s31_h_relay
-  mode: single
 - id: '1719721903366'
   alias: Basement water sensor
   description: ''
@@ -1639,10 +1614,6 @@
   conditions: []
   actions:
   - type: turn_on
-    device_id: cc25658d3fb3238910c466fb8c99811e
-    entity_id: fb45c7ba92a6e549c420fc95d5de885a
-    domain: switch
-  - type: turn_on
     device_id: 7be88988203aa4792813962ef92877ad
     entity_id: 4411c8105a5713204510ef369520b741
     domain: switch
@@ -1669,10 +1640,6 @@
     at: '22:01:00'
   conditions: []
   actions:
-  - type: turn_off
-    device_id: cc25658d3fb3238910c466fb8c99811e
-    entity_id: fb45c7ba92a6e549c420fc95d5de885a
-    domain: switch
   - type: turn_off
     device_id: 7be88988203aa4792813962ef92877ad
     entity_id: 4411c8105a5713204510ef369520b741
@@ -2009,11 +1976,6 @@
       - switch.dehumidifier_relay
       - switch.s31_m_relay
       - switch.s31_k_relay
-  - action: switch.turn_on
-    metadata: {}
-    target:
-      entity_id: switch.s31_h_relay
-    data: {}
   mode: single
 - id: '1767672029633'
   alias: Radio light motion
@@ -2081,3 +2043,72 @@
       light_target:
         device_id: 73e1fd3d1cc978de6aabe8723436d342
       no_motion_wait: 600
+- id: dryer_started
+  alias: Dryer cycle started
+  description: Track when dryer starts running
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.s31_h_power
+    above: 100
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions: []
+  actions:
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.dryer_running
+    data: {}
+  mode: single
+- id: dryer_finished
+  alias: Dryer cycle finished
+  description: Notify when dryer cycle completes
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.s31_h_power
+    below: 10
+    for:
+      minutes: 1
+  conditions:
+  - condition: state
+    entity_id: input_boolean.dryer_running
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.dryer_running
+  - action: script.notify_a_person_on_all_devices
+    data:
+      person: person.patrick_van_staveren
+      message: Dryer cycle complete
+  mode: single
+- id: '1768939732306'
+  alias: Sunset office desk lamp on
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 470a9ae157247c582dbd6e332ca4d777
+    entity_id: 085c45b9e6a2e0610ef424f2c657a622
+    domain: light
+  mode: single
+- id: '1768939760596'
+  alias: Sunset turn off office desk lamp
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: 0
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: 470a9ae157247c582dbd6e332ca4d777
+    entity_id: 085c45b9e6a2e0610ef424f2c657a622
+    domain: light
+  mode: single

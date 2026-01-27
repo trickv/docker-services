@@ -16,6 +16,11 @@ prometheus:
 #energy:
 #input_number:
 
+input_boolean:
+  dryer_running:
+    name: Dryer Running
+    icon: mdi:tumble-dryer
+
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
@@ -222,7 +227,6 @@ sensor:
     unit_time: h
 
 
-
 template:
   - sensor:
       - name: "Claude Session Reset"
@@ -254,6 +258,16 @@ template:
       - name: "Combined Solar.Forecast Tomorrow"
         unit_of_measurement: "kWh"
         state: "{{ float(states('sensor.forecast_solar_south_energy_production_tomorrow')) + float(states('sensor.forecast_solar_west_energy_production_tomorrow')) + float(states('sensor.forecast_solar_east_energy_production_tomorrow')) }}"
+      # GitHub Actions Minutes - Percentage and Limit
+      - name: "GitHub Actions Minutes Percentage"
+        unit_of_measurement: "%"
+        state: >
+          {% set used = states('sensor.mqtt_github_actions_total_billable_minutes') | float(0) %}
+          {% set limit = 2000 %}
+          {{ ((used / limit) * 100) | round(1) }}
+      - name: "GitHub Actions Minutes Limit"
+        unit_of_measurement: "minutes"
+        state: "2000"
   - trigger:
       - platform: event
         event_type: sonde_alert

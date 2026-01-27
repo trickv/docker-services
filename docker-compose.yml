@@ -281,16 +281,10 @@ services:
   solaredge2mqtt:
     container_name: solaredge2mqtt
     image: solaredge2mqtt:dev
+    volumes:
+      - ./solaredge2mqtt:/app/config
     environment:
-      - SE2MQTT_LOGGING_LEVEL=INFO
-      - SE2MQTT_MODBUS__HOST=solaredge-inverter.home.vanstaveren.us
-      - SE2MQTT_MQTT__BROKER=litecoin.home.vanstaveren.us
-      - SE2MQTT_MQTT__USERNAME=anonymous
-      - SE2MQTT_MQTT__PASSWORD=x
-      - SE2MQTT_MONITORING__USERNAME=sp@vanstaveren.us
-      - SE2MQTT_LOCATION__LATITUDE=41.8781
-      - SE2MQTT_LOCATION__LONGITUDE=-88.0754
-      - TZ="America/Chicago"
+      - TZ=America/Chicago
     restart: unless-stopped
     logging:
       driver: json-file

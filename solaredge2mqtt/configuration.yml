@@ -1,0 +1,55 @@
+# SolarEdge2MQTT Configuration File
+# Migrated from docker-compose environment variables
+
+# Interval between requests in seconds
+interval: 5
+
+# Set logging level to DEBUG, INFO (default), WARNING, ERROR, CRITICAL
+logging_level: DEBUG
+
+# Location settings
+location:
+  latitude: 41.8781
+  longitude: -88.0754
+
+# Modbus configuration (required)
+modbus:
+  host: solaredge-inverter.home.vanstaveren.us
+  port: 1502
+  timeout: 1
+  unit: 1
+  meter:
+    - true
+    - true
+    - true
+  battery:
+    - true
+    - true
+  check_grid_status: false
+  advanced_power_controls: disabled
+
+# MQTT configuration (required)
+mqtt:
+  client_id: solaredge2mqtt
+  broker: litecoin.home.vanstaveren.us
+  port: 1883
+  username: anonymous
+  password: !secret mqtt_password
+  topic_prefix: solaredge
+  retain: false
+
+# Powerflow configuration
+powerflow:
+  external_production: false
+  retain: false
+
+# Energy calculation settings
+energy:
+  retain: false
+
+# SolarEdge Monitoring Platform
+monitoring:
+  site_id: !secret monitoring_site_id
+  username: "sp@vanstaveren.us"
+  password: !secret monitoring_password
+  retain: false

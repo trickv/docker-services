@@ -41,7 +41,7 @@ services:
     mem_limit: 10m
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefikmetrics.rule=Host(`traefikmetrics.yellow.v9n.us)"
+      - "traefik.http.routers.traefikmetrics.rule=Host(`traefikmetrics.yellow.v9n.us`)"
       - "traefik.http.routers.traefikmetrics.entrypoints=websecure"
       - "traefik.http.routers.traefikmetrics.tls.certresolver=le"
       - "traefik.http.services.traefikmetrics.loadbalancer.server.port=80"

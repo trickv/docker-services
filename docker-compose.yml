@@ -12,9 +12,9 @@ services:
       - "--entryPoints.websecure.address=:443"
       - "--entryPoints.web.address=:80"
       - "--certificatesResolvers.le.acme.email=trick@vanstaveren.us"
-      #- "--certificatesResolvers.le.acme.storage=/acme/acme.json"
-      - "--certificatesResolvers.le.acme.storage=/acme/acme-staging.json"
-      - "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesResolvers.le.acme.storage=/acme/acme.json"
+      #- "--certificatesResolvers.le.acme.storage=/acme/acme-staging.json"
+      #- "--certificatesResolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesResolvers.le.acme.tlsChallenge=true"
       - "--metrics.prometheus.entryPoint=metrics"
       - "--metrics.prometheus=true"
@@ -73,3 +73,15 @@ services:
     #command: -i 10
     mem_limit: 75m
 
+
+  lbv:
+    image: nginx:alpine
+    container_name: lbv
+    volumes:
+      - /home/trick/src/github.com/trickv/lbv:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lbv.entrypoints=websecure"
+      - "traefik.http.routers.lbv.tls.certresolver=le"
+      - "traefik.http.routers.lbv.rule=Host(`values-dev.yellow.v9n.us`)"
+      - "traefik.http.services.lbv.loadbalancer.server.port=80"

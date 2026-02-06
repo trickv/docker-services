@@ -1,4 +1,0 @@
-for a in $(cat module-list); do
-    b=$(echo $a | tr '[:upper:]' '[:lower:]' | tr '-' '_')
-    echo "  - entity: sensor.solaredge2mqtt_module_YYY_power_derivative" | sed s:YYY:$b:g
-done

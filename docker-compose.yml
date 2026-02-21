@@ -77,6 +77,7 @@ services:
   lbv:
     image: nginx:alpine
     container_name: lbv
+    restart: unless-stopped
     volumes:
       - /home/trick/src/github.com/trickv/lbv:/usr/share/nginx/html:ro
     labels:
@@ -85,3 +86,35 @@ services:
       - "traefik.http.routers.lbv.tls.certresolver=le"
       - "traefik.http.routers.lbv.rule=Host(`values-dev.yellow.v9n.us`)"
       - "traefik.http.services.lbv.loadbalancer.server.port=80"
+
+  task-dashboard:
+    image: nginx:alpine
+    container_name: task-dashboard
+    restart: unless-stopped
+    volumes:
+      - /home/trick/workspace/dashboard:/usr/share/nginx/html:ro
+      - /home/trick/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /home/trick/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.task-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.task-dashboard.tls.certresolver=le"
+      - "traefik.http.routers.task-dashboard.rule=Host(`task-dashboard.yellow.v9n.us`)"
+      - "traefik.http.services.task-dashboard.loadbalancer.server.port=80"
+  
+  steve-dashboard:
+    image: nginx:alpine
+    container_name: steve-dashboard
+    restart: unless-stopped
+    volumes:
+      - /home/trick/clawd-values-site/data/workspace/dashboard:/usr/share/nginx/html:ro
+      - /home/trick/clawd-values-site/data/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /home/trick/clawd-values-site/data/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.steve-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.steve-dashboard.tls.certresolver=le"
+      - "traefik.http.routers.steve-dashboard.rule=Host(`steve-dashboard.yellow.v9n.us`)"
+      - "traefik.http.services.steve-dashboard.loadbalancer.server.port=80"

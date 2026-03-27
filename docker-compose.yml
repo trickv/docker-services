@@ -105,9 +105,9 @@ services:
     container_name: task-dashboard
     restart: unless-stopped
     volumes:
-      - /home/trick/workspace/dashboard:/usr/share/nginx/html:ro
-      - /home/trick/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
-      - /home/trick/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /home/trick/clawd-tasker/data/workspace/dashboard:/usr/share/nginx/html:ro
+      - /home/trick/clawd-tasker/data/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /home/trick/clawd-tasker/data/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
     labels:
       - "traefik.enable=true"
@@ -121,9 +121,9 @@ services:
     container_name: steve-dashboard
     restart: unless-stopped
     volumes:
-      - /home/trick/clawd-values-site/data/workspace/dashboard:/usr/share/nginx/html:ro
-      - /home/trick/clawd-values-site/data/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
-      - /home/trick/clawd-values-site/data/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /home/trick/claws/steve/data/workspace/dashboard:/usr/share/nginx/html:ro
+      - /home/trick/claws/steve/data/workspace/dashboard/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /home/trick/claws/steve/data/workspace/dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
     labels:
       - "traefik.enable=true"

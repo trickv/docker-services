@@ -74,6 +74,19 @@ services:
     mem_limit: 75m
 
 
+  look-up:
+    image: nginx:alpine
+    container_name: look-up
+    restart: unless-stopped
+    volumes:
+      - /home/trick/src/github.com/trickv/look-up/dist:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.look-up.entrypoints=websecure"
+      - "traefik.http.routers.look-up.tls.certresolver=le"
+      - "traefik.http.routers.look-up.rule=Host(`look-up.yellow.v9n.us`)"
+      - "traefik.http.services.look-up.loadbalancer.server.port=80"
+
   lbv:
     image: nginx:alpine
     container_name: lbv

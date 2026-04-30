@@ -131,3 +131,19 @@ services:
       - "traefik.http.routers.steve-dashboard.tls.certresolver=le"
       - "traefik.http.routers.steve-dashboard.rule=Host(`steve-dashboard.yellow.v9n.us`)"
       - "traefik.http.services.steve-dashboard.loadbalancer.server.port=80"
+  
+  c3po-dashboard:
+    image: nginx:alpine
+    container_name: c3po-dashboard
+    restart: unless-stopped
+    volumes:
+      - /home/trick/claws/slackers/data/workspace/public-site:/usr/share/nginx/html:ro
+      - /home/trick/claws/slackers/data/workspace/public-site/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /home/trick/claws/slackers/data/workspace/public-site/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.c3po-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.c3po-dashboard.tls.certresolver=le"
+      - "traefik.http.routers.c3po-dashboard.rule=Host(`c3po-dashboard.yellow.v9n.us`)"
+      - "traefik.http.services.c3po-dashboard.loadbalancer.server.port=80"

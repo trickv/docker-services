@@ -1,7 +1,7 @@
 services:
   traefik:
     container_name: traefik
-    image: traefik:saintmarcelin
+    image: traefik:v2.11
     restart: unless-stopped
     command:
       - "--api.insecure=true"
@@ -147,3 +147,35 @@ services:
       - "traefik.http.routers.c3po-dashboard.tls.certresolver=le"
       - "traefik.http.routers.c3po-dashboard.rule=Host(`c3po-dashboard.yellow.v9n.us`)"
       - "traefik.http.services.c3po-dashboard.loadbalancer.server.port=80"
+
+  # RTL-SDR EOT/DPU decoder. Writes trains/passes/signal CSVs + a 60s
+  # liveness heartbeat into the repo's data/ dir (dashboard mounts it ro).
+  # NOTE: only one process may use the dongle — don't also run traintap
+  # bare-metal / via systemd on this host.
+  traintap:
+    build: /home/trick/src/github.com/trickv/eot-watch
+    container_name: traintap
+    restart: unless-stopped
+    devices:
+      - /dev/bus/usb:/dev/bus/usb   # RTL-SDR; if not found try privileged: true
+    volumes:
+      - /home/trick/src/github.com/trickv/eot-watch/data:/data
+    mem_limit: 512m
+    # default image CMD: --mode eot, CSVs + heartbeat into /data
+
+  traintap-dashboard:
+    build: /home/trick/src/github.com/trickv/eot-watch/dashboard
+    container_name: traintap-dashboard
+    restart: unless-stopped
+    volumes:
+      - /home/trick/src/github.com/trickv/eot-watch/data:/data:ro
+    environment:
+      - DATA_DIR=/data
+      - TRACK_DISTANCE_M=173   # antenna -> middle of the freight track (Doppler fit)
+    mem_limit: 150m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traintap-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.traintap-dashboard.tls.certresolver=le"
+      - "traefik.http.routers.traintap-dashboard.rule=Host(`traintap.yellow.v9n.us`)"
+      - "traefik.http.services.traintap-dashboard.loadbalancer.server.port=8000"
